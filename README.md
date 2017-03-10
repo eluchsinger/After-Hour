@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/eluchsinger/After-Hour.svg?token=qGdUXq6yMCLLxngwYqhT&branch=master)](https://travis-ci.com/eluchsinger/After-Hour)
+
 # After-Hour
 Das Projekt After-Hour besteht aus drei Anwendungen: 
 - Server-Anwendung
