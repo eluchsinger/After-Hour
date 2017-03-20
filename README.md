@@ -3,8 +3,7 @@
 # After-Hour
 Das Projekt After-Hour besteht aus drei Anwendungen: 
 - Server-Anwendung
-- Kunden-Anwendung (Android App)
-- Betreiber-Anwendung (Android App)
+- Benutzer-Anwendung (Android App)
 
 ## Server
 Der Server ist gegenüber der Mobile Application eine REST-Schnittstelle. Die Android App darf nicht direkt mit der Datenbank sprechen, deshalb übernimmt der Server die Datenbankanbindung.
@@ -21,6 +20,9 @@ Für die Installation von SBT, folge die Anleitungen unter http://www.scala-sbt.
 Der Server sollte jetzt gestartet werden und unter `localhost:9000` erreichbar sein.
 
 **Anmerkung:** Bei jedem Request prüft der Server, ob es Änderungen im Code gegeben hat. Wenn es eine Änderung gab oder der Server noch nie kompiliert wurde, wird vor der Antwort des Request die komplette Serveranwendung noch einmal kompiliert. Dies kann durchaus einige Sekunden dauern.
+
+### Pusher
+Um proaktiv vom Server zur Android Anwendung Events zu versenden, verwenden wir den [Pusher Service](https://pusher.com/). Ein Android Tutorial ist [hier](https://pusher.com/docs/android_quick_start) verfügbar.
 
 ### Hibernate
 Als ORM wird JPA in Verbindung mit [Hibernate](http://hibernate.org/orm/) verwendet. So, wie es jetzt geplant ist, werden wir eine relationale Datenbank (MySQL) verwenden. 
