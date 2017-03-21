@@ -1,0 +1,10 @@
+/RUNNING_PID
+/logs/
+/project/*-shim.sbt
+/project/project/
+/project/target/
+/target/
+.idea/modules/
+.idea/workspace.xml
+.idea_modules/
+.sbtserver/
