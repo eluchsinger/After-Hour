@@ -14,6 +14,7 @@ Für die REST - Schnittstelle wird das [Play Framework](https://playframework.co
 #### Installation Play Framework
 Zur Installation des Play Frameworks muss zuerst die Anwendung SBT installiert werden. SBT ist eine Konsole, mit der das Aufsetzen und Ausführen des Play Servers automatisiert werden kann. 
 Für die Installation von SBT, folge die Anleitungen unter http://www.scala-sbt.org/
+>   Tipp: Prüfe, ob SBT schon installiert ist mit dem Befehl ```sbt sbtVersion```
 
 #### Ausführen des Servers
 Öffnen eine Konsole im Root-Ordner des Servers und führe folgenden Befehl aus: `sbt run`
