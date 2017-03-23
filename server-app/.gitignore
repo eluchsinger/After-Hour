@@ -1,5 +1,3 @@
-logs
-target
 /.idea
 /.idea_modules
 /.classpath
@@ -7,3 +5,10 @@ target
 /.settings
 /RUNNING_PID
 /.sbtserver
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
