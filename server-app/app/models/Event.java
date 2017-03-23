@@ -5,12 +5,22 @@ package models;
  * An event (a Party).
  */
 public class Event {
+    private int id;
     private String title;
     private String description;
 
-    public Event(final String title, final String description) {
+    public Event(final int id, final String title, final String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
+    }
+
+    public void setId(final int value) {
+        this.id = value;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setTitle(final String value) {
