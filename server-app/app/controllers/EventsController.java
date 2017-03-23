@@ -8,6 +8,7 @@ import play.mvc.*;
  */
 public class EventsController extends Controller {
 
+
     public Result getAllEvents() {
         return ok("Kaufleuten Event");
     }
