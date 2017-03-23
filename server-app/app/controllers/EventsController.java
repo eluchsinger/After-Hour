@@ -7,6 +7,7 @@ import play.mvc.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 22.03.2017.
@@ -24,6 +25,18 @@ public class EventsController extends Controller {
     public Result getAllEvents() {
         JsonNode jsonNode = Json.toJson(this.events);
         return ok(jsonNode);
+    }
+
+    public Result getEvent(int id) {
+        Optional<Event> maybeEvent = this.events.stream()
+                .filter(event -> event.getId() == id)
+                .findFirst();
+
+        if(maybeEvent.isPresent()) {
+            return ok(Json.toJson(maybeEvent.get()));
+        } else {
+            return Results.notFound();
+        }
     }
 
 }

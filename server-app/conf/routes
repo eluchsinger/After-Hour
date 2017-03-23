@@ -9,6 +9,7 @@ GET     /fabian                     controllers.FabianController.yolo
 
 # REST Events
 GET     /events                     controllers.EventsController.getAllEvents
+GET     /events/:id                 controllers.EventsController.getEvent(id: Integer)
 
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
