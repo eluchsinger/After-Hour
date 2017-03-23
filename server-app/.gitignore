@@ -8,10 +8,10 @@
 logs
 project/project
 project/target
+project/.sbtserver
+project/.sbtserver.lock
 target
 tmp
 dist
 .cache
 projectFilesBackup
-.sbtserver
-.sbtserver.lock
