@@ -13,3 +13,5 @@ tmp
 dist
 .cache
 projectFilesBackup
+.sbtserver
+.sbtserver.lock
