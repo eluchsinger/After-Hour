@@ -20,6 +20,7 @@ public class EventsController extends Controller {
         this.events = new ArrayList<Event>();
         this.events.add(new Event(1, "Bobba Fett Party", "Sei wie Bobba. Sei Fett."));
         this.events.add(new Event(2, "Nachtseminar", "DIE Party für Studis"));
+        this.events.add(new Event (3, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
     }
 
     public Result getAllEvents() {
