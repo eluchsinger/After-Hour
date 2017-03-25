@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,6 +13,7 @@ public class User {
     private String firstName;
     private Date dateOfBirth;
     private Gender gender;
+    private ArrayList<TicketInstance> tickets;
 
     public User(int id, String name, String firstName, Date dateOfBirth, Gender gender){
         this.id = id;
@@ -19,6 +21,7 @@ public class User {
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+        tickets = new ArrayList<>();
     }
 
     public Date getDateOfBirth(){
@@ -27,5 +30,9 @@ public class User {
 
     public int getId(){
         return id;
+    }
+
+    public void addTicket(TicketInstance ticket){
+        tickets.add(ticket);
     }
 }
