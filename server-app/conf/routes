@@ -11,6 +11,12 @@ GET     /fabian                     controllers.FabianController.yolo
 GET     /events                     controllers.EventsController.getAllEvents
 GET     /events/:id                 controllers.EventsController.getEvent(id: Integer)
 
+# REST Tickets
+GET /users/:userId/tickets/:eventId controllers.UserController.getTicket(userId: Integer, eventId: Integer)
+
+# Request Sample: http://localhost:9000/ticket?user=1&event=1
+GET     /tickets                    controllers.EventsController.getTicket(user: Integer, event: Integer)
+
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
