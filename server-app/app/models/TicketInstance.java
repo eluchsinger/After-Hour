@@ -5,4 +5,6 @@ package models;
  * TicketInstance
  */
 public class TicketInstance {
+    protected User user;
+    protected Event event;
 }

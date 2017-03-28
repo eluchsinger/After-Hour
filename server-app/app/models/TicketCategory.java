@@ -19,4 +19,22 @@ public class TicketCategory {
     public ArrayList<SoldTicket> getSoldTickets(){
         return soldTickets;
     }
+
+    public void setTicketStartDateTime(Date date){
+        this.ticketStartDateTime = date;
+    }
+
+    public Date getTicketStartDateTime(){
+        return ticketStartDateTime;
+    }
+
+    public void setTicketStopDateTime(Date date){
+        this.ticketStopDateTime = date;
+    }
+
+    public Date getTicketStopDateTime(){
+        return ticketStopDateTime;
+    }
+
+
 }

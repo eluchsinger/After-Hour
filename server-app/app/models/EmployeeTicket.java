@@ -7,6 +7,9 @@ import java.util.Date;
  * An EmployeeTicket for eomployees.
  */
 public class EmployeeTicket extends TicketCategory {
+    public EmployeeTicket(){
+
+    }
     public EmployeeTicket(Date ticketStartDateTime, Date ticketStopDateTime){
         this.ticketStartDateTime = ticketStartDateTime;
         this.ticketStopDateTime = ticketStopDateTime;

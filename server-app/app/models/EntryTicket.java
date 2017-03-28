@@ -16,4 +16,9 @@ public class EntryTicket extends TicketCategory {
         this.ticketStartDateTime = ticketStartDateTime;
         this.ticketStopDateTime = ticketStopDateTime;
     }
+
+    public EntryTicket(String description, int price){
+        this.description = description;
+        this.price = price;
+    }
 }

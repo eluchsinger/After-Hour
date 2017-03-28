@@ -49,7 +49,7 @@ public class Event {
         this.location = location;
     }
 
-    public void setOrganizer(){
+    public void setOrganizer(Organizer organizer){
         this.organizer = organizer;
     }
 
