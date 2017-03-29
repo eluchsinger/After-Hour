@@ -1,4 +1,6 @@
-package models;
+package dataLayer.events;
+
+import dataLayer.tickets.SoldTicket;
 
 import java.util.ArrayList;
 import java.util.Date;

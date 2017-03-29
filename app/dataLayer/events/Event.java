@@ -1,4 +1,6 @@
-package models;
+package dataLayer.events;
+
+import dataLayer.tickets.CoatCheck;
 
 import java.util.ArrayList;
 

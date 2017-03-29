@@ -1,4 +1,4 @@
-package models;
+package dataLayer.events;
 
 /**
  * Created by Fabian on 25.03.2017.

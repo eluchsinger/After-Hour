@@ -1,7 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.Event;
+import dataLayer.events.Event;
 import play.libs.Json;
 import play.mvc.*;
 

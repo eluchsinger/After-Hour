@@ -1,4 +1,6 @@
-package models;
+package dataLayer.users;
+
+import dataLayer.tickets.TicketInstance;
 
 import java.util.ArrayList;
 import java.util.Date;
