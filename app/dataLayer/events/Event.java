@@ -21,6 +21,8 @@ public class Event {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.ticketCategories = new ArrayList<>();
+        this.coatChecks = new ArrayList<>();
     }
 
     public void setId(final int value) {

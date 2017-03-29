@@ -9,6 +9,7 @@ import play.mvc.Result;
  * Controller for /users
  */
 public class UserController extends Controller {
+
     public Result getTicket(Integer userId, Integer eventId){
         String result = "User: " + userId + " Ticket: " + eventId;
         return ok(Json.toJson(result));
