@@ -2,6 +2,7 @@ package dataLayer.events;
 
 import dataLayer.events.TicketCategory;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -17,6 +18,7 @@ public class EntryTicket extends TicketCategory {
         this.description = description;
         this.ticketStartDateTime = ticketStartDateTime;
         this.ticketStopDateTime = ticketStopDateTime;
+        this.soldTickets = new ArrayList<>();
     }
 
     public EntryTicket(String description, int price){

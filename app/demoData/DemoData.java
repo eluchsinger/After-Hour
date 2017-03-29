@@ -3,6 +3,7 @@ package demoData;
 import dataLayer.events.EntryTicket;
 import dataLayer.events.Event;
 import dataLayer.events.TicketCategory;
+import dataLayer.tickets.SoldTicket;
 import dataLayer.users.Gender;
 import dataLayer.users.User;
 
@@ -29,6 +30,7 @@ public class DemoData {
         initEvents();
         initUsers();
         initTicketCategories();
+        initSoldTickets();
     }
 
     private void initEvents() {
@@ -65,4 +67,13 @@ public class DemoData {
             e.printStackTrace();
         }
     }
+
+    private void initSoldTickets(){
+        //Sample Ticket sold, with all references.
+        SoldTicket soldTicket = new SoldTicket(users.get(0), events.get(0), events.get(0).getTicketCategories().get(0));
+        TicketCategory category = events.get(0).getTicketCategories().get(0);
+        category.addSoldTicket(soldTicket);
+        users.get(0).addTicket(soldTicket);
+    }
+
 }

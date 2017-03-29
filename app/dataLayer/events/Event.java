@@ -1,5 +1,6 @@
 package dataLayer.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dataLayer.tickets.CoatCheck;
 
 import java.util.ArrayList;
@@ -9,12 +10,15 @@ import java.util.ArrayList;
  * An event (a Party).
  */
 public class Event {
+    @JsonIgnore
     private int id;
     private String title;
     private String description;
     private Location location;
     private Organizer organizer;
+    @JsonIgnore
     private ArrayList<TicketCategory> ticketCategories;
+    @JsonIgnore
     private ArrayList<CoatCheck> coatChecks;
 
     public Event(final int id, final String title, final String description) {

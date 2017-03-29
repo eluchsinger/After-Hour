@@ -10,7 +10,7 @@ import java.util.Date;
  * A Ticket Category
  */
 public class TicketCategory {
-    private ArrayList<SoldTicket> soldTickets;
+    protected ArrayList<SoldTicket> soldTickets;
     protected Date ticketStartDateTime;
     protected Date ticketStopDateTime;
 
