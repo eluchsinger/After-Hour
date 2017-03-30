@@ -25,4 +25,8 @@ public class EntryTicket extends TicketCategory {
         this.description = description;
         this.price = price;
     }
+
+    public String getDescription(){
+        return description;
+    }
 }

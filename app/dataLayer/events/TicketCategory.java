@@ -1,5 +1,6 @@
 package dataLayer.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dataLayer.tickets.SoldTicket;
 
 import java.util.ArrayList;
@@ -10,8 +11,11 @@ import java.util.Date;
  * A Ticket Category
  */
 public class TicketCategory {
+    @JsonIgnore
     protected ArrayList<SoldTicket> soldTickets;
+    @JsonIgnore
     protected Date ticketStartDateTime;
+    @JsonIgnore
     protected Date ticketStopDateTime;
 
     public void addSoldTicket(SoldTicket soldTicket){

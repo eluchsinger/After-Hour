@@ -34,6 +34,14 @@ public class User {
         return id;
     }
 
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String getName(){
+        return name;
+    }
+
     public void addTicket(TicketInstance ticket){
         tickets.add(ticket);
     }

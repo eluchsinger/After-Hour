@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import dataLayer.events.Event;
 import dataLayer.tickets.SoldTicket;
 import dataLayer.tickets.TicketInstance;
@@ -9,6 +10,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -39,6 +41,27 @@ public class UserController extends Controller {
                 return ok("Ticket found");
             }
         }
-        return ok(Json.toJson("No Ticket"));
+        return notFound("Ticket not found");
+    }
+
+    public Result getEvents(Integer userId){
+        Optional<ArrayList<TicketInstance>> optionalTickets = demoData.getUsers().stream()
+                .filter(user -> userId == user.getId())
+                .map(user -> user.getTickets())
+                .findFirst();
+
+        return ok(Json.toJson(optionalTickets.get()));
+    }
+
+    public Result getUser(Integer userId){
+        Optional<User> optionalUser = demoData.getUsers().stream()
+                .filter(user -> user.getId() == userId)
+                .findFirst();
+
+        if(optionalUser.isPresent()){
+            JsonNode user = Json.toJson(optionalUser.get());
+            return ok(Json.toJson(user));
+        }
+        return notFound("User not found");
     }
 }

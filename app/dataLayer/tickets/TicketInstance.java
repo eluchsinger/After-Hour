@@ -1,5 +1,6 @@
 package dataLayer.tickets;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dataLayer.events.Event;
 import dataLayer.users.User;
 
@@ -8,6 +9,7 @@ import dataLayer.users.User;
  * TicketInstance
  */
 public class TicketInstance {
+    @JsonIgnore
     protected User user;
     protected Event event;
 }
