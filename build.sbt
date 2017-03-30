@@ -12,6 +12,10 @@ libraryDependencies ++= Seq(
   javaWs
 )
 
+resolvers += "jitpack" at "https://jitpack.io"
+libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "-SNAPSHOT"
+
+fork in run := true
 
 fork in run := true
 
