@@ -11,7 +11,6 @@ import java.util.Date;
  * A Ticket Category
  */
 public class TicketCategory {
-    @JsonIgnore
     protected ArrayList<SoldTicket> soldTickets;
     @JsonIgnore
     protected Date ticketStartDateTime;
