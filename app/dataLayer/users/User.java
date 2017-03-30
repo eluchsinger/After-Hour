@@ -37,4 +37,8 @@ public class User {
     public void addTicket(TicketInstance ticket){
         tickets.add(ticket);
     }
+
+    public ArrayList<TicketInstance> getTickets(){
+        return tickets;
+    }
 }

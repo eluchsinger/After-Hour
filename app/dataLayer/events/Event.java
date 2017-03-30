@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * An event (a Party).
  */
 public class Event {
-    @JsonIgnore
     private int id;
     private String title;
     private String description;

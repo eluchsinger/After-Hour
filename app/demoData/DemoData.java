@@ -56,6 +56,10 @@ public class DemoData {
         }
     }
 
+    public ArrayList<User> getUsers(){
+        return users;
+    }
+
     private void initTicketCategories(){
         try {
             events.get(0).addTicketCategory(new EntryTicket("Ticket", 25, dateFormat.parse("2017-03-30"), dateFormat.parse("2017-04-20")));
@@ -69,11 +73,17 @@ public class DemoData {
     }
 
     private void initSoldTickets(){
+        soldTicket(1,1,0);
+        soldTicket(2,1,0);
+        soldTicket(2,2,0);
+    }
+
+    private void soldTicket(int userId, int eventId, int ticketCategory){
         //Sample Ticket sold, with all references.
-        SoldTicket soldTicket = new SoldTicket(users.get(0), events.get(0), events.get(0).getTicketCategories().get(0));
-        TicketCategory category = events.get(0).getTicketCategories().get(0);
+        SoldTicket soldTicket = new SoldTicket(users.get(userId - 1), events.get(eventId - 1), events.get(eventId - 1).getTicketCategories().get(ticketCategory));
+        TicketCategory category = events.get(eventId - 1).getTicketCategories().get(ticketCategory);
         category.addSoldTicket(soldTicket);
-        users.get(0).addTicket(soldTicket);
+        users.get(userId - 1).addTicket(soldTicket);
     }
 
 }
