@@ -13,6 +13,7 @@ libraryDependencies ++= Seq(
 )
 
 resolvers += "jitpack" at "https://jitpack.io"
+resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
 libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "-SNAPSHOT"
 
 fork in run := true
