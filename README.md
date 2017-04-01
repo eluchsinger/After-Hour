@@ -1,4 +1,6 @@
 ﻿[![Build Status](https://travis-ci.com/eluchsinger/After-Hour.svg?token=qGdUXq6yMCLLxngwYqhT&branch=master)](https://travis-ci.com/eluchsinger/After-Hour)
+ [![JitPack Status](https://jitpack.io/v/eluchsinger/After-Hour-Shared.svg)](https://jitpack.io/#eluchsinger/After-Hour-Shared)
+
 
 # After-Hour
 Das Projekt After-Hour besteht aus drei Anwendungen: 

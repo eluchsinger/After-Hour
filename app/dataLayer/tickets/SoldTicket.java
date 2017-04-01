@@ -1,4 +1,9 @@
-package models;
+package dataLayer.tickets;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import dataLayer.events.Event;
+import dataLayer.events.TicketCategory;
+import dataLayer.users.User;
 
 import java.util.Date;
 
@@ -25,6 +30,7 @@ public class SoldTicket extends TicketInstance {
         return event;
     }
 
+    @JsonIgnore
     public TicketCategory getTicketCategory(){
         return ticketCategory;
     }

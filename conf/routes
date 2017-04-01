@@ -11,8 +11,10 @@ GET     /fabian                     controllers.FabianController.yolo
 GET     /events                     controllers.EventsController.getAllEvents
 GET     /events/:id                 controllers.EventsController.getEvent(id: Integer)
 
-# REST Tickets
+# REST Users
 GET /users/:userId/tickets/:eventId controllers.UserController.getTicket(userId: Integer, eventId: Integer)
+GET /users/:userId/tickets          controllers.UserController.getEvents(userId: Integer)
+GET /users/:userId                  controllers.UserController.getUser(userId: Integer)
 
 # Request Sample: http://localhost:9000/ticket?user=1&event=1
 GET     /tickets                    controllers.EventsController.getTicket(user: Integer, event: Integer)

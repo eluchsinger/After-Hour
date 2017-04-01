@@ -1,4 +1,6 @@
-package models;
+package dataLayer.users;
+
+import dataLayer.tickets.TicketInstance;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +34,19 @@ public class User {
         return id;
     }
 
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public String getName(){
+        return name;
+    }
+
     public void addTicket(TicketInstance ticket){
         tickets.add(ticket);
+    }
+
+    public ArrayList<TicketInstance> getTickets(){
+        return tickets;
     }
 }
