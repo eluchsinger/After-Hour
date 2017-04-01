@@ -1,10 +1,11 @@
 version: 2
 jobs:
-  working_directory: /
-  docker:
-    - image: ingensi/play-framework
-  steps:
-    - checkout
-    - run:
-        name: Run tests
-        command: sbt test
+  build:
+    working_directory: /
+    docker:
+      - image: ingensi/play-framework
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: sbt test
