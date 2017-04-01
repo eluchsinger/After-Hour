@@ -21,8 +21,7 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
 
-//  Uncomment to utilize the shared-repo.
-//  libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "-SNAPSHOT"
+libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "v0.1-alpha"
 
 fork in run := true
 
