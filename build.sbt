@@ -1,6 +1,6 @@
 name := """server-app"""
 
-version := "1.0-SNAPSHOT"
+version := "0.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
@@ -21,7 +21,8 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 resolvers += Resolver.url("Typesafe Ivy releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns)
 
-libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "-SNAPSHOT"
+//  Uncomment to utilize the shared-repo.
+//  libraryDependencies += "com.github.eluchsinger" % "After-Hour-Shared" % "-SNAPSHOT"
 
 fork in run := true
 
