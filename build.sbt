@@ -14,6 +14,10 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "5.2.9.Final" // replace by your jpa implementation
 )
 
+// https://mvnrepository.com/artifact/org.postgresql/postgresql
+libraryDependencies += "org.postgresql" % "postgresql" % "42.0.0"
+
+
 resolvers += "jitpack" at "https://jitpack.io"
 
 resolvers  += "Online Play Repository" at
