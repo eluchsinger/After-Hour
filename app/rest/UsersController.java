@@ -63,6 +63,7 @@ public class UsersController extends Controller {
 
         User user = this.usersLogic.getUserById(userId);
         if(user != null) {
+            user.addTickets(demoData.getUsers().get(userId-1).getTickets());
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }
