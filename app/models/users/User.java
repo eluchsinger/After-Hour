@@ -2,12 +2,10 @@ package models.users;
 
 import models.tickets.TicketInstance;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Fabian on 24.03.17.
@@ -23,6 +21,7 @@ public class User {
     private String firstName;
     private Date dateOfBirth;
     private Gender gender;
+    @Transient
     private ArrayList<TicketInstance> tickets;
 
     public User(){
@@ -59,5 +58,9 @@ public class User {
 
     public ArrayList<TicketInstance> getTickets(){
         return tickets;
+    }
+
+    public void addTickets(ArrayList<TicketInstance> tickets) {
+        this.tickets = tickets;
     }
 }
