@@ -1,4 +1,4 @@
-package domain;
+package logic.users;
 
 import dal.UsersRepository;
 import models.users.User;
@@ -8,11 +8,11 @@ import javax.inject.Inject;
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
  */
-public class UserDomainImpl implements UserDomain {
+public class UsersLogicImpl implements UsersLogic {
     private UsersRepository usersRepository;
 
     @Inject
-    public UserDomainImpl(UsersRepository usersRepository) {
+    public UsersLogicImpl(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 

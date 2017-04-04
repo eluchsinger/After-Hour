@@ -1,4 +1,4 @@
-package controllers;
+package rest;
 
 import javax.inject.*;
 import play.*;

@@ -3,26 +3,26 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+GET /                                       rest.HomeController.index
 # Fabian's Website
-GET     /fabian                     controllers.FabianController.yolo
+GET /fabian                                 rest.FabianController.yolo
 
 # REST Events
-GET     /events                     controllers.EventsController.getAllEvents
-GET     /events/:id                 controllers.EventsController.getEvent(id: Integer)
+GET /events                                 rest.EventsController.getAllEvents
+GET /events/:id                             rest.EventsController.getEvent(id: Integer)
 
 # REST Users
-GET /users/:userId/tickets/:eventId controllers.UserController.getTicket(userId: Integer, eventId: Integer)
-GET /users/:userId/tickets          controllers.UserController.getEvents(userId: Integer)
-GET /users/:userId                  controllers.UserController.getUser(userId: Integer)
+GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userId: Integer, eventId: Integer)
+GET /users/:userId/tickets                  rest.UsersController.getEvents(userId: Integer)
+GET /users/:userId                          rest.UsersController.getUser(userId: Integer)
 
 # Request Sample: http://localhost:9000/ticket?user=1&event=1
-GET     /tickets                    controllers.EventsController.getTicket(user: Integer, event: Integer)
+GET /tickets                                rest.EventsController.getTicket(user: Integer, event: Integer)
 
 # An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
+GET /count                                  rest.CountController.count
 # An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
+GET /message                                rest.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)

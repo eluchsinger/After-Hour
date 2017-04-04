@@ -1,8 +1,7 @@
-package controllers;
+package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import domain.UserDomain;
-import domain.UserDomainImpl;
+import logic.users.UsersLogic;
 import models.tickets.SoldTicket;
 import models.tickets.TicketInstance;
 import models.users.User;
@@ -20,14 +19,14 @@ import java.util.Optional;
  * Created by Fabian on 28.03.17.
  * Controller for /users
  */
-public class UserController extends Controller {
+public class UsersController extends Controller {
     private DemoData demoData;
-    private UserDomain userDomain;
+    private UsersLogic usersLogic;
 
     @Inject
-    public UserController(UserDomain userDomain){
+    public UsersController(UsersLogic usersLogic){
         this.demoData = DemoData.getInstance();
-        this.userDomain = userDomain;
+        this.usersLogic = usersLogic;
     }
 
 
@@ -62,7 +61,7 @@ public class UserController extends Controller {
     @Transactional
     public Result getUser(Integer userId){
 
-        User user = this.userDomain.getUserById(userId);
+        User user = this.usersLogic.getUserById(userId);
         if(user != null) {
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));

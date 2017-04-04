@@ -1,4 +1,4 @@
-package controllers;
+package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.events.Event;
