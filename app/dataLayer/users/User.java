@@ -14,7 +14,7 @@ import java.util.Date;
  * User
  */
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "tbl_user", schema = "public")
 public class User {
     @Id
     @GeneratedValue
