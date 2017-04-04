@@ -25,6 +25,9 @@ public class User {
     private Gender gender;
     private ArrayList<TicketInstance> tickets;
 
+    public User(){
+    }
+
     public User(int id, String name, String firstName, Date dateOfBirth, Gender gender){
         this.id = id;
         this.name = name;
