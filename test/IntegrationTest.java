@@ -1,18 +1,16 @@
 import com.google.common.collect.ImmutableMap;
-import controllers.UserController;
-import org.junit.*;
-
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import play.db.Database;
 import play.db.Databases;
-import play.mvc.*;
-import play.test.*;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static play.test.Helpers.*;
-import static org.junit.Assert.*;
-
-import static org.fluentlenium.core.filter.FilterConstructor.*;
+import static org.junit.Assert.assertEquals;
 
 public class IntegrationTest {
 
