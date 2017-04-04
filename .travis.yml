@@ -16,5 +16,5 @@ services:
   - postgresql
 
 before_script:
-  - PGPASSWORD=[p4ssw0rd] psql -c 'create database ahdb;' -U postgres
-  - psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';"
+  - psql -c 'create database ahdb;' -U postgres
+  - psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';" -U postgres
