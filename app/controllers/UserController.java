@@ -1,19 +1,18 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dal.UsersRepository;
+import domain.UserDomain;
+import domain.UserDomainImpl;
 import models.tickets.SoldTicket;
 import models.tickets.TicketInstance;
 import models.users.User;
 import demoData.DemoData;
-import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -23,12 +22,12 @@ import java.util.Optional;
  */
 public class UserController extends Controller {
     private DemoData demoData;
-    private UsersRepository usersRepository;
+    private UserDomain userDomain;
 
     @Inject
-    public UserController(UsersRepository usersRepository){
+    public UserController(UserDomain userDomain){
         this.demoData = DemoData.getInstance();
-        this.usersRepository = usersRepository;
+        this.userDomain = userDomain;
     }
 
 
@@ -63,7 +62,7 @@ public class UserController extends Controller {
     @Transactional
     public Result getUser(Integer userId){
 
-        User user = this.usersRepository.getUserById(userId);
+        User user = this.userDomain.getUserById(userId);
         if(user != null) {
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
