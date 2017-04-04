@@ -13,8 +13,6 @@ import java.text.SimpleDateFormat;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.TestCase.assertEquals;
-import static play.test.Helpers.route;
 import static play.inject.Bindings.bind;
 
 /**
