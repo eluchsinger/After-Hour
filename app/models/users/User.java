@@ -1,6 +1,6 @@
-package dataLayer.users;
+package models.users;
 
-import dataLayer.tickets.TicketInstance;
+import models.tickets.TicketInstance;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

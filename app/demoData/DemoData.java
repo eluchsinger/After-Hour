@@ -1,11 +1,11 @@
 package demoData;
 
-import dataLayer.events.EntryTicket;
-import dataLayer.events.Event;
-import dataLayer.events.TicketCategory;
-import dataLayer.tickets.SoldTicket;
-import dataLayer.users.Gender;
-import dataLayer.users.User;
+import models.events.EntryTicket;
+import models.events.Event;
+import models.events.TicketCategory;
+import models.tickets.SoldTicket;
+import models.users.Gender;
+import models.users.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

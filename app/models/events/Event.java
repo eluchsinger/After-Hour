@@ -1,7 +1,7 @@
-package dataLayer.events;
+package models.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dataLayer.tickets.CoatCheck;
+import models.tickets.CoatCheck;
 
 import java.util.ArrayList;
 

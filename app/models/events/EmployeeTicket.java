@@ -1,6 +1,4 @@
-package dataLayer.events;
-
-import dataLayer.events.TicketCategory;
+package models.events;
 
 import java.util.Date;
 

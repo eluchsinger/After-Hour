@@ -1,13 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dataLayer.events.Event;
+import models.events.Event;
 import demoData.DemoData;
 import play.libs.Json;
 import play.mvc.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**

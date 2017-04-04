@@ -1,10 +1,9 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dataLayer.events.Event;
-import dataLayer.tickets.SoldTicket;
-import dataLayer.tickets.TicketInstance;
-import dataLayer.users.User;
+import models.tickets.SoldTicket;
+import models.tickets.TicketInstance;
+import models.users.User;
 import demoData.DemoData;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
