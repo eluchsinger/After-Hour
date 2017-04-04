@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import dal.UsersRepository;
 import models.tickets.SoldTicket;
 import models.tickets.TicketInstance;
 import models.users.User;
@@ -22,12 +23,12 @@ import java.util.Optional;
  */
 public class UserController extends Controller {
     private DemoData demoData;
-    private JPAApi jpaApi;
+    private UsersRepository usersRepository;
 
     @Inject
-    public UserController(JPAApi jpaApi){
+    public UserController(UsersRepository usersRepository){
         this.demoData = DemoData.getInstance();
-        this.jpaApi = jpaApi;
+        this.usersRepository = usersRepository;
     }
 
 
@@ -59,26 +60,15 @@ public class UserController extends Controller {
         return ok(Json.toJson(optionalTickets.get()));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Result getUser(Integer userId){
 
-        EntityManager em = jpaApi.em();
-        User user = em.find(User.class, userId);
+        User user = this.usersRepository.getUserById(userId);
         if(user != null) {
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }
 
         return notFound("User not found");
-
-//        Optional<User> optionalUser = demoData.getUsers().stream()
-//                .filter(user -> user.getId() == userId)
-//                .findFirst();
-//
-//        if(optionalUser.isPresent()){
-//            JsonNode user = Json.toJson(optionalUser.get());
-//            return ok(Json.toJson(user));
-//        }
-//        return notFound("User not found");
     }
 }

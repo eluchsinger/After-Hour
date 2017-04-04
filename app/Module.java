@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
+import dal.UsersRepository;
+import dal.jpa.UsersRepositoryJPA;
 import services.ApplicationTimer;
 import services.AtomicCounter;
 import services.Counter;
@@ -26,6 +28,9 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
+
+        // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
+        bind(UsersRepository.class).to(UsersRepositoryJPA.class);
     }
 
 }
