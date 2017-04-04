@@ -1,4 +1,4 @@
-package dataLayer.users;
+package models.users;
 
 /**
  * Created by Fabian on 24.03.17.

@@ -1,7 +1,7 @@
-package dataLayer.events;
+package models.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dataLayer.tickets.SoldTicket;
+import models.tickets.SoldTicket;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,19 +1,17 @@
-package controllers;
+package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import dataLayer.events.Event;
-import dataLayer.tickets.SoldTicket;
-import dataLayer.tickets.TicketInstance;
-import dataLayer.users.User;
+import logic.users.UsersLogic;
+import models.tickets.SoldTicket;
+import models.tickets.TicketInstance;
+import models.users.User;
 import demoData.DemoData;
-import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -21,14 +19,14 @@ import java.util.Optional;
  * Created by Fabian on 28.03.17.
  * Controller for /users
  */
-public class UserController extends Controller {
+public class UsersController extends Controller {
     private DemoData demoData;
-    private JPAApi jpaApi;
+    private UsersLogic usersLogic;
 
     @Inject
-    public UserController(JPAApi jpaApi){
+    public UsersController(UsersLogic usersLogic){
         this.demoData = DemoData.getInstance();
-        this.jpaApi = jpaApi;
+        this.usersLogic = usersLogic;
     }
 
 
@@ -60,26 +58,15 @@ public class UserController extends Controller {
         return ok(Json.toJson(optionalTickets.get()));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Result getUser(Integer userId){
 
-        EntityManager em = jpaApi.em();
-        User user = em.find(User.class, userId);
+        User user = this.usersLogic.getUserById(userId);
         if(user != null) {
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }
 
         return notFound("User not found");
-
-//        Optional<User> optionalUser = demoData.getUsers().stream()
-//                .filter(user -> user.getId() == userId)
-//                .findFirst();
-//
-//        if(optionalUser.isPresent()){
-//            JsonNode user = Json.toJson(optionalUser.get());
-//            return ok(Json.toJson(user));
-//        }
-//        return notFound("User not found");
     }
 }

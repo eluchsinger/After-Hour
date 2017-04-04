@@ -1,9 +1,9 @@
-package dataLayer.tickets;
+package models.tickets;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dataLayer.events.Event;
-import dataLayer.events.TicketCategory;
-import dataLayer.users.User;
+import models.events.Event;
+import models.events.TicketCategory;
+import models.users.User;
 
 import java.util.Date;
 

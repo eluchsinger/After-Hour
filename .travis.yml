@@ -21,3 +21,7 @@ notifications:
 before_script:
   - psql -c 'create database ahdb;' -U postgres
   - psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';" -U postgres
+
+addons:
+    code_climate:
+        repo_token: 6e864b6e0d8b24e43bd1e907c19017075af69fc4d50a8e183dbfdf174be4fa02
