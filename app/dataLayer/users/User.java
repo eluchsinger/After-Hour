@@ -2,10 +2,6 @@ package dataLayer.users;
 
 import dataLayer.tickets.TicketInstance;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,11 +9,7 @@ import java.util.Date;
  * Created by Fabian on 24.03.17.
  * User
  */
-@Entity
-@Table(name = "tbl_user", schema = "public")
 public class User {
-    @Id
-    @GeneratedValue
     private int id;
     private String name;
     private String firstName;
