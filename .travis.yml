@@ -1,3 +1,6 @@
+dist: trusty
+sudo: required
+
 language: scala
 
 scala:
@@ -8,3 +11,13 @@ script:
 
 jdk:
   - oraclejdk8
+
+services:
+  - postgresql
+
+notifications:
+  email: false
+
+before_script:
+  - psql -c 'create database ahdb;' -U postgres
+  - psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';" -U postgres
