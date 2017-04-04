@@ -1,25 +1,79 @@
-import org.junit.*;
+import dal.UsersRepository;
+import dal.mocks.UsersRepositoryMock;
+import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.test.Helpers;
 
-import play.mvc.*;
-import play.test.*;
-
+import static play.inject.Bindings.bind;
 import static play.test.Helpers.*;
-import static org.junit.Assert.*;
-
-import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 public class IntegrationTest {
 
-    /**
-     * add your integration test here
-     * in this example we just check if the welcome page is being shown
-     */
+    private Application application;
+
+    @Before
+    public void initalize() {
+        this.application = new GuiceApplicationBuilder()
+            .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
+            .build();
+    }
+
     @Test
-    public void test() {
-        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, browser -> {
-            browser.goTo("http://localhost:3333");
-            assertTrue(browser.pageSource().contains("Your new application is ready."));
+    public void testGetExistingUser() {
+        Helpers.running(application, () -> {
+            Http.RequestBuilder request = new Http.RequestBuilder()
+                    .method(GET)
+                    .uri("/users/1");
+            Result result = route(request);
+            TestCase.assertEquals(OK, result.status());
         });
     }
+
+    @Test
+    public void testGetNonExistingUser() {
+        Helpers.running(application, () -> {
+            Http.RequestBuilder request = new Http.RequestBuilder()
+                    .method(GET)
+                    .uri("/users/123123123");
+            Result result = route(request);
+            TestCase.assertEquals(NOT_FOUND, result.status());
+        });
+    }
+
+    @Test
+    public void testGetEvents() {
+        Helpers.running(application, () -> {
+            Http.RequestBuilder request = new Http.RequestBuilder()
+                    .method(GET)
+                    .uri("/events");
+            Result result = route(request);
+            TestCase.assertEquals(OK, result.status());
+        });
+    }
+
+//    @Test
+//    public void testGetUser() {
+//        running(fakeApplication(), () -> {
+//            Integer id = 1;
+//
+//            Http.RequestBuilder mockActionRequest = fakeRequest(controllers.routes.UserController.getUser(id));
+//            Result result = route(mockActionRequest);
+//            // Todo: Revert the test result to test for OK
+//            assertEquals(NOT_FOUND, result.status());
+//        });
+//    }
+
+//    @Test
+//    public void testGetAllEvents() {
+//        running(testServer(3333, fakeApplication(inMemoryDatabase())), HTMLUNIT, browser -> {
+//            browser.goTo("http://localhost:3333/events");
+//            assertEquals(Json.toJson(serverData.getEvents()).toString(), browser.pageSource().toString());
+//        });
+//    }
 
 }

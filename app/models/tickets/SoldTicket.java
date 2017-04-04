@@ -1,4 +1,9 @@
-package models;
+package models.tickets;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.events.Event;
+import models.events.TicketCategory;
+import models.users.User;
 
 import java.util.Date;
 
@@ -25,6 +30,7 @@ public class SoldTicket extends TicketInstance {
         return event;
     }
 
+    @JsonIgnore
     public TicketCategory getTicketCategory(){
         return ticketCategory;
     }

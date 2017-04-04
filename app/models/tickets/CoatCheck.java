@@ -1,4 +1,7 @@
-package models;
+package models.tickets;
+
+import models.events.Event;
+import models.users.User;
 
 /**
  * Created by Fabian on 25.03.2017.

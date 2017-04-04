@@ -1,4 +1,7 @@
-package models;
+package models.events;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.tickets.SoldTicket;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,8 +11,10 @@ import java.util.Date;
  * A Ticket Category
  */
 public class TicketCategory {
-    private ArrayList<SoldTicket> soldTickets;
+    protected ArrayList<SoldTicket> soldTickets;
+    @JsonIgnore
     protected Date ticketStartDateTime;
+    @JsonIgnore
     protected Date ticketStopDateTime;
 
     public void addSoldTicket(SoldTicket soldTicket){

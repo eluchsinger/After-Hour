@@ -1,12 +1,11 @@
-package controllers;
+package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.Event;
+import models.events.Event;
+import demoData.DemoData;
 import play.libs.Json;
 import play.mvc.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,26 +13,21 @@ import java.util.Optional;
  * Controls the REST Event-Requests.
  */
 public class EventsController extends Controller {
+    private DemoData demoData;
 
-    public final List<Event> events;
     public EventsController() {
-        this.events = new ArrayList<>();
-        this.initEvents();
+        this.demoData = DemoData.getInstance();
     }
 
-    private void initEvents() {
-        this.events.add(new Event(1, "Bobba Fett Party", "Sei wie Bobba. Sei Fett."));
-        this.events.add(new Event(2, "Nachtseminar", "DIE Party für Studis"));
-        this.events.add(new Event (3, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
-    }
+
 
     public Result getAllEvents() {
-        JsonNode jsonNode = Json.toJson(this.events);
+        JsonNode jsonNode = Json.toJson(demoData.getEvents());
         return ok(jsonNode);
     }
 
     public Result getEvent(int id) {
-        Optional<Event> maybeEvent = this.events.stream()
+        Optional<Event> maybeEvent = demoData.getEvents().stream()
                 .filter(event -> event.getId() == id)
                 .findFirst();
 

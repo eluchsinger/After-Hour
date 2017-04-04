@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import demoData.DemoData;
 import org.junit.*;
 
 import play.mvc.*;
@@ -26,7 +27,11 @@ import static org.junit.Assert.*;
  * If you are interested in mocking a whole application, see the wiki for more details.
  *
  */
-public class ApplicationTest {
+public class DataLayerTest {
+
+    @Before public void initialize(){
+        DemoData demoData = DemoData.getInstance();
+    }
 
     @Test
     public void simpleCheck() {

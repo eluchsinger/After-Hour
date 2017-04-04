@@ -1,4 +1,7 @@
-package models;
+package models.events;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import models.tickets.CoatCheck;
 
 import java.util.ArrayList;
 
@@ -12,13 +15,17 @@ public class Event {
     private String description;
     private Location location;
     private Organizer organizer;
+    @JsonIgnore
     private ArrayList<TicketCategory> ticketCategories;
+    @JsonIgnore
     private ArrayList<CoatCheck> coatChecks;
 
     public Event(final int id, final String title, final String description) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.ticketCategories = new ArrayList<>();
+        this.coatChecks = new ArrayList<>();
     }
 
     public void setId(final int value) {
