@@ -33,6 +33,8 @@ public class AdminController extends Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        
+        int i = 1;
 
         return ok(output.toString());
     }
