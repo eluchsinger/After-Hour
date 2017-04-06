@@ -34,7 +34,7 @@ import static play.test.Helpers.running;
 /**
  * Created by Esteban Luchsinger on 06.04.2017.
  */
-public class DatabaseTesting extends WithApplication {
+public class UserPersistenceTesting extends WithApplication {
     @Inject
     private JPAApi jpaApi;
 
