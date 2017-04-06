@@ -60,7 +60,7 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getUser(Integer userId){
-
+        Logger.getGlobal().log(Level.INFO, "Getting user: " + userId);
         User user = this.usersLogic.getUserById(userId);
         if(user != null) {
             user.addTickets(demoData.getUsers().get(userId-1).getTickets());
