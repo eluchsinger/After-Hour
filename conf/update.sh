@@ -1,0 +1,1 @@
+git pull git@github.com:eluchsinger/After-Hour.git > update.log

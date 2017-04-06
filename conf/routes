@@ -19,6 +19,9 @@ GET /users/:userId                          rest.UsersController.getUser(userId:
 # Request Sample: http://localhost:9000/ticket?user=1&event=1
 GET /tickets                                rest.EventsController.getTicket(user: Integer, event: Integer)
 
+# Request for Update
+GET /update                                 admin.AdminController.executeUpdate
+
 # An example controller showing how to use dependency injection
 GET /count                                  rest.CountController.count
 # An example controller showing how to write asynchronous code
