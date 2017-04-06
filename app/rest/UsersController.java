@@ -14,8 +14,6 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Fabian on 28.03.17.
