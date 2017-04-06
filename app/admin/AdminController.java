@@ -14,39 +14,14 @@ import java.util.Map;
  */
 public class AdminController extends Controller {
 
-    public Result executeUpdate2(){
-        StringBuffer output = new StringBuffer();
-
-        Process process;
-        try {
-            process = Runtime.getRuntime().exec("git pull");
-            process.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            String line = "";
-            while ((line = reader.readLine())!= null) {
-                output.append(line + "\n");
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        
-        int i = 1;
-
-        return ok(output.toString());
-    }
-
     public Result executeUpdate(){
 
         ProcessBuilder pb = new ProcessBuilder("conf/update.sh");
 
         try {
-            Process p = pb.start();
+            pb.start();
         } catch (IOException e) {
-            return ok(e.getMessage());
+            return internalServerError(e.getMessage());
         }
 
         return ok("Update");
