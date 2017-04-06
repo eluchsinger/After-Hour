@@ -1,8 +1,7 @@
-package dal.mocks;
+package dal.users;
 
-import dal.UsersRepository;
 import demoData.DemoData;
-import models.tickets.SoldTicket;
+import models.tickets.Ticket;
 import models.users.User;
 
 /**
@@ -23,7 +22,17 @@ public class UsersRepositoryMock implements UsersRepository {
     }
 
     @Override
-    public SoldTicket getEventTicket(Integer userId, Integer eventId) {
+    public User registerUser(User user) {
+        return null;
+    }
+
+    @Override
+    public boolean removeUserById(Integer userId) {
+        return false;
+    }
+
+    @Override
+    public Ticket getEventTicket(Integer userId, Integer eventId) {
         return null;
     }
 }

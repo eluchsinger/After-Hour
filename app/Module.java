@@ -1,8 +1,8 @@
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
-import dal.UsersRepository;
-import dal.jpa.UsersRepositoryJPA;
+import dal.users.UsersRepository;
+import dal.users.UsersRepositoryJPA;
 import logic.users.UsersLogic;
 import logic.users.UsersLogicImpl;
 import services.ApplicationTimer;
