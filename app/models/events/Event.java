@@ -3,29 +3,42 @@ package models.events;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.CoatCheck;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 23.03.2017.
  * An event (a Party).
  */
+@Entity
+@Table(name = "tbl_events", schema = "public")
 public class Event {
-    private int id;
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String title;
     private String description;
-    private Location location;
-    private Organizer organizer;
+    //private Location location;
+    //private Organizer organizer;
     @JsonIgnore
-    private ArrayList<TicketCategory> ticketCategories;
-    @JsonIgnore
-    private ArrayList<CoatCheck> coatChecks;
+    @OneToMany(mappedBy = "event")
+    private List<TicketCategory> ticketCategories;
+    //@JsonIgnore
+    //@OneToMany(mappedBy = "event")
+    //private ArrayList<CoatCheck> coatChecks;
 
-    public Event(final int id, final String title, final String description) {
+    public Event(){
+        this.id = null;
+        ticketCategories = new ArrayList<>();
+    }
+
+    public Event(final Integer id, final String title, final String description) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.ticketCategories = new ArrayList<>();
-        this.coatChecks = new ArrayList<>();
+        //this.coatChecks = new ArrayList<>();
     }
 
     public void setId(final int value) {
@@ -53,26 +66,26 @@ public class Event {
     }
 
     public void setLocation(Location location){
-        this.location = location;
+        //this.location = location;
     }
 
     public void setOrganizer(Organizer organizer){
-        this.organizer = organizer;
+        //this.organizer = organizer;
     }
 
     public void addTicketCategory(TicketCategory ticket){
         ticketCategories.add(ticket);
     }
 
-    public ArrayList<TicketCategory> getTicketCategories(){
+    public List<TicketCategory> getTicketCategories(){
         return ticketCategories;
     }
 
     public void addCoatCheck(CoatCheck coatCheck){
-        coatChecks.add(coatCheck);
+       // coatChecks.add(coatCheck);
     }
 
     public ArrayList<CoatCheck> getCoatChecks(){
-        return coatChecks;
+        return null;
     }
 }

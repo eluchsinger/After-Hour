@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
+import dal.events.EventsRepository;
+import dal.events.EventsRepositoryJPA;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryJPA;
 import logic.users.UsersLogic;
@@ -34,6 +36,7 @@ public class Module extends AbstractModule {
         bind(UsersLogic.class).to(UsersLogicImpl.class);
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class);
+        bind(EventsRepository.class).to(EventsRepositoryJPA.class);
     }
 
 }
