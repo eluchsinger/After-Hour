@@ -1,20 +1,25 @@
 package dal.users;
 
+
 import demoData.DemoData;
 import models.tickets.Ticket;
 import models.users.User;
+
+import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
  */
 public class UsersRepositoryMock implements UsersRepository {
+    private List<User> users;
 
     public UsersRepositoryMock() {
+        users = DemoData.getInstance().getUsers();
     }
 
     @Override
     public User getUserById(Integer userId) {
-        return DemoData.getInstance().getUsers()
+        return users
                 .stream()
                 .filter(user -> user.getId() == userId)
                 .findFirst()
@@ -23,7 +28,8 @@ public class UsersRepositoryMock implements UsersRepository {
 
     @Override
     public User registerUser(User user) {
-        return null;
+        users.add(user);
+        return user;
     }
 
     @Override

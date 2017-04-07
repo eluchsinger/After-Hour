@@ -4,8 +4,6 @@
 
 # An example controller showing a sample home page
 GET /                                       rest.HomeController.index
-# Fabian's Website
-GET /fabian                                 rest.FabianController.yolo
 
 # REST Events
 GET /events                                 rest.EventsController.getAllEvents
