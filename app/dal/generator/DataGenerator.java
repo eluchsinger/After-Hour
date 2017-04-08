@@ -6,6 +6,7 @@ import models.events.Event;
 import models.users.Gender;
 import models.users.User;
 import play.Logger;
+import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import java.text.ParseException;
@@ -66,6 +67,7 @@ public class DataGenerator {
      * @return Returns the amount of users generated.
      * @throws GenerateException Exception thrown, if the generation failed.
      */
+    @Transactional
     private int generateUsers(final UsersRepository usersRepository) throws GenerateException {
         try {
             final List<User> users = getDemoUsers();
@@ -85,6 +87,7 @@ public class DataGenerator {
      * @return Returns the amount of event generated.
      * @throws GenerateException Exception thrown, if the generation failed.
      */
+    @Transactional
     private int generateEvents(final EventsRepository eventsRepository) throws GenerateException {
         try {
             List<Event> events = getDemoEvents();
@@ -100,20 +103,20 @@ public class DataGenerator {
 
     private List<User> getDemoUsers() throws ParseException {
         final List<User> users = new ArrayList<>(INITIAL_USERS_CAPACITY);
-        users.add(new User(1, "silvio.berlusconi@italy.it", "Berlusconi","Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
-        users.add(new User(2, "i.beller@cervelat.de", "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE));
-        users.add(new User(3, "franz.becki@idc.yolo", "Beckenbauer", "Franz Anton",this.dateFormat.parse("1945-09-11"), Gender.MALE));
-        users.add(new User(4, "g.n@netz.los", "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
+        users.add(new User(null, "silvio.berlusconi@italy.it", "Berlusconi","Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
+        users.add(new User(null, "i.beller@cervelat.de", "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE));
+        users.add(new User(null, "franz.becki@idc.yolo", "Beckenbauer", "Franz Anton",this.dateFormat.parse("1945-09-11"), Gender.MALE));
+        users.add(new User(null, "g.n@netz.los", "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
 
         return users;
     }
 
     private List<Event> getDemoEvents() {
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
-        events.add(new Event(1, "Bobba Fett Party", "Sei wie Bobba. Sei Fett."));
-        events.add(new Event(2, "Nachtseminar", "DIE Party für Studis"));
-        events.add(new Event (3, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
-        events.add(new Event(4,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft)"));
+        events.add(new Event(null, "Bobba Fett Party", "Sei wie Bobba. Sei Fett."));
+        events.add(new Event(null, "Nachtseminar", "DIE Party für Studis"));
+        events.add(new Event (null, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
+        events.add(new Event(null,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft)"));
         return events;
     }
 }

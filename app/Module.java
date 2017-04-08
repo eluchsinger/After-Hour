@@ -1,6 +1,8 @@
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
+import config.StartupConfiguration;
+import config.StartupConfigurationImpl;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryJPA;
 import dal.users.UsersRepository;
@@ -41,6 +43,8 @@ public class Module extends AbstractModule {
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class);
         bind(EventsRepository.class).to(EventsRepositoryJPA.class);
+
+        bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();
     }
 
 }
