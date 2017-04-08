@@ -59,6 +59,9 @@ public class User {
         return dateOfBirth;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public Integer getId(){
         return id;
     }

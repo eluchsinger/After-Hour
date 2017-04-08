@@ -7,7 +7,9 @@ import models.users.User;
 import play.Logger;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
@@ -21,16 +23,23 @@ public class UsersRepositoryMock implements UsersRepository {
     }
 
     @Override
-    public User getUserById(Integer userId) {
+    public User getUserById(final Integer userId) {
         return users
                 .stream()
                 .filter(user -> user.getId().equals(userId))
-                .findFirst()
-                .orElse(null);
+                .findFirst().orElse(null);
     }
 
     @Override
     public User registerUser(User user) {
+        if(user.getId() == null) {
+            Optional<User> maxUserId = this.users.stream().max(Comparator.comparingInt(User::getId));
+
+            if(maxUserId.isPresent())
+                user.setId(maxUserId.get().getId());
+            else
+                user.setId(1);
+        }
         users.add(user);
         return user;
     }
