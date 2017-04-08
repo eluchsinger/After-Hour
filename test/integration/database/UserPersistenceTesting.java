@@ -55,12 +55,28 @@ public class UserPersistenceTesting extends WithApplication {
             UsersRepositoryJPA repository = new UsersRepositoryJPA(jpaApi);
             Date creationDate = new Date();
             User expectedUser = new User(null, "max.muster@hsr.ch", "Muster", "Max", creationDate, Gender.MALE);
-            play.Logger.info("Created user: " + expectedUser);
             repository.registerUser(expectedUser);
 
             User actualUser = repository.getUserById(expectedUser.getId());
 
             assertEquals(expectedUser, actualUser);
+        });
+    }
+
+    @Test
+    public void testResetUsersRepository() {
+        this.jpaApi.withTransaction(() -> {
+            UsersRepository repository = new UsersRepositoryJPA(jpaApi);
+            Date creationDate = new Date();
+
+            // Add new users
+            User newUser1 = new User(null, "max.muster@hsr.ch", "Muster", "Max", creationDate, Gender.MALE);
+            User newUser2 = new User(null, "fabienne.ebis@hsr.ch", "Ebis", "Fabienne", creationDate, Gender.FEMALE);
+            repository.registerUser(newUser1);
+            repository.registerUser(newUser2);
+
+            repository.resetRepository();
+            assertEquals(0, repository.countUsers());
         });
     }
 }

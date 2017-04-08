@@ -14,6 +14,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tbl_users", schema = "public")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "User.count", query = "SELECT COUNT(*) FROM tbl_users"),
+        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE")
+})
 public class User {
     private final static int TICKETS_INIT_SIZE = 2;
 

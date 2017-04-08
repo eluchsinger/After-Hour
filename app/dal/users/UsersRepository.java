@@ -17,4 +17,17 @@ public interface UsersRepository {
      */
     boolean removeUserById(Integer userId);
     Ticket getEventTicket(Integer userId, Integer eventId);
+
+    /**
+     * Counts how many users are registered
+     * @return Returns the amount of registered users.
+     */
+    long countUsers();
+
+    /**
+     * Resets the complete repository.
+     * (Deletes all user data)
+     * WARNING: When the users are deleted, their corresponding tickets will also be deleted.
+     */
+    void resetRepository();
 }
