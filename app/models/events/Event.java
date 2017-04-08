@@ -19,14 +19,19 @@ public class Event {
     private Integer id;
     private String title;
     private String description;
-    //private Location location;
-    //private Organizer organizer;
+    @Transient
+    private Location location;
+    @Transient
+    private Organizer organizer;
     @JsonIgnore
     @OneToMany(mappedBy = "event")
     private List<TicketCategory> ticketCategories;
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "event")
-    //private ArrayList<CoatCheck> coatChecks;
+    @JsonIgnore
+    @Transient
+    private ArrayList<CoatCheck> coatChecks;
+
+
+    //region Constructors
 
     public Event(){
         this.id = null;
@@ -38,8 +43,12 @@ public class Event {
         this.title = title;
         this.description = description;
         this.ticketCategories = new ArrayList<>();
-        //this.coatChecks = new ArrayList<>();
+        this.coatChecks = new ArrayList<>();
     }
+
+    //endregion
+
+    //region Getters and Setters
 
     public void setId(final int value) {
         this.id = value;
@@ -66,11 +75,11 @@ public class Event {
     }
 
     public void setLocation(Location location){
-        //this.location = location;
+        this.location = location;
     }
 
     public void setOrganizer(Organizer organizer){
-        //this.organizer = organizer;
+        this.organizer = organizer;
     }
 
     public void addTicketCategory(TicketCategory ticket){
@@ -82,10 +91,12 @@ public class Event {
     }
 
     public void addCoatCheck(CoatCheck coatCheck){
-       // coatChecks.add(coatCheck);
+       coatChecks.add(coatCheck);
     }
 
-    public ArrayList<CoatCheck> getCoatChecks(){
-        return null;
+    public List<CoatCheck> getCoatChecks(){
+        return coatChecks;
     }
+
+    //endregion
 }
