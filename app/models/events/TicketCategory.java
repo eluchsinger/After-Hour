@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "tbl_ticketcategories")
 public class TicketCategory {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;

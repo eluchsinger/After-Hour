@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "tbl_tickets")
 public class Ticket {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
     private User user;

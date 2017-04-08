@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "tbl_events", schema = "public")
 public class Event {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String description;

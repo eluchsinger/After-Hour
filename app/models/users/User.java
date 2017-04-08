@@ -22,7 +22,7 @@ public class User {
     private final static int TICKETS_INIT_SIZE = 2;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
     private String lastName;
