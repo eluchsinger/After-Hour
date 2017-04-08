@@ -19,7 +19,7 @@ public class Ticket {
     @ManyToOne
     private User user;
     private Date soldDate;
-    @Transient
+    @ManyToOne
     private TicketCategory ticketCategory;
 
     public Ticket() {
