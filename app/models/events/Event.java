@@ -50,11 +50,11 @@ public class Event {
 
     //region Getters and Setters
 
-    public void setId(final int value) {
+    public void setId(final Integer value) {
         this.id = value;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
