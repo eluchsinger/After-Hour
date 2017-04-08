@@ -80,20 +80,20 @@ public class UserPersistenceTesting extends WithApplication {
         });
     }
 
-    /**
-     * This test tests that the tables were dropped before.
-     */
-    @Test
-    public void testUserIDsStartFrom1() {
-        this.jpaApi.withTransaction(() -> {
-            UsersRepository repository = new UsersRepositoryJPA(jpaApi);
-            Date creationDate = new Date();
-
-            // Add new users
-            User newUser1 = new User(null, "max.muster@hsr.ch", "Muster", "Max", creationDate, Gender.MALE);
-            repository.registerUser(newUser1);
-            User actualUser = repository.getUserById(1);
-            assertEquals(newUser1, actualUser);
-        });
-    }
+//    /**
+//     * This test tests that the tables were dropped before.
+//     */
+//    @Test
+//    public void testUserIDsStartFrom1() {
+//        this.jpaApi.withTransaction(() -> {
+//            UsersRepository repository = new UsersRepositoryJPA(jpaApi);
+//            Date creationDate = new Date();
+//
+//            // Add new users
+//            User newUser1 = new User(null, "max.muster@hsr.ch", "Muster", "Max", creationDate, Gender.MALE);
+//            repository.registerUser(newUser1);
+//            User actualUser = repository.getUserById(1);
+//            assertEquals(newUser1, actualUser);
+//        });
+//    }
 }
