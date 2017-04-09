@@ -60,7 +60,7 @@ public class UsersController extends Controller {
     public Result getUser(Integer userId){
         User user = this.usersLogic.getUserById(userId);
         if(user != null) {
-            user.addTickets(demoData.getUsers().get(userId-1).getTickets());
+            user.addTickets(demoData.getUsers().get(1).getTickets());
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }

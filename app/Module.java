@@ -9,6 +9,8 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryJPA;
 import logic.events.EventsLogic;
 import logic.events.EventsLogicImpl;
+import logic.sales.SalesLogic;
+import logic.sales.SalesLogicImpl;
 import logic.users.UsersLogic;
 import logic.users.UsersLogicImpl;
 import services.ApplicationTimer;
@@ -39,6 +41,7 @@ public class Module extends AbstractModule {
 
         bind(UsersLogic.class).to(UsersLogicImpl.class);
         bind(EventsLogic.class).to(EventsLogicImpl.class);
+        bind(SalesLogic.class).to(SalesLogicImpl.class);
 
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class);
