@@ -3,6 +3,7 @@ package dal.generator;
 import dal.events.EventsRepository;
 import dal.users.UsersRepository;
 import models.events.Event;
+import models.events.TicketCategory;
 import models.users.Gender;
 import models.users.User;
 import play.Logger;
@@ -21,6 +22,7 @@ import java.util.List;
 public class DataGenerator {
     private final static int INITIAL_USERS_CAPACITY = 10;
     private final static int INITIAL_EVENTS_CAPACITY = 10;
+    private final static int INITIAL_TICKET_CATEGORY_CAPAZITY = 10;
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
@@ -101,6 +103,13 @@ public class DataGenerator {
         }
     }
 
+    @Transactional
+    private int generateTicketCategories(){
+        //Todo: Implement Ticket Category Demo Data and store it in the Repo.
+
+        return 0;
+    }
+
     private List<User> getDemoUsers() throws ParseException {
         final List<User> users = new ArrayList<>(INITIAL_USERS_CAPACITY);
         users.add(new User(null, "silvio.berlusconi@italy.it", "Berlusconi","Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
@@ -118,5 +127,11 @@ public class DataGenerator {
         events.add(new Event (null, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
         events.add(new Event(null,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft)"));
         return events;
+    }
+
+    private List<TicketCategory> getTDemoTicketCategories(final EventsRepository eventsRepository) throws ParseException {
+        final List<TicketCategory> ticketCategories = new ArrayList<>(INITIAL_TICKET_CATEGORY_CAPAZITY);
+        ticketCategories.add(new TicketCategory(null, "Studenten Ticket", "Ticket für Studenten", eventsRepository.getEventById(1), 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
+        return ticketCategories;
     }
 }

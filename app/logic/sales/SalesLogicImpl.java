@@ -8,11 +8,6 @@ import models.events.TicketCategory;
 public class SalesLogicImpl implements SalesLogic{
 
     @Override
-    public boolean validateTicket(Integer userId, Integer ticketCategoryId) {
-        return false;
-    }
-
-    @Override
     public boolean buyTicket(Integer userId, Integer ticketCategoryId) {
         return false;
     }
