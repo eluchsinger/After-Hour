@@ -1,6 +1,7 @@
 package models.users;
 
-import models.tickets.TicketInstance;
+
+import models.tickets.Ticket;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,39 +9,60 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Fabian on 24.03.17.
- * User
+ * Created by Fabian Schwyter on 24.03.17.
+ * User Account of the service After-Hour.
  */
 @Entity
-@Table(name = "tbl_user", schema = "public")
+@Table(name = "tbl_users", schema = "public")
+@NamedNativeQueries({
+        @NamedNativeQuery(name = "User.count", query = "SELECT COUNT(*) FROM tbl_users"),
+        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE")
+})
 public class User {
+    private final static int TICKETS_INIT_SIZE = 2;
+
     @Id
-    @GeneratedValue
-    private int id;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String email;
+    private String lastName;
     private String firstName;
     private Date dateOfBirth;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Transient
-    private ArrayList<TicketInstance> tickets;
 
+    // Mapped by the name of the attribute on the other side.
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
+
+    //region Constructors
     public User(){
+        this.id = null;
     }
 
-    public User(int id, String name, String firstName, Date dateOfBirth, Gender gender){
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender){
         this.id = id;
-        this.name = name;
+        this.email = email;
+        this.lastName = lastName;
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        tickets = new ArrayList<>();
+        tickets = new ArrayList<>(TICKETS_INIT_SIZE);
     }
+
+    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(null, email, lastName, firstName, dateOfBirth, gender);
+    }
+    //endregion Constructors
 
     public Date getDateOfBirth(){
         return dateOfBirth;
     }
 
-    public int getId(){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getId(){
         return id;
     }
 
@@ -48,19 +70,57 @@ public class User {
         return firstName;
     }
 
-    public String getName(){
-        return name;
+    public String getLastName(){
+        return lastName;
     }
 
-    public void addTicket(TicketInstance ticket){
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void addTicket(Ticket ticket){
         tickets.add(ticket);
     }
 
-    public ArrayList<TicketInstance> getTickets(){
+    public List<Ticket> getTickets(){
         return tickets;
     }
 
-    public void addTickets(ArrayList<TicketInstance> tickets) {
+    public void addTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
+
+    //region Overrides
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        if (!email.equals(user.email)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!firstName.equals(user.firstName)) return false;
+        if (!dateOfBirth.equals(user.dateOfBirth)) return false;
+        if (gender != user.gender) return false;
+        return tickets.equals(user.tickets);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + dateOfBirth.hashCode();
+        result = 31 * result + gender.hashCode();
+        result = 31 * result + tickets.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return this.getFirstName() + " " + this.getLastName() + "(" + this.getId() + ")";
+    }
+
+    //endregion
 }

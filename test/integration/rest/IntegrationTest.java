@@ -1,5 +1,7 @@
-import dal.UsersRepository;
-import dal.mocks.UsersRepositoryMock;
+package integration.rest;
+
+import dal.users.UsersRepository;
+import dal.users.UsersRepositoryMock;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;

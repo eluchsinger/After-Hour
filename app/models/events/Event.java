@@ -3,24 +3,42 @@ package models.events;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.CoatCheck;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 23.03.2017.
  * An event (a Party).
  */
+@Entity
+@Table(name = "tbl_events", schema = "public")
 public class Event {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String title;
     private String description;
+    @Transient
     private Location location;
+    @Transient
     private Organizer organizer;
     @JsonIgnore
-    private ArrayList<TicketCategory> ticketCategories;
+    @OneToMany(mappedBy = "event")
+    private List<TicketCategory> ticketCategories;
     @JsonIgnore
+    @Transient
     private ArrayList<CoatCheck> coatChecks;
 
-    public Event(final int id, final String title, final String description) {
+
+    //region Constructors
+
+    public Event(){
+        this.id = null;
+        ticketCategories = new ArrayList<>();
+    }
+
+    public Event(final Integer id, final String title, final String description) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -28,11 +46,15 @@ public class Event {
         this.coatChecks = new ArrayList<>();
     }
 
-    public void setId(final int value) {
+    //endregion
+
+    //region Getters and Setters
+
+    public void setId(final Integer value) {
         this.id = value;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -64,15 +86,17 @@ public class Event {
         ticketCategories.add(ticket);
     }
 
-    public ArrayList<TicketCategory> getTicketCategories(){
+    public List<TicketCategory> getTicketCategories(){
         return ticketCategories;
     }
 
     public void addCoatCheck(CoatCheck coatCheck){
-        coatChecks.add(coatCheck);
+       coatChecks.add(coatCheck);
     }
 
-    public ArrayList<CoatCheck> getCoatChecks(){
+    public List<CoatCheck> getCoatChecks(){
         return coatChecks;
     }
+
+    //endregion
 }
