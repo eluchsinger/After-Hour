@@ -55,4 +55,8 @@ public class TicketCategory {
         return soldTickets;
     }
 
+    public Integer getId(){
+        return id;
+    }
+
 }
