@@ -18,7 +18,7 @@ public class SalesController extends Controller {
     }
 
     public Result buyTicket(Integer userId, Integer ticketCategory){
-        if (salesLogic.buyTicket(userId, ticketCategory)){
+        if (salesLogic.buyTicket(userId, ticketCategory) != null){
             return ok("Ticket bought");
         }
         return badRequest("Ticket not bought");
