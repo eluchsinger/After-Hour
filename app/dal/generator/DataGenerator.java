@@ -1,6 +1,7 @@
 package dal.generator;
 
 import dal.events.EventsRepository;
+import dal.ticket_categories.TicketCategoriesRepository;
 import dal.users.UsersRepository;
 import models.events.Event;
 import models.events.TicketCategory;
@@ -26,12 +27,14 @@ public class DataGenerator {
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
+    private final TicketCategoriesRepository ticketCategoriesRepository;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     @Inject
-    public DataGenerator(final UsersRepository usersRepository, final EventsRepository eventsRepository) {
+    public DataGenerator(final UsersRepository usersRepository, final EventsRepository eventsRepository, final TicketCategoriesRepository ticketCategoriesRepository) {
         this.usersRepository = usersRepository;
         this.eventsRepository = eventsRepository;
+        this.ticketCategoriesRepository = ticketCategoriesRepository;
     }
 
     /**
@@ -42,9 +45,11 @@ public class DataGenerator {
 
         final int amountOfUsers = this.generateUsers(this.usersRepository);
         final int amountOfEvents = this.generateEvents(this.eventsRepository);
+        final int amountOfTicketCategories = this.generateTicketCategories(this.ticketCategoriesRepository);
 
         Logger.info("Generated " + amountOfUsers + " users");
         Logger.info("Generated " + amountOfEvents + " events");
+        Logger.info("Generated " + amountOfTicketCategories + " ticketCategories");
     }
 
     /**
@@ -104,10 +109,17 @@ public class DataGenerator {
     }
 
     @Transactional
-    private int generateTicketCategories(){
-        //Todo: Implement Ticket Category Demo Data and store it in the Repo.
-
-        return 0;
+    private int generateTicketCategories(final TicketCategoriesRepository ticketCategoriesRepository) throws GenerateException {
+        try {
+            List<TicketCategory> ticketCategories = getDemoTicketCategories(eventsRepository);
+            for (TicketCategory ticketCategory : ticketCategories) {
+                ticketCategoriesRepository.registerTicketCategory(ticketCategory);
+            }
+            return ticketCategories.size();
+        }
+        catch(Exception exception) {
+            throw new GenerateException("Failed to generate events", exception);
+        }
     }
 
     private List<User> getDemoUsers() throws ParseException {
@@ -129,7 +141,7 @@ public class DataGenerator {
         return events;
     }
 
-    private List<TicketCategory> getTDemoTicketCategories(final EventsRepository eventsRepository) throws ParseException {
+    private List<TicketCategory> getDemoTicketCategories(final EventsRepository eventsRepository) throws ParseException {
         final List<TicketCategory> ticketCategories = new ArrayList<>(INITIAL_TICKET_CATEGORY_CAPAZITY);
         ticketCategories.add(new TicketCategory(null, "Studenten Ticket", "Ticket für Studenten", eventsRepository.getEventById(1), 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
         return ticketCategories;
