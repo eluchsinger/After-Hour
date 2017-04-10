@@ -1,7 +1,5 @@
-package unit;
-
-import dal.users.UsersRepository;
-import dal.users.UsersRepositoryMock;
+import dal.UsersRepository;
+import dal.mocks.UsersRepositoryMock;
 import logic.users.UsersLogic;
 import models.users.User;
 import org.junit.Before;

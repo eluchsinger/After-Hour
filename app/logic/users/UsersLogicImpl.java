@@ -1,6 +1,6 @@
 package logic.users;
 
-import dal.users.UsersRepository;
+import dal.UsersRepository;
 import models.users.User;
 
 import javax.inject.Inject;
