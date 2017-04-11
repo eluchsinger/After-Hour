@@ -1,6 +1,7 @@
 package models.events;
 
 import models.tickets.Ticket;
+import models.users.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class TicketCategory {
     private Date startAvailability;
     private Date endAvailability;
 
+    @Transient
+    private TicketFactory ticketFactory = new TicketFactory(this);
+
     //region Constructors
 
     public TicketCategory(){
@@ -47,8 +51,10 @@ public class TicketCategory {
 
     //endregion
 
-    public void addSoldTicket(Ticket ticket){
-        soldTickets.add(ticket);
+    public Ticket sellTicket(final User user) {
+        final Ticket soldTicket = this.ticketFactory.createTicket(user);
+        this.soldTickets.add(soldTicket);
+        return soldTicket;
     }
 
     public List<Ticket> getSoldTickets(){
@@ -57,6 +63,19 @@ public class TicketCategory {
 
     public Integer getId(){
         return id;
+    }
+
+
+    private class TicketFactory {
+        private final TicketCategory ticketCategory;
+
+        private TicketFactory(final TicketCategory category) {
+            this.ticketCategory = category;
+        }
+
+        Ticket createTicket(final User user) {
+            return new Ticket(user, new Date(), this.ticketCategory);
+        }
     }
 
 }

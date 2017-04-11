@@ -16,10 +16,10 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class)
     private User user;
     private Date soldDate;
-    @ManyToOne
+    @ManyToOne(targetEntity = TicketCategory.class)
     private TicketCategory ticketCategory;
 
     public Ticket() {

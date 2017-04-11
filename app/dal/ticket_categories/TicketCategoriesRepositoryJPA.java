@@ -1,6 +1,7 @@
 package dal.ticket_categories;
 
 import models.events.TicketCategory;
+import models.tickets.Ticket;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -30,4 +31,10 @@ public class TicketCategoriesRepositoryJPA implements TicketCategoriesRepository
         return em.find(TicketCategory.class, ticketCategoryId);
     }
 
+    @Override
+    public Ticket persistTicket(Ticket ticket) {
+        EntityManager em = this.jpaApi.em();
+        em.persist(ticket);
+        return ticket;
+    }
 }

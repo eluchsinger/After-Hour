@@ -1,6 +1,7 @@
 package rest;
 
 import logic.sales.SalesLogic;
+import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -17,6 +18,7 @@ public class SalesController extends Controller {
         this.salesLogic = salesLogic;
     }
 
+    @Transactional
     public Result buyTicket(Integer userId, Integer ticketCategory){
         if (salesLogic.buyTicket(userId, ticketCategory) != null){
             return ok("Ticket bought");
