@@ -1,5 +1,6 @@
 package models.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -57,6 +58,7 @@ public class TicketCategory {
         return soldTicket;
     }
 
+    @JsonIgnore
     public List<Ticket> getSoldTickets(){
         return soldTickets;
     }

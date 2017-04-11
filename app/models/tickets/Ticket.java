@@ -31,4 +31,12 @@ public class Ticket {
         this.soldDate = soldDate;
         this.ticketCategory = ticketCategory;
     }
+
+    public TicketCategory getTicketCategory() {
+        return this.ticketCategory;
+    }
+
+    public Date getSoldDate() {
+        return this.soldDate;
+    }
 }

@@ -58,9 +58,8 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getUser(Integer userId){
-        User user = this.usersLogic.getUserById(userId);
+        final User user = this.usersLogic.getUserById(userId);
         if(user != null) {
-            user.addTickets(demoData.getUsers().get(1).getTickets());
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }
