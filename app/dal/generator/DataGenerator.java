@@ -4,6 +4,7 @@ import dal.events.EventsRepository;
 import dal.ticket_categories.TicketCategoriesRepository;
 import dal.users.UsersRepository;
 import models.events.Event;
+import models.events.Location;
 import models.events.TicketCategory;
 import models.tickets.Ticket;
 import models.users.Gender;
@@ -26,6 +27,7 @@ public class DataGenerator {
     private final static int INITIAL_EVENTS_CAPACITY = 5;
     private final static int INITIAL_TICKET_CATEGORY_CAPACITY = 10;
     private final static int INITIAL_TICKET_CAPACITY = 20;
+    private final static int INITIAL_LOCATION_CAPACITY = 3;
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
@@ -43,8 +45,11 @@ public class DataGenerator {
      *  This method initializes the data for the repositories.
      */
     public void initializeData() throws GenerateException {
-        confirmRepositoryNotNull(this.usersRepository, this.eventsRepository);
+        confirmRepositoryNotNull(this.usersRepository,
+                this.eventsRepository,
+                this.ticketCategoriesRepository);
 
+        final int amountOfLocations = this.generateLocations(this.eventsRepository);
         final int amountOfUsers = this.generateUsers(this.usersRepository);
         final int amountOfEvents = this.generateEvents(this.eventsRepository);
         final int amountOfTicketCategories = this.generateTicketCategories(this.ticketCategoriesRepository);
@@ -54,6 +59,7 @@ public class DataGenerator {
         Logger.info("Generated " + amountOfEvents + " events");
         Logger.info("Generated " + amountOfTicketCategories + " ticketCategories");
         Logger.info("Generated " + amountOfTickets + " tickets");
+        Logger.info("Generated " + amountOfLocations + " locations");
     }
 
     /**
@@ -101,7 +107,7 @@ public class DataGenerator {
     @Transactional
     private int generateEvents(final EventsRepository eventsRepository) throws GenerateException {
         try {
-            List<Event> events = getDemoEvents();
+            List<Event> events = getDemoEvents(eventsRepository);
             for (Event event : events) {
                 eventsRepository.registerEvent(event);
             }
@@ -140,6 +146,20 @@ public class DataGenerator {
         }
     }
 
+    @Transactional
+    private int generateLocations(EventsRepository eventsRepository) throws GenerateException {
+        try {
+            List<Location> locations = this.getDemoLocations();
+            for(Location location : locations) {
+                eventsRepository.addLocation(location);
+            }
+            return locations.size();
+        }
+        catch(Exception exception) {
+            throw new GenerateException("Failed to generate locations", exception);
+        }
+    }
+
     private List<User> getDemoUsers() throws ParseException {
         final List<User> users = new ArrayList<>(INITIAL_USERS_CAPACITY);
         users.add(new User(null, "silvio.berlusconi@italy.it", "Berlusconi","Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
@@ -150,12 +170,14 @@ public class DataGenerator {
         return users;
     }
 
-    private List<Event> getDemoEvents() {
+    private List<Event> getDemoEvents(final EventsRepository eventsRepository) {
+        final Location kaufleuten = eventsRepository.getLocationById(1);
+        final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
-        events.add(new Event(null, "Bobba Fett Party", "Sei wie Bobba. Sei Fett."));
-        events.add(new Event(null, "Nachtseminar", "DIE Party für Studis"));
-        events.add(new Event (null, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen"));
-        events.add(new Event(null,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft"));
+        events.add(new Event(null, "Bobba Fett Party", "Sei wie Bobba. Sei Fett.", kaufleuten));
+        events.add(new Event(null, "Nachtseminar", "DIE Party für Studis", plaza));
+        events.add(new Event (null, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen", kaufleuten));
+        events.add(new Event(null,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
         return events;
     }
 
@@ -226,5 +248,14 @@ public class DataGenerator {
         tickets.add(duschi1.sellTicket(guenther));
 
         return tickets;
+    }
+
+    private List<Location> getDemoLocations() {
+        List<Location> locations = new ArrayList<>(INITIAL_LOCATION_CAPACITY);
+
+        locations.add(new Location(null, "Kaufleuten", "Der beste Klub der Schweiz.", null));
+        locations.add(new Location(null, "Plaza", "Der andere beste Klub der Schweiz", "ChIJIXJ33hsKkEcRTTvRa3eNxd0"));
+
+        return locations;
     }
 }

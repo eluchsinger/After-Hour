@@ -19,7 +19,7 @@ public class Event {
     private Integer id;
     private String title;
     private String description;
-    @Transient
+    @ManyToOne(targetEntity = Location.class)
     private Location location;
     @Transient
     private Organizer organizer;
@@ -34,14 +34,17 @@ public class Event {
     //region Constructors
 
     public Event(){
-        this.id = null;
-        ticketCategories = new ArrayList<>();
+        this(null, null, null);
     }
 
     public Event(final Integer id, final String title, final String description) {
+        this(id, title, description, null);
+    }
+    public Event(final Integer id, final String title, final String description, final Location location) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.location = location;
         this.ticketCategories = new ArrayList<>();
         this.coatChecks = new ArrayList<>();
     }

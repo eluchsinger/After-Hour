@@ -2,10 +2,9 @@ package dal.events;
 
 import demoData.DemoData;
 import models.events.Event;
-import play.db.jpa.JPAApi;
+import models.events.Location;
 
-import javax.inject.Inject;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,9 +12,11 @@ import java.util.List;
  */
 public class EventsRepositoryMock implements EventsRepository {
     private List<Event> events;
+    private List<Location> locations;
 
     public EventsRepositoryMock(){
         this.events = DemoData.getInstance().getEvents();
+        this.locations = new ArrayList<>();
     }
 
     @Override
@@ -36,5 +37,17 @@ public class EventsRepositoryMock implements EventsRepository {
     @Override
     public boolean removeEventById(Integer eventId) {
         return events.removeIf(event -> event.getId().equals(eventId));
+    }
+
+    @Override
+    public Location getLocationById(Integer locationId) {
+        return this.locations.stream()
+                .filter(location -> location.getId().equals(locationId))
+                .findFirst().orElse(null);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        this.locations.add(location);
     }
 }

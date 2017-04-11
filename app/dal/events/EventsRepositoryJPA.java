@@ -1,6 +1,7 @@
 package dal.events;
 
 import models.events.Event;
+import models.events.Location;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -33,5 +34,17 @@ public class EventsRepositoryJPA implements EventsRepository {
     @Override
     public boolean removeEventById(Integer eventId) {
         return false;
+    }
+
+    @Override
+    public Location getLocationById(final Integer locationId) {
+        EntityManager em = this.jpaApi.em();
+        return em.find(Location.class, locationId);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        EntityManager em = jpaApi.em();
+        em.persist(location);
     }
 }
