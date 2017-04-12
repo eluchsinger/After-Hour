@@ -1,8 +1,18 @@
 import com.google.inject.AbstractModule;
 import java.time.Clock;
 
-import dal.UsersRepository;
-import dal.jpa.UsersRepositoryJPA;
+import config.StartupConfiguration;
+import config.StartupConfigurationImpl;
+import dal.events.EventsRepository;
+import dal.events.EventsRepositoryJPA;
+import dal.ticket_categories.TicketCategoriesRepository;
+import dal.ticket_categories.TicketCategoriesRepositoryJPA;
+import dal.users.UsersRepository;
+import dal.users.UsersRepositoryJPA;
+import logic.events.EventsLogic;
+import logic.events.EventsLogicImpl;
+import logic.sales.SalesLogic;
+import logic.sales.SalesLogicImpl;
 import logic.users.UsersLogic;
 import logic.users.UsersLogicImpl;
 import services.ApplicationTimer;
@@ -32,8 +42,15 @@ public class Module extends AbstractModule {
         bind(Counter.class).to(AtomicCounter.class);
 
         bind(UsersLogic.class).to(UsersLogicImpl.class);
+        bind(EventsLogic.class).to(EventsLogicImpl.class);
+        bind(SalesLogic.class).to(SalesLogicImpl.class);
+
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class);
+        bind(EventsRepository.class).to(EventsRepositoryJPA.class);
+        bind(TicketCategoriesRepository.class).to(TicketCategoriesRepositoryJPA.class);
+
+        bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();
     }
 
 }
