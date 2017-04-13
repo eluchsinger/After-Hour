@@ -19,9 +19,8 @@ public interface EventsRepository {
     /**
      * Adds a new event to the events-repository.
      * @param event The object of type {@link Event} to add into the repository.
-     * TODO: return void
      */
-    Event registerEvent(Event event);
+    void registerEvent(Event event);
 
     /**
      * Removes the event corresponding to the eventId.
