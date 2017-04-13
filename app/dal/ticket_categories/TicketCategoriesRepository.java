@@ -4,17 +4,28 @@ import models.events.TicketCategory;
 import models.tickets.Ticket;
 
 /**
- * Created by Fabian on 09.04.2017.
+ * Created by Fabian Schwyter on 09.04.2017.
+ * Handles the ticketing operations.
  */
 public interface TicketCategoriesRepository {
-    TicketCategory registerTicketCategory(TicketCategory ticketCategory);
+
+    /**
+     * Adds a new {@link TicketCategory} to the repository.
+     * @param ticketCategory The new {@link TicketCategory} to be added.
+     */
+    void registerTicketCategory(TicketCategory ticketCategory);
+
+    /**
+     * Finds and returns a {@link TicketCategory} using a unique ID.
+     * @param ticketCategoryId The unique ID of the {@link TicketCategory}
+     * @return Returns the found {@link TicketCategory} or null, if nothing was found.
+     */
     TicketCategory getTicketCategoryById(Integer ticketCategoryId);
 
     /**
-     * This method saves the created ticket into the database.
-     * Should be called to persist NEWLY created tickets to the database.
-     * @param ticket The ticket to save into the DB
-     * @return Returns the ticket added to the DB.
+     * This method saves a {@link Ticket} into the Repository.
+     * Should be called to persist a NEWLY created {@link Ticket} into the repository.
+     * @param ticket The {@link Ticket} to save into the DB
      */
-    Ticket persistTicket(Ticket ticket);
+    void persistTicket(Ticket ticket);
 }

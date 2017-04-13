@@ -19,10 +19,9 @@ public class TicketCategoriesRepositoryJPA implements TicketCategoriesRepository
     }
 
     @Override
-    public TicketCategory registerTicketCategory(TicketCategory ticketCategory) {
+    public void registerTicketCategory(TicketCategory ticketCategory) {
         EntityManager em = jpaApi.em();
         em.persist(ticketCategory);
-        return ticketCategory;
     }
 
     @Override
@@ -32,9 +31,8 @@ public class TicketCategoriesRepositoryJPA implements TicketCategoriesRepository
     }
 
     @Override
-    public Ticket persistTicket(Ticket ticket) {
+    public void persistTicket(Ticket ticket) {
         EntityManager em = this.jpaApi.em();
         em.persist(ticket);
-        return ticket;
     }
 }
