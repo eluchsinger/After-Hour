@@ -1,6 +1,5 @@
 package dal.users;
 
-import models.tickets.Ticket;
 import models.users.User;
 import play.Logger;
 import play.db.jpa.JPAApi;
@@ -8,7 +7,6 @@ import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 
 /**
@@ -31,10 +29,9 @@ public class UsersRepositoryJPA implements UsersRepository {
 
     @Override
     @Transactional
-    public User registerUser(User user) {
+    public void registerUser(User user) {
         EntityManager em = jpaApi.em();
         em.persist(user);
-        return user;
     }
 
     @Override
@@ -48,11 +45,6 @@ public class UsersRepositoryJPA implements UsersRepository {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public Ticket getEventTicket(Integer userId, Integer eventId) {
-        return null;
     }
 
     /**

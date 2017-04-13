@@ -2,7 +2,6 @@ package dal.users;
 
 
 import demoData.DemoData;
-import models.tickets.Ticket;
 import models.users.User;
 import play.Logger;
 
@@ -31,7 +30,7 @@ public class UsersRepositoryMock implements UsersRepository {
     }
 
     @Override
-    public User registerUser(User user) {
+    public void registerUser(User user) {
         if(user.getId() == null) {
             Optional<User> maxUserId = this.users.stream().max(Comparator.comparingInt(User::getId));
 
@@ -41,17 +40,11 @@ public class UsersRepositoryMock implements UsersRepository {
                 user.setId(1);
         }
         users.add(user);
-        return user;
     }
 
     @Override
     public boolean removeUserById(Integer userId) {
         return false;
-    }
-
-    @Override
-    public Ticket getEventTicket(Integer userId, Integer eventId) {
-        return null;
     }
 
     /**

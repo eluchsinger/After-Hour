@@ -1,5 +1,5 @@
 dist: trusty
-sudo: required
+sudo: false
 
 language: scala
 
@@ -17,6 +17,16 @@ services:
 
 notifications:
   email: false
+
+before_cache:
+  # Cleanup the cached directories to avoid unnecessary cache updates
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+  - find $HOME/.sbt        -name "*.lock"               -print -delete
+
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt
 
 before_script:
   - psql -c 'create database ahdb;' -U postgres

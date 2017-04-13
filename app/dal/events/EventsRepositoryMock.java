@@ -29,9 +29,8 @@ public class EventsRepositoryMock implements EventsRepository {
     }
 
     @Override
-    public Event registerEvent(Event event) {
+    public void registerEvent(Event event) {
         events.add(event);
-        return event;
     }
 
     @Override

@@ -25,10 +25,9 @@ public class EventsRepositoryJPA implements EventsRepository {
     }
 
     @Override
-    public Event registerEvent(Event event) {
+    public void registerEvent(Event event) {
         EntityManager em = jpaApi.em();
         em.persist(event);
-        return event;
     }
 
     @Override
