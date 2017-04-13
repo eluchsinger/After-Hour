@@ -253,7 +253,7 @@ public class DataGenerator {
     private List<Location> getDemoLocations() {
         List<Location> locations = new ArrayList<>(INITIAL_LOCATION_CAPACITY);
 
-        locations.add(new Location(null, "Kaufleuten", "Der beste Klub der Schweiz.", null));
+        locations.add(new Location(null, "Kaufleuten", "Der beste Klub der Schweiz.", "ChIJ7ZMwUgEKkEcRjV6Q7jc2y1I"));
         locations.add(new Location(null, "Plaza", "Der andere beste Klub der Schweiz", "ChIJIXJ33hsKkEcRTTvRa3eNxd0"));
 
         return locations;
