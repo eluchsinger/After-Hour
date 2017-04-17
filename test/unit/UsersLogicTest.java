@@ -1,5 +1,9 @@
 package unit;
 
+import dal.events.EventsRepository;
+import dal.events.EventsRepositoryMock;
+import dal.ticket_categories.TicketCategoriesMock;
+import dal.ticket_categories.TicketCategoriesRepository;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.users.UsersLogic;
@@ -30,6 +34,8 @@ public class UsersLogicTest extends WithApplication {
     public void initalize(){
         this.application = new GuiceApplicationBuilder()
                 .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
+                .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
+                .overrides(bind(TicketCategoriesRepository.class).to(TicketCategoriesMock.class))
                 .build();
         this.injector = application.injector();
     }
