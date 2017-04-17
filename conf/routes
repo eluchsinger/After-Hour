@@ -14,6 +14,8 @@ GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userI
 GET /users/:userId/tickets                  rest.UsersController.getEvents(userId: Integer)
 GET /users/:userId                          rest.UsersController.getUser(userId: Integer)
 
+POST /register                              rest.UsersController.registerUser()
+
 # REST Ticket Sales
 GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)
 

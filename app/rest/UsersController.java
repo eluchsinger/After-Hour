@@ -30,6 +30,16 @@ public class UsersController extends Controller {
         return notFound("Not implemented");
     }
 
+    public Result registerUser(){
+        JsonNode json = request().body().asJson();
+        User user = createUserFromJson(json);
+        return ok(Json.toJson(user));
+    }
+
+    private User createUserFromJson(JsonNode json){
+        return Json.fromJson(json, User.class);
+    }
+
     @Transactional
     public Result getUser(Integer userId){
         final User user = this.usersLogic.getUserById(userId);
