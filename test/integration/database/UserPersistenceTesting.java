@@ -24,6 +24,8 @@ import play.test.WithApplication;
 
 import javax.inject.Inject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -79,6 +81,23 @@ public class UserPersistenceTesting extends WithApplication {
             assertEquals(0, repository.countUsers());
         });
     }
+
+    @Test
+    public void testGetUserByEmail() {
+        this.jpaApi.withTransaction(() -> {
+            UsersRepository repository = new UsersRepositoryJPA(jpaApi);
+            Date creationDate = new Date();
+
+            // Add new users
+            User user = new User(null, "max.muster@hsr.ch", "Muster", "Max", creationDate, Gender.MALE);
+            repository.registerUser(user);
+            User userActual = repository.getUserByEmail("max.muster@hsr.ch");
+
+            assertEquals(user, userActual);
+
+        });
+    }
+
 
 //    /**
 //     * This test tests that the tables were dropped before.

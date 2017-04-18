@@ -31,6 +31,11 @@ public class UsersRepositoryMock implements UsersRepository {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public User registerUser(User user) {
         if(user.getId() == null) {
             Optional<User> maxUserId = this.users.stream().max(Comparator.comparingInt(User::getId));

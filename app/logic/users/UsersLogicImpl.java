@@ -23,4 +23,7 @@ public class UsersLogicImpl implements UsersLogic {
 
     @Override
     public User registerUser(User user){return this.usersRepository.registerUser(user);}
+
+    @Override
+    public User getUserByEmail(String email){return this.usersRepository.getUserByEmail(email);}
 }

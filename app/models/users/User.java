@@ -19,7 +19,11 @@ import java.util.List;
 @Table(name = "tbl_users", schema = "public")
 @NamedNativeQueries({
         @NamedNativeQuery(name = "User.count", query = "SELECT COUNT(*) FROM tbl_users"),
-        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE")
+        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE"),
+        //@NamedNativeQuery(name = "User.getUserByEmail", query = "SELECT * FROM tbl_users WHERE email = 'silvio.berlusconi@italy.it'" )
+})
+@NamedQueries({
+        @NamedQuery(name = "User.getUserByEmail", query="SELECT u FROM User u WHERE u.email = :email")
 })
 public class User {
     private final static int TICKETS_INIT_SIZE = 2;

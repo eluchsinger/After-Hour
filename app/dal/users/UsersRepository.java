@@ -8,6 +8,7 @@ import models.users.User;
  */
 public interface UsersRepository {
     User getUserById(Integer userId);
+    User getUserByEmail(String email);
     User registerUser(User user);
 
     /**

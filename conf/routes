@@ -13,8 +13,9 @@ GET /events/:id                             rest.EventsController.getEvent(id: I
 GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userId: Integer, eventId: Integer)
 GET /users/:userId/tickets                  rest.UsersController.getEvents(userId: Integer)
 GET /users/:userId                          rest.UsersController.getUser(userId: Integer)
+GET /users/mail/:email                      rest.UsersController.getUserByEmail(email: String)
 
-POST /register                              rest.UsersController.registerUser()
+POST /users/register                        rest.UsersController.registerUser()
 
 # REST Ticket Sales
 GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)

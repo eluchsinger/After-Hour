@@ -8,4 +8,5 @@ import models.users.User;
 public interface UsersLogic {
     User getUserById(Integer userId);
     User registerUser(User user);
+    User getUserByEmail(String email);
 }

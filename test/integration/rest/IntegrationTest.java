@@ -85,22 +85,29 @@ public class IntegrationTest {
 
     @Test
     public void testRegisterUser() {
-        JsonNode json = Json.parse("{\"id\":\"1\", " +
-                "\"email\":\"elon.musk@hsr.ch\", " +
-                "\"lastName\":\"Musk\", " +
-                "\"firstName\":\"Elon\"," +
-                "\"dateOfBirth\":\"1971-06-28\"," +
-                "\"gender\":\"MALE\"}");
-        Helpers.running(application, () -> {
-            Http.RequestBuilder request = new Http.RequestBuilder()
-                    .method(POST)
-                    .uri("/register")
-                    .bodyJson(json);
-            Result result = route(request);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            User user = new User(null, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
+            JsonNode json = Json.toJson(user);
+            Helpers.running(application, () -> {
+                Http.RequestBuilder request = new Http.RequestBuilder()
+                        .method(POST)
+                        .uri("/users/register")
+                        .bodyJson(json);
+                Result result = route(request);
 
-            TestCase.assertEquals(OK, result.status());
+                TestCase.assertEquals(OK, result.status());
 
-        });
+                Http.RequestBuilder request2 = new Http.RequestBuilder()
+                        .method(GET)
+                        .uri("/user/elon.musk@hsr.ch");
+                Result result2 = route(request);
+
+                TestCase.assertEquals(OK, result2.status());
+            });
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 //    @Test
