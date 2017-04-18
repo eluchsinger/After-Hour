@@ -61,7 +61,7 @@ public class UsersLogicTest extends WithApplication {
     @Test
     public void testUserGeneratingId(){
         UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
-        User user = domain.getUserById(1);
-        assertEquals(user.getId(), new Integer(1));
+        User user = domain.getUserById(2);
+        assertEquals(user.getId(), new Integer(2));
     }
 }
