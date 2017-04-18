@@ -42,10 +42,7 @@ public class EventsLogicTets extends WithApplication {
     @Test
     public void testGetExistingEvent(){
         EventsLogic domain = this.injector.instanceOf(EventsLogic.class);
-        Event event= domain.getEventById(1);
-
-
-        assertEquals(new Integer (1), event.getId());
-        //Todo: Make Test with TestData.
+        Event event= domain.getEventById(2);
+        assertEquals(new Integer (2), event.getId());
     }
 }
