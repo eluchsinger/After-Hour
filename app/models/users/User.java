@@ -2,9 +2,12 @@ package models.users;
 
 
 import models.tickets.Ticket;
+import models.utils.TimeIgnoringDateComparator;
+import org.joda.time.DateTimeComparator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +19,11 @@ import java.util.List;
 @Table(name = "tbl_users", schema = "public")
 @NamedNativeQueries({
         @NamedNativeQuery(name = "User.count", query = "SELECT COUNT(*) FROM tbl_users"),
-        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE")
+        @NamedNativeQuery(name = "User.reset", query = "TRUNCATE tbl_users CASCADE"),
+        //@NamedNativeQuery(name = "User.getUserByEmail", query = "SELECT * FROM tbl_users WHERE email = 'silvio.berlusconi@italy.it'" )
+})
+@NamedQueries({
+        @NamedQuery(name = "User.getUserByEmail", query="SELECT u FROM User u WHERE u.email = :email")
 })
 public class User {
     private final static int TICKETS_INIT_SIZE = 2;
@@ -90,6 +97,8 @@ public class User {
         this.tickets = tickets;
     }
 
+    public Gender getGender(){ return this.gender; }
+
     //region Overrides
     @Override
     public boolean equals(Object o) {
@@ -101,7 +110,7 @@ public class User {
         if (!email.equals(user.email)) return false;
         if (!lastName.equals(user.lastName)) return false;
         if (!firstName.equals(user.firstName)) return false;
-        if (!dateOfBirth.equals(user.dateOfBirth)) return false;
+        if (new TimeIgnoringDateComparator().compare(dateOfBirth, user.dateOfBirth) != 0) return false;
         if (gender != user.gender) return false;
         return tickets.equals(user.tickets);
     }

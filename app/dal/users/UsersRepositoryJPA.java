@@ -7,7 +7,9 @@ import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
@@ -25,6 +27,15 @@ public class UsersRepositoryJPA implements UsersRepository {
     public User getUserById(Integer userId) {
         EntityManager em = jpaApi.em();
         return em.find(User.class, userId);
+    }
+
+    @Override
+    @Transactional
+    public User getUserByEmail(String email) {
+        EntityManager em = jpaApi.em();
+        TypedQuery<User> q = em.createNamedQuery("User.getUserByEmail", User.class);
+        q.setParameter("email", email);
+        return q.getSingleResult();
     }
 
     @Override
