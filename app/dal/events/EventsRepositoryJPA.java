@@ -19,7 +19,6 @@ public class EventsRepositoryJPA implements EventsRepository {
     public EventsRepositoryJPA(JPAApi jpaApi){
         this.jpaApi = jpaApi;
     }
-
     @Override
     public Event getEventById(Integer eventId) {
         EntityManager em = jpaApi.em();

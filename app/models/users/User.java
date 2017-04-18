@@ -1,28 +1,19 @@
 package models.users;
 
-<<<<<<< HEAD
-import models.tickets.TicketInstance;
-=======
 
 import models.tickets.Ticket;
 import models.utils.TimeIgnoringDateComparator;
-import org.joda.time.DateTimeComparator;
->>>>>>> refs/remotes/origin/developer
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Fabian on 24.03.17.
- * User
+ * Created by Fabian Schwyter on 24.03.17.
+ * User Account of the service After-Hour.
  */
 @Entity
-<<<<<<< HEAD
-@Table(name = "tbl_user", schema = "public")
-=======
 @Table(name = "tbl_users", schema = "public")
 @NamedNativeQueries({
         @NamedNativeQuery(name = "User.count", query = "SELECT COUNT(*) FROM tbl_users"),
@@ -32,35 +23,51 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "User.getUserByEmail", query="SELECT u FROM User u WHERE u.email = :email")
 })
->>>>>>> refs/remotes/origin/developer
 public class User {
+    private final static int TICKETS_INIT_SIZE = 2;
+
     @Id
-    @GeneratedValue
-    private int id;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String email;
+    private String lastName;
     private String firstName;
     private Date dateOfBirth;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
-    @Transient
-    private ArrayList<TicketInstance> tickets;
 
+    // Mapped by the name of the attribute on the other side.
+    @OneToMany(mappedBy = "user")
+    private List<Ticket> tickets;
+
+    //region Constructors
     public User(){
+        this.id = null;
     }
 
-    public User(int id, String name, String firstName, Date dateOfBirth, Gender gender){
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender){
         this.id = id;
-        this.name = name;
+        this.email = email;
+        this.lastName = lastName;
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        tickets = new ArrayList<>();
+        tickets = new ArrayList<>(TICKETS_INIT_SIZE);
     }
+
+    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(null, email, lastName, firstName, dateOfBirth, gender);
+    }
+    //endregion Constructors
 
     public Date getDateOfBirth(){
         return dateOfBirth;
     }
 
-    public int getId(){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public Integer getId(){
         return id;
     }
 
@@ -68,23 +75,25 @@ public class User {
         return firstName;
     }
 
-    public String getName(){
-        return name;
+    public String getLastName(){
+        return lastName;
     }
 
-    public void addTicket(TicketInstance ticket){
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void addTicket(Ticket ticket){
         tickets.add(ticket);
     }
 
-    public ArrayList<TicketInstance> getTickets(){
+    public List<Ticket> getTickets(){
         return tickets;
     }
 
-    public void addTickets(ArrayList<TicketInstance> tickets) {
+    public void addTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
-<<<<<<< HEAD
-=======
 
     public Gender getGender(){ return this.gender; }
 
@@ -121,5 +130,4 @@ public class User {
     }
 
     //endregion
->>>>>>> refs/remotes/origin/developer
 }

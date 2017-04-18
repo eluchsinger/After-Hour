@@ -1,7 +1,3 @@
-<<<<<<< HEAD:test/UsersLogicTest.java
-import dal.UsersRepository;
-import dal.mocks.UsersRepositoryMock;
-=======
 package unit;
 
 import config.StartupConfiguration;
@@ -12,7 +8,6 @@ import dal.tickets.TicketMock;
 import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
->>>>>>> refs/remotes/origin/developer:test/unit/UsersLogicTest.java
 import logic.users.UsersLogic;
 import models.users.User;
 import org.junit.Before;

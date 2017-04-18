@@ -4,8 +4,6 @@
 
 # An example controller showing a sample home page
 GET /                                       rest.HomeController.index
-# Fabian's Website
-GET /fabian                                 rest.FabianController.yolo
 
 # REST Events
 GET /events                                 rest.EventsController.getAllEvents
@@ -18,6 +16,9 @@ GET /users/:userId                          rest.UsersController.getUser(userId:
 GET /users/mail/:email                      rest.UsersController.getUserByEmail(email: String)
 
 POST /users/register                        rest.UsersController.registerUser()
+
+# REST Ticket Sales
+GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)
 
 # Request Sample: http://localhost:9000/ticket?user=1&event=1
 GET /tickets                                rest.EventsController.getTicket(user: Integer, event: Integer)

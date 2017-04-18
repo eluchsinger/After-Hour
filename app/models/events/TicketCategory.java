@@ -1,31 +1,21 @@
 package models.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-<<<<<<< HEAD
-import models.tickets.SoldTicket;
-=======
 import models.tickets.Ticket;
 import models.users.User;
->>>>>>> refs/remotes/origin/developer
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Fabian on 25.03.2017.
  * A Ticket Category
  */
+@Entity
+@Table(name = "tbl_ticketcategories")
 public class TicketCategory {
-<<<<<<< HEAD
-    protected ArrayList<SoldTicket> soldTickets;
-    @JsonIgnore
-    protected Date ticketStartDateTime;
-    @JsonIgnore
-    protected Date ticketStopDateTime;
-
-    public void addSoldTicket(SoldTicket soldTicket){
-        soldTickets.add(soldTicket);
-=======
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -47,25 +37,21 @@ public class TicketCategory {
     public TicketCategory(){
         this.id = null;
         this.soldTickets = new ArrayList<>();
->>>>>>> refs/remotes/origin/developer
     }
 
-    public ArrayList<SoldTicket> getSoldTickets(){
-        return soldTickets;
+    public TicketCategory(final Integer id, final String name, final String description, final Event event, final Double price, final Date startAvailability, final Date endAvailability){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.event = event;
+        this.price = price;
+        this.startAvailability = startAvailability;
+        this.endAvailability = endAvailability;
+        this.soldTickets = new ArrayList<>();
     }
 
-    public void setTicketStartDateTime(Date date){
-        this.ticketStartDateTime = date;
-    }
+    //endregion
 
-<<<<<<< HEAD
-    public Date getTicketStartDateTime(){
-        return ticketStartDateTime;
-    }
-
-    public void setTicketStopDateTime(Date date){
-        this.ticketStopDateTime = date;
-=======
     public Ticket sellTicket(final User user) {
         final Ticket soldTicket = this.ticketFactory.createTicket(user);
         this.soldTickets.add(soldTicket);
@@ -75,15 +61,12 @@ public class TicketCategory {
     @JsonIgnore
     public List<Ticket> getSoldTickets(){
         return soldTickets;
->>>>>>> refs/remotes/origin/developer
     }
 
-    public Date getTicketStopDateTime(){
-        return ticketStopDateTime;
+    public Integer getId(){
+        return id;
     }
 
-<<<<<<< HEAD
-=======
     public String getDescription(){
         return description;
     }
@@ -104,6 +87,5 @@ public class TicketCategory {
             return new Ticket(user, new Date(), this.ticketCategory);
         }
     }
->>>>>>> refs/remotes/origin/developer
 
 }

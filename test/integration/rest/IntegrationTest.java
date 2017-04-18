@@ -1,13 +1,8 @@
-<<<<<<< HEAD:test/IntegrationTest.java
-import dal.UsersRepository;
-import dal.mocks.UsersRepositoryMock;
-=======
 package integration.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
->>>>>>> refs/remotes/origin/developer:test/integration/rest/IntegrationTest.java
 import junit.framework.TestCase;
 import models.users.Gender;
 import models.users.User;
@@ -33,7 +28,7 @@ public class IntegrationTest {
     @Before
     public void initalize() {
         this.application = new GuiceApplicationBuilder()
-            .build();
+                .build();
     }
 
     @Test
