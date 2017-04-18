@@ -16,7 +16,11 @@ public class UsersLogicImpl implements UsersLogic {
         this.usersRepository = usersRepository;
     }
 
+    @Override
     public User getUserById(Integer userId) {
         return this.usersRepository.getUserById(userId);
     }
+
+    @Override
+    public User registerUser(User user){return this.usersRepository.registerUser(user);}
 }

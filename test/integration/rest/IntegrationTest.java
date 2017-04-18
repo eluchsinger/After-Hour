@@ -65,19 +65,13 @@ public class IntegrationTest {
         });
     }
 
-    /*
 
     @Test
     public void testCreateUserFromJson(){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         try {
-            JsonNode json = Json.parse("{\"id\":\"1\", " +
-                    "\"email\":\"elon.musk@hsr.ch\", " +
-                    "\"lastName\":\"Musk\", " +
-                    "\"firstName\":\"Elon\"," +
-                    "\"dateOfBirth\":\"1971-06-28\"," +
-                    "\"gender\":\"MALE\"}");
+            JsonNode json = Json.toJson(new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE));
 
             User user = new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
 
@@ -87,7 +81,7 @@ public class IntegrationTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     @Test
     public void testRegisterUser() {
