@@ -24,7 +24,6 @@ public class Event {
     private Location location;
     @Transient
     private Organizer organizer;
-    @JsonIgnore
     @OneToMany(mappedBy = "event")
     private List<TicketCategory> ticketCategories;
     @JsonIgnore

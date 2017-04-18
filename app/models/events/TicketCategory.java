@@ -67,6 +67,14 @@ public class TicketCategory {
         return id;
     }
 
+    public String getDescription(){
+        return description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
 
     private class TicketFactory {
         private final TicketCategory ticketCategory;
