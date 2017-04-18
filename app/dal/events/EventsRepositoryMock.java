@@ -50,4 +50,9 @@ public class EventsRepositoryMock implements EventsRepository {
         location.setId(locationIdCounter++);
         this.locations.add(location);
     }
+
+    @Override
+    public List<Event> getEvents() {
+        return null;
+    }
 }
