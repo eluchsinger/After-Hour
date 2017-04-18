@@ -35,6 +35,7 @@ public class UsersController extends Controller {
         return ok(Json.toJson(user));
     }
 
+    @Transactional
     public Result registerUser(){
         JsonNode json = request().body().asJson();
         User user = Json.fromJson(json, User.class);
