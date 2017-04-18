@@ -34,11 +34,6 @@ public class EventsRepositoryMock implements EventsRepository {
     }
 
     @Override
-    public boolean removeEventById(Integer eventId) {
-        return events.removeIf(event -> event.getId().equals(eventId));
-    }
-
-    @Override
     public Location getLocationById(Integer locationId) {
         return this.locations.stream()
                 .filter(location -> location.getId().equals(locationId))

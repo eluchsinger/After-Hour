@@ -31,11 +31,6 @@ public class EventsRepositoryJPA implements EventsRepository {
     }
 
     @Override
-    public boolean removeEventById(Integer eventId) {
-        return false;
-    }
-
-    @Override
     public Location getLocationById(final Integer locationId) {
         EntityManager em = this.jpaApi.em();
         return em.find(Location.class, locationId);
