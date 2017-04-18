@@ -38,8 +38,8 @@ public class UsersController extends Controller {
     public Result registerUser(){
         JsonNode json = request().body().asJson();
         User user = Json.fromJson(json, User.class);
-        User resultUser = this.usersLogic.registerUser(user);
-        return ok(Json.toJson(resultUser));
+        this.usersLogic.registerUser(user);
+        return ok();
     }
 
     @Transactional

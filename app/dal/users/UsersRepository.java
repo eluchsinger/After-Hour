@@ -15,6 +15,13 @@ public interface UsersRepository {
     User getUserById(Integer userId);
 
     /**
+     * Finds and returns a {@link User} by its Email.
+     * @param email
+     * @return
+     */
+    User getUserByEmail(String email);
+
+    /**
      * Adds a new {@link User} to the Repository and persists it.
      * @param user The new user to persist into the Repository.
      */
