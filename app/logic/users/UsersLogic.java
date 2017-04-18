@@ -7,4 +7,6 @@ import models.users.User;
  */
 public interface UsersLogic {
     User getUserById(Integer userId);
+    void registerUser(User user);
+    User getUserByEmail(String email);
 }

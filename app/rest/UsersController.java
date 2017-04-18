@@ -15,10 +15,6 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
 
-/**
- * Created by Fabian on 28.03.17.
- * Controller for /users
- */
 public class UsersController extends Controller {
     private DemoData demoData;
     private UsersLogic usersLogic;
@@ -31,6 +27,7 @@ public class UsersController extends Controller {
 
 
     public Result getTicket(Integer userId, Integer eventId){
+<<<<<<< HEAD
         Optional<User> optinalUser = demoData.getUsers().stream()
                 .filter(user -> user.getId() == userId)
                 .findFirst();
@@ -56,13 +53,36 @@ public class UsersController extends Controller {
                 .findFirst();
 
         return ok(Json.toJson(optionalTickets.get()));
+=======
+        return notFound("Not implemented");
+    }
+
+    public Result getEvents(Integer userId){
+        return notFound("Not implemented");
+>>>>>>> refs/remotes/origin/developer
+    }
+
+    public Result getUserByEmail(String email){
+        User user = this.usersLogic.getUserByEmail(email);
+        return ok(Json.toJson(user));
+    }
+
+    @Transactional
+    public Result registerUser(){
+        JsonNode json = request().body().asJson();
+        User user = Json.fromJson(json, User.class);
+        this.usersLogic.registerUser(user);
+        return ok();
     }
 
     @Transactional
     public Result getUser(Integer userId){
-        User user = this.usersLogic.getUserById(userId);
+        final User user = this.usersLogic.getUserById(userId);
         if(user != null) {
+<<<<<<< HEAD
             user.addTickets(demoData.getUsers().get(userId-1).getTickets());
+=======
+>>>>>>> refs/remotes/origin/developer
             JsonNode jsonUser = Json.toJson(user);
             return ok(Json.toJson(jsonUser));
         }

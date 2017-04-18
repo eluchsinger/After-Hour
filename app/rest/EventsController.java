@@ -1,11 +1,14 @@
 package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import logic.events.EventsLogic;
 import models.events.Event;
 import demoData.DemoData;
+import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
+import javax.inject.Inject;
 import java.util.Optional;
 
 /**
@@ -13,29 +16,27 @@ import java.util.Optional;
  * Controls the REST Event-Requests.
  */
 public class EventsController extends Controller {
-    private DemoData demoData;
+    private EventsLogic eventsLogic;
 
-    public EventsController() {
-        this.demoData = DemoData.getInstance();
+    @Inject
+    public EventsController(EventsLogic eventsLogic) {
+        this.eventsLogic = eventsLogic;
     }
 
 
-
+    @Transactional
     public Result getAllEvents() {
-        JsonNode jsonNode = Json.toJson(demoData.getEvents());
+        JsonNode jsonNode = Json.toJson(eventsLogic.getEvents());
         return ok(jsonNode);
     }
 
-    public Result getEvent(int id) {
-        Optional<Event> maybeEvent = demoData.getEvents().stream()
-                .filter(event -> event.getId() == id)
-                .findFirst();
-
-        if(maybeEvent.isPresent()) {
-            return ok(Json.toJson(maybeEvent.get()));
-        } else {
-            return Results.notFound();
+    @Transactional
+    public Result getEvent(Integer id) {
+        Event event = eventsLogic.getEventById(id);
+        if (event != null){
+            return ok(Json.toJson(event));
         }
+        return badRequest("Ticket not found");
     }
 
     public Result getTicket(Integer userId, Integer eventId){
