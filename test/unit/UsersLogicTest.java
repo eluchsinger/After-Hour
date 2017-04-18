@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
 
 /**
@@ -55,5 +56,12 @@ public class UsersLogicTest extends WithApplication {
         UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
         User expectedUser = domain.getUserById(123123123);
         assertNull(expectedUser);
+    }
+
+    @Test
+    public void testUserGeneratingId(){
+        UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
+        User user = domain.getUserById(1);
+        assertEquals(user.getId(), new Integer(1));
     }
 }

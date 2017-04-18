@@ -13,10 +13,14 @@ import java.util.List;
 public class EventsRepositoryMock implements EventsRepository {
     private List<Event> events;
     private List<Location> locations;
+    private int eventId;
+    private int locationId;
 
     public EventsRepositoryMock(){
         this.events = DemoData.getInstance().getEvents();
         this.locations = new ArrayList<>();
+        this.eventId = 1;
+        this.locationId = 1;
     }
 
     @Override
@@ -30,6 +34,7 @@ public class EventsRepositoryMock implements EventsRepository {
 
     @Override
     public void registerEvent(Event event) {
+        event.setId(eventId++);
         events.add(event);
     }
 
@@ -42,6 +47,7 @@ public class EventsRepositoryMock implements EventsRepository {
 
     @Override
     public void addLocation(Location location) {
+        location.setId(locationId++);
         this.locations.add(location);
     }
 }

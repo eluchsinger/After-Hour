@@ -20,7 +20,7 @@ public class Location {
         this(null, "", "", "");
     }
 
-    public Location(Integer id, String name, String description, String placeId){
+    public Location(Integer locationId, String name, String description, String placeId){
         this.name = name;
         this.description = description;
         this.placeId = placeId;
@@ -28,6 +28,10 @@ public class Location {
 
     public Integer getId() {
         return this.id;
+    }
+
+    public void setId(Integer locationId){
+        this.id = locationId;
     }
 
     public String getName() {
