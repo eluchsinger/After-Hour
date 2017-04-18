@@ -30,8 +30,13 @@ public class EventsController extends Controller {
         return ok(jsonNode);
     }
 
-    public Result getEvent(int id) {
-        return null;
+    @Transactional
+    public Result getEvent(Integer id) {
+        Event event = eventsLogic.getEventById(id);
+        if (event != null){
+            return ok(Json.toJson(event));
+        }
+        return badRequest("Ticket not found");
     }
 
     public Result getTicket(Integer userId, Integer eventId){

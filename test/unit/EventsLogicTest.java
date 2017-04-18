@@ -24,7 +24,7 @@ import static play.inject.Bindings.bind;
  * Created by Fabian on 08.04.17.
  */
 
-public class EventsLogicTets extends WithApplication {
+public class EventsLogicTest extends WithApplication {
     private Application application;
     private Injector injector;
 

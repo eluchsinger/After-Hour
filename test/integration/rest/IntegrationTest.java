@@ -109,6 +109,17 @@ public class IntegrationTest {
         }
     }
 
+    @Test
+    public void testGetEventById() {
+        Helpers.running(application, () -> {
+            Http.RequestBuilder request = new Http.RequestBuilder()
+                    .method(GET)
+                    .uri("/events/1");
+            Result result = route(request);
+            TestCase.assertEquals(OK, result.status());
+        });
+    }
+
 //    @Test
 //    public void testGetUser() {
 //        running(fakeApplication(), () -> {
