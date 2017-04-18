@@ -23,13 +23,6 @@ public interface EventsRepository {
     void registerEvent(Event event);
 
     /**
-     * Removes the event corresponding to the eventId.
-     * @param eventId The unique ID of the {@link Event}.
-     * @return Returns true, if an event was removed, false if nothing was removed.
-     */
-    boolean removeEventById(Integer eventId);
-
-    /**
      * Returns the {@link Location} by its Unique-Id (NOT the PlacesID!)
      * @param locationId The unique id of the location (NOT the same as the PlacesID).
      * @return Return the found location or null, if no location was found.

@@ -1,6 +1,6 @@
 package logic.sales;
 
-import dal.ticket_categories.TicketCategoriesRepository;
+import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
 import models.events.TicketCategory;
 import models.tickets.Ticket;
@@ -14,14 +14,14 @@ import javax.inject.Inject;
  */
 public class SalesLogicImpl implements SalesLogic{
 
-    private TicketCategoriesRepository ticketCategoriesRepository;
+    private TicketRepository ticketRepository;
     private UsersRepository usersRepository;
     private JPAApi jpaApi;
 
     @Inject
-    public SalesLogicImpl(JPAApi jpaApi, final TicketCategoriesRepository ticketCategoriesRepository,
+    public SalesLogicImpl(JPAApi jpaApi, final TicketRepository ticketRepository,
                           final UsersRepository usersRepository) {
-        this.ticketCategoriesRepository = ticketCategoriesRepository;
+        this.ticketRepository = ticketRepository;
         this.usersRepository = usersRepository;
         this.jpaApi = jpaApi;
     }
@@ -35,11 +35,11 @@ public class SalesLogicImpl implements SalesLogic{
      */
     @Override
     public Ticket buyTicket(final Integer userId, final Integer ticketCategoryId) {
-        TicketCategory ticketCategory = this.ticketCategoriesRepository
+        TicketCategory ticketCategory = this.ticketRepository
                 .getTicketCategoryById(ticketCategoryId);
         User buyingUser = this.usersRepository.getUserById(userId);
         Ticket soldTicket = ticketCategory.sellTicket(buyingUser);
-        this.ticketCategoriesRepository.persistTicket(soldTicket);
+        this.ticketRepository.persistTicket(soldTicket);
 
         return soldTicket;
     }
