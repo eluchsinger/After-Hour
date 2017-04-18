@@ -1,7 +1,11 @@
 package unit;
 
+import config.StartupConfiguration;
+import config.StartupConfigurationMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
+import dal.tickets.TicketMock;
+import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
@@ -27,7 +31,10 @@ public class EventsLogicTets extends WithApplication {
     @Before
     public void initalize(){
         this.application = new GuiceApplicationBuilder()
+                .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
+                .overrides(bind(TicketRepository.class).to(TicketMock.class))
+                .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
                 .build();
         this.injector = application.injector();
     }
@@ -35,10 +42,7 @@ public class EventsLogicTets extends WithApplication {
     @Test
     public void testGetExistingEvent(){
         EventsLogic domain = this.injector.instanceOf(EventsLogic.class);
-        Event event= domain.getEventById(1);
-
-
-        assertEquals(new Integer (1), event.getId());
-        //Todo: Make Test with TestData.
+        Event event= domain.getEventById(2);
+        assertEquals(new Integer (2), event.getId());
     }
 }

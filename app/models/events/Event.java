@@ -12,6 +12,7 @@ import java.util.List;
  * An event (a Party).
  */
 @Entity
+@NamedQuery(name="Event.getAll", query="SELECT e FROM Event e")
 @Table(name = "tbl_events", schema = "public")
 public class Event {
     @Id

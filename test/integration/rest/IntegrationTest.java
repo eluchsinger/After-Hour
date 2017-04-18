@@ -28,7 +28,6 @@ public class IntegrationTest {
     @Before
     public void initalize() {
         this.application = new GuiceApplicationBuilder()
-            .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
             .build();
     }
 

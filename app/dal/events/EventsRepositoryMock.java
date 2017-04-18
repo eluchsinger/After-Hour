@@ -13,10 +13,14 @@ import java.util.List;
 public class EventsRepositoryMock implements EventsRepository {
     private List<Event> events;
     private List<Location> locations;
+    private int eventIdCounter;
+    private int locationIdCounter;
 
     public EventsRepositoryMock(){
         this.events = DemoData.getInstance().getEvents();
         this.locations = new ArrayList<>();
+        this.eventIdCounter = 1;
+        this.locationIdCounter = 1;
     }
 
     @Override
@@ -29,14 +33,9 @@ public class EventsRepositoryMock implements EventsRepository {
     }
 
     @Override
-    public Event registerEvent(Event event) {
+    public void registerEvent(Event event) {
+        event.setId(eventIdCounter++);
         events.add(event);
-        return event;
-    }
-
-    @Override
-    public boolean removeEventById(Integer eventId) {
-        return events.removeIf(event -> event.getId().equals(eventId));
     }
 
     @Override
@@ -48,6 +47,12 @@ public class EventsRepositoryMock implements EventsRepository {
 
     @Override
     public void addLocation(Location location) {
+        location.setId(locationIdCounter++);
         this.locations.add(location);
+    }
+
+    @Override
+    public List<Event> getEvents() {
+        return null;
     }
 }

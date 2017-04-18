@@ -1,7 +1,7 @@
 package dal.generator;
 
 import dal.events.EventsRepository;
-import dal.ticket_categories.TicketCategoriesRepository;
+import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
 import models.events.Event;
 import models.events.Location;
@@ -23,37 +23,47 @@ import java.util.List;
  * This class is used to generate demo-data.
  */
 public class DataGenerator {
-    private final static int INITIAL_USERS_CAPACITY = 4;
-    private final static int INITIAL_EVENTS_CAPACITY = 5;
-    private final static int INITIAL_TICKET_CATEGORY_CAPACITY = 10;
-    private final static int INITIAL_TICKET_CAPACITY = 20;
-    private final static int INITIAL_LOCATION_CAPACITY = 3;
+    private static final int INITIAL_USERS_CAPACITY = 4;
+    private static final int INITIAL_EVENTS_CAPACITY = 5;
+    private static final int INITIAL_TICKET_CATEGORY_CAPACITY = 10;
+    private static final int INITIAL_TICKET_CAPACITY = 20;
+    private static final int INITIAL_LOCATION_CAPACITY = 3;
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
-    private final TicketCategoriesRepository ticketCategoriesRepository;
+    private final TicketRepository ticketRepository;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
+    /**
+     * Initializes the DataGenerator using the respositories.
+     *
+     * @param usersRepository            The repository handling the users.
+     * @param eventsRepository           The repository handling the events.
+     * @param ticketRepository The repository handling the tickets.
+     */
     @Inject
-    public DataGenerator(final UsersRepository usersRepository, final EventsRepository eventsRepository, final TicketCategoriesRepository ticketCategoriesRepository) {
+    public DataGenerator(final UsersRepository usersRepository,
+                         final EventsRepository eventsRepository,
+                         final TicketRepository ticketRepository) {
         this.usersRepository = usersRepository;
         this.eventsRepository = eventsRepository;
-        this.ticketCategoriesRepository = ticketCategoriesRepository;
+        this.ticketRepository = ticketRepository;
     }
 
     /**
-     *  This method initializes the data for the repositories.
+     * This method initializes the data for the repositories.
      */
     public void initializeData() throws GenerateException {
         confirmRepositoryNotNull(this.usersRepository,
                 this.eventsRepository,
-                this.ticketCategoriesRepository);
+                this.ticketRepository);
 
-        final int amountOfLocations = this.generateLocations(this.eventsRepository);
-        final int amountOfUsers = this.generateUsers(this.usersRepository);
-        final int amountOfEvents = this.generateEvents(this.eventsRepository);
-        final int amountOfTicketCategories = this.generateTicketCategories(this.ticketCategoriesRepository);
-        final int amountOfTickets = this.generateTickets(this.usersRepository, this.ticketCategoriesRepository);
+        final int amountOfLocations = generateLocations(this.eventsRepository);
+        final int amountOfUsers = generateUsers(this.usersRepository);
+        final int amountOfEvents = generateEvents(this.eventsRepository);
+        final int amountOfTicketCategories = generateTicketCategories(this.ticketRepository);
+        final int amountOfTickets = generateTickets(this.usersRepository,
+                this.ticketRepository);
 
         Logger.info("Generated " + amountOfUsers + " users");
         Logger.info("Generated " + amountOfEvents + " events");
@@ -64,22 +74,25 @@ public class DataGenerator {
 
     /**
      * Checks if repositories are null.
+     *
      * @param repositories Repositories that can't be null
      * @param <T>
      * @throws GenerateException
      */
     @SafeVarargs
     private final <T> void confirmRepositoryNotNull(T... repositories) throws GenerateException {
-        for(T repository : repositories) {
-            if(repository == null) {
-                throw new GenerateException("There can't be any null repositories when generating the data.",
+        for (T repository : repositories) {
+            if (repository == null) {
+                throw new GenerateException("There can't be any null repositories " +
+                        "when generating the data.",
                         new NullPointerException("At least one repository was null"));
             }
         }
     }
 
     /**
-     *  Generate demo users.
+     * Generate demo users.
+     *
      * @param usersRepository The repository in which the users will be generated.
      * @return Returns the amount of users generated.
      * @throws GenerateException Exception thrown, if the generation failed.
@@ -88,18 +101,18 @@ public class DataGenerator {
     private int generateUsers(final UsersRepository usersRepository) throws GenerateException {
         try {
             final List<User> users = getDemoUsers();
-            for(User user : users) {
+            for (User user : users) {
                 usersRepository.registerUser(user);
             }
             return users.size();
-        }
-        catch(ParseException parseException) {
+        } catch (ParseException parseException) {
             throw new GenerateException("Failed generating users", parseException);
         }
     }
 
     /**
-     *  Generate demo events
+     * Generate demo events
+     *
      * @param eventsRepository The repository in which the events will be generated.
      * @return Returns the amount of event generated.
      * @throws GenerateException Exception thrown, if the generation failed.
@@ -112,36 +125,36 @@ public class DataGenerator {
                 eventsRepository.registerEvent(event);
             }
             return events.size();
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             throw new GenerateException("Failed to generate events", exception);
         }
     }
 
     @Transactional
-    private int generateTicketCategories(final TicketCategoriesRepository ticketCategoriesRepository) throws GenerateException {
+    private int generateTicketCategories(final TicketRepository ticketRepository)
+            throws GenerateException {
         try {
             List<TicketCategory> ticketCategories = getDemoTicketCategories(eventsRepository);
             for (TicketCategory ticketCategory : ticketCategories) {
-                ticketCategoriesRepository.registerTicketCategory(ticketCategory);
+                ticketRepository.registerTicketCategory(ticketCategory);
             }
             return ticketCategories.size();
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             throw new GenerateException("Failed to generate ticket categories", exception);
         }
     }
 
     @Transactional
-    private int generateTickets(final UsersRepository usersRepository, final TicketCategoriesRepository ticketCategoriesRepository) throws GenerateException {
+    private int generateTickets(final UsersRepository usersRepository,
+                                final TicketRepository ticketRepository)
+            throws GenerateException {
         try {
-            List<Ticket> tickets = getDemoTickets(usersRepository, ticketCategoriesRepository);
+            List<Ticket> tickets = getDemoTickets(usersRepository, ticketRepository);
             for (Ticket ticket : tickets) {
-                ticketCategoriesRepository.persistTicket(ticket);
+                ticketRepository.persistTicket(ticket);
             }
             return tickets.size();
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             throw new GenerateException("Failed to generate ticket categories", exception);
         }
     }
@@ -150,22 +163,25 @@ public class DataGenerator {
     private int generateLocations(EventsRepository eventsRepository) throws GenerateException {
         try {
             List<Location> locations = this.getDemoLocations();
-            for(Location location : locations) {
+            for (Location location : locations) {
                 eventsRepository.addLocation(location);
             }
             return locations.size();
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             throw new GenerateException("Failed to generate locations", exception);
         }
     }
 
     private List<User> getDemoUsers() throws ParseException {
         final List<User> users = new ArrayList<>(INITIAL_USERS_CAPACITY);
-        users.add(new User(null, "silvio.berlusconi@italy.it", "Berlusconi","Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
-        users.add(new User(null, "i.beller@cervelat.de", "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE));
-        users.add(new User(null, "franz.becki@idc.yolo", "Beckenbauer", "Franz Anton",this.dateFormat.parse("1945-09-11"), Gender.MALE));
-        users.add(new User(null, "g.n@netz.los", "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
+        users.add(new User(null, "silvio.berlusconi@italy.it",
+                "Berlusconi", "Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
+        users.add(new User(null, "i.beller@cervelat.de",
+                "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE));
+        users.add(new User(null, "franz.becki@idc.yolo",
+                "Beckenbauer", "Franz Anton", this.dateFormat.parse("1945-09-11"), Gender.MALE));
+        users.add(new User(null, "g.n@netz.los",
+                "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
 
         return users;
     }
@@ -174,10 +190,14 @@ public class DataGenerator {
         final Location kaufleuten = eventsRepository.getLocationById(1);
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
-        events.add(new Event(null, "Bobba Fett Party", "Sei wie Bobba. Sei Fett.", kaufleuten));
-        events.add(new Event(null, "Nachtseminar", "DIE Party für Studis", plaza));
-        events.add(new Event (null, "Duschi Abgstellt Party", "Party für Fussballer nach dem Duschen", kaufleuten));
-        events.add(new Event(null,"Silvios Bunga Bunga Party", "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
+        events.add(new Event(null, "Bobba Fett Party",
+                "Sei wie Bobba. Sei Fett.", kaufleuten));
+        events.add(new Event(null, "Nachtseminar",
+                "DIE Party für Studis", plaza));
+        events.add(new Event(null, "Duschi Abgstellt Party",
+                "Party für Fussballer nach dem Duschen", kaufleuten));
+        events.add(new Event(null, "Silvios Bunga Bunga Party",
+                "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
         return events;
     }
 
@@ -189,26 +209,54 @@ public class DataGenerator {
         final List<TicketCategory> ticketCategories = new ArrayList<>(INITIAL_TICKET_CATEGORY_CAPACITY);
 
         /* Bobba Fett Party */
-        ticketCategories.add(new TicketCategory(null, "Vorverkauf", "Das Vorverkaufsticket der Extraklasse", bobbaFettParty, 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Abendkasse", "Das übliche Ticket an der Abendkasse", bobbaFettParty, 25.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
+        ticketCategories.add(new TicketCategory(null,
+                "Vorverkauf", "Das Vorverkaufsticket der Extraklasse",
+                bobbaFettParty, 15.00, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null,
+                "Abendkasse", "Das übliche Ticket an der Abendkasse",
+                bobbaFettParty, 25.00, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
 
         /* Studi Party */
-        ticketCategories.add(new TicketCategory(null, "Early Bird", "Wenn du vor 12 Uhr kommst, erhälst du gratis Eintritt.", studiParty, 0.0, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Abendkasse", "Nach 12 Uhr musst du für den Eintritt bezahlen. Aber immernoch Studipreis :)", studiParty, 5.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
+        ticketCategories.add(new TicketCategory(null,
+                "Early Bird", "Wenn du vor 12 Uhr kommst, erhälst du gratis Eintritt.",
+                studiParty, 0.0, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null,
+                "Abendkasse", "Nach 12 Uhr musst du für den " +
+                "Eintritt bezahlen. Aber immernoch Studipreis :)",
+                studiParty, 5.00, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
 
         /* Duschi Party */
-        ticketCategories.add(new TicketCategory(null, "Stürmer Ticket", "Wenn du ein Stürmer bist. Inklusive Salat.", duschiParty, 5.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Mittelfeld Ticket", "Für Mittelfeldspieler. Inklusive Rüebli.", duschiParty, 10.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Verteidiger Ticket", "Die Verteidiger müssen standhaft sein. Inklusive Cervelat", duschiParty, 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Goalie Ticket", "Flinke Hände. Red Bull Inklusive", duschiParty, 20.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
+        ticketCategories.add(new TicketCategory(null,
+                "Stürmer Ticket", "Wenn du ein Stürmer bist. Inklusive Salat.",
+                duschiParty, 5.00, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null,
+                "Mittelfeld Ticket",
+                "Für Mittelfeldspieler. Inklusive Rüebli.",
+                duschiParty, 10.00, dateFormat.parse("2017-4-20"),
+                dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null, "Verteidiger Ticket",
+                "Die Verteidiger müssen standhaft sein. Inklusive Cervelat",
+                duschiParty, 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null, "Goalie Ticket",
+                "Flinke Hände. Red Bull Inklusive", duschiParty,
+                20.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
 
         /* Silvios Party */
-        ticketCategories.add(new TicketCategory(null, "Silvios Freundschaft", "Wenn du mit Silvio befreundet bist.", silviosParty, 3455.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
-        ticketCategories.add(new TicketCategory(null, "Nur Bekannter Ticket", "Nur ein Bekannter des Presidente.", silviosParty, 6545.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") ));
+        ticketCategories.add(new TicketCategory(null, "Silvios Freundschaft",
+                "Wenn du mit Silvio befreundet bist.", silviosParty,
+                3455.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+        ticketCategories.add(new TicketCategory(null, "Nur Bekannter Ticket",
+                "Nur ein Bekannter des Presidente.", silviosParty, 6545.00,
+                dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
         return ticketCategories;
     }
 
-    private List<Ticket> getDemoTickets(final UsersRepository usersRepository, final TicketCategoriesRepository ticketCategoriesRepository) {
+    private List<Ticket> getDemoTickets(final UsersRepository usersRepository, final TicketRepository ticketRepository) {
         final List<Ticket> tickets = new ArrayList<>(INITIAL_TICKET_CAPACITY);
 
         /* Users */
@@ -218,19 +266,19 @@ public class DataGenerator {
         final User guenther = usersRepository.getUserById(4);
 
         /* Categories */
-        final TicketCategory bobbaFett1 = ticketCategoriesRepository.getTicketCategoryById(1);
-        final TicketCategory bobbaFett2 = ticketCategoriesRepository.getTicketCategoryById(2);
+        final TicketCategory bobbaFett1 = ticketRepository.getTicketCategoryById(1);
+        final TicketCategory bobbaFett2 = ticketRepository.getTicketCategoryById(2);
 
-        final TicketCategory studi1 = ticketCategoriesRepository.getTicketCategoryById(3);
-        final TicketCategory studi2 = ticketCategoriesRepository.getTicketCategoryById(4);
+        final TicketCategory studi1 = ticketRepository.getTicketCategoryById(3);
+        final TicketCategory studi2 = ticketRepository.getTicketCategoryById(4);
 
-        final TicketCategory duschi1 = ticketCategoriesRepository.getTicketCategoryById(5);
-        final TicketCategory duschi2 = ticketCategoriesRepository.getTicketCategoryById(6);
-        final TicketCategory duschi3 = ticketCategoriesRepository.getTicketCategoryById(7);
-        final TicketCategory duschi4 = ticketCategoriesRepository.getTicketCategoryById(8);
+        final TicketCategory duschi1 = ticketRepository.getTicketCategoryById(5);
+        final TicketCategory duschi2 = ticketRepository.getTicketCategoryById(6);
+        final TicketCategory duschi3 = ticketRepository.getTicketCategoryById(7);
+        final TicketCategory duschi4 = ticketRepository.getTicketCategoryById(8);
 
-        final TicketCategory silvio1 = ticketCategoriesRepository.getTicketCategoryById(9);
-        final TicketCategory silvio2 = ticketCategoriesRepository.getTicketCategoryById(10);
+        final TicketCategory silvio1 = ticketRepository.getTicketCategoryById(9);
+        final TicketCategory silvio2 = ticketRepository.getTicketCategoryById(10);
 
         /* Bobba Fett Party */
         tickets.add(bobbaFett1.sellTicket(silvio));
@@ -253,8 +301,14 @@ public class DataGenerator {
     private List<Location> getDemoLocations() {
         List<Location> locations = new ArrayList<>(INITIAL_LOCATION_CAPACITY);
 
-        locations.add(new Location(null, "Kaufleuten", "Der beste Klub der Schweiz.", null));
-        locations.add(new Location(null, "Plaza", "Der andere beste Klub der Schweiz", "ChIJIXJ33hsKkEcRTTvRa3eNxd0"));
+        locations.add(new Location(null,
+                "Kaufleuten",
+                "Der beste Klub der Schweiz.",
+                "ChIJ7ZMwUgEKkEcRjV6Q7jc2y1I"));
+        locations.add(new Location(null,
+                "Plaza",
+                "Der andere beste Klub der Schweiz",
+                "ChIJIXJ33hsKkEcRTTvRa3eNxd0"));
 
         return locations;
     }
