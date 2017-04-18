@@ -3,6 +3,8 @@ package dal.events;
 import models.events.Event;
 import models.events.Location;
 
+import java.util.List;
+
 /**
  * Created by Esteban Luchsinger on 06.04.2017.
  * The EventsRepository handles the CRUD operations in regards of {@link Event}
@@ -34,4 +36,10 @@ public interface EventsRepository {
      * @param location The location to be added to the repository.
      */
     void addLocation(Location location);
+
+    /**
+     * Get All Events from repository.
+     * @return Returns a List of all Events.
+     */
+    List<Event> getEvents();
 }
