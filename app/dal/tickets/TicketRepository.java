@@ -1,4 +1,4 @@
-package dal.ticket_categories;
+package dal.tickets;
 
 import models.events.TicketCategory;
 import models.tickets.Ticket;
@@ -7,7 +7,7 @@ import models.tickets.Ticket;
  * Created by Fabian Schwyter on 09.04.2017.
  * Handles the ticketing operations.
  */
-public interface TicketCategoriesRepository {
+public interface TicketRepository {
 
     /**
      * Adds a new {@link TicketCategory} to the repository.

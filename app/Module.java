@@ -5,8 +5,8 @@ import config.StartupConfiguration;
 import config.StartupConfigurationImpl;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryJPA;
-import dal.ticket_categories.TicketCategoriesRepository;
-import dal.ticket_categories.TicketCategoriesRepositoryJPA;
+import dal.tickets.TicketRepository;
+import dal.tickets.TicketRepositoryJPA;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryJPA;
 import logic.events.EventsLogic;
@@ -48,7 +48,7 @@ public class Module extends AbstractModule {
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class);
         bind(EventsRepository.class).to(EventsRepositoryJPA.class);
-        bind(TicketCategoriesRepository.class).to(TicketCategoriesRepositoryJPA.class);
+        bind(TicketRepository.class).to(TicketRepositoryJPA.class);
 
         bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();
     }

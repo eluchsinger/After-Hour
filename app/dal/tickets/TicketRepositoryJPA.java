@@ -1,4 +1,4 @@
-package dal.ticket_categories;
+package dal.tickets;
 
 import models.events.TicketCategory;
 import models.tickets.Ticket;
@@ -10,11 +10,11 @@ import javax.persistence.EntityManager;
 /**
  * Created by Fabian on 09.04.2017.
  */
-public class TicketCategoriesRepositoryJPA implements TicketCategoriesRepository {
+public class TicketRepositoryJPA implements TicketRepository {
     public JPAApi jpaApi;
 
     @Inject
-    public TicketCategoriesRepositoryJPA(JPAApi jpaApi){
+    public TicketRepositoryJPA(JPAApi jpaApi){
         this.jpaApi = jpaApi;
     }
 
