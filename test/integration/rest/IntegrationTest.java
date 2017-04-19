@@ -28,7 +28,7 @@ public class IntegrationTest {
     @Before
     public void initalize() {
         this.application = new GuiceApplicationBuilder()
-            .build();
+                .build();
     }
 
     @Test

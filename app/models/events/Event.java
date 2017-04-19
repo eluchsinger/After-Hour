@@ -94,7 +94,7 @@ public class Event {
     }
 
     public void addCoatCheck(CoatCheck coatCheck){
-       coatChecks.add(coatCheck);
+        coatChecks.add(coatCheck);
     }
 
     public List<CoatCheck> getCoatChecks(){

@@ -3,11 +3,9 @@ package models.users;
 
 import models.tickets.Ticket;
 import models.utils.TimeIgnoringDateComparator;
-import org.joda.time.DateTimeComparator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
