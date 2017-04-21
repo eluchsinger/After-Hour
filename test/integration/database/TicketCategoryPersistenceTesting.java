@@ -1,6 +1,5 @@
 package integration.database;
 
-import com.google.inject.Guice;
 import dal.events.EventsRepositoryJPA;
 import dal.tickets.TicketRepositoryJPA;
 import models.events.Event;
@@ -8,13 +7,8 @@ import models.events.TicketCategory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import play.Environment;
 import play.db.jpa.JPAApi;
-import play.inject.guice.GuiceApplicationBuilder;
-import play.inject.guice.GuiceApplicationLoader;
 import play.test.WithApplication;
-
-import javax.inject.Inject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,15 +20,10 @@ import static junit.framework.TestCase.assertTrue;
  * Created by Fabian on 09.04.2017.
  */
 public class TicketCategoryPersistenceTesting extends WithApplication {
-    @Inject
-    private JPAApi jpaApi;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     @Before
     public void setup() {
-        GuiceApplicationBuilder builder = new GuiceApplicationLoader()
-                .builder(new play.ApplicationLoader.Context(Environment.simple()));
-        Guice.createInjector(builder.applicationModule()).injectMembers(this);
     }
 
     @After
@@ -43,7 +32,8 @@ public class TicketCategoryPersistenceTesting extends WithApplication {
 
     @Test
     public void testRegisterNewTicketCategoryWithoutEvent(){
-        this.jpaApi.withTransaction(() -> {
+        final JPAApi jpaApi = this.app.injector().instanceOf(JPAApi.class);
+        jpaApi.withTransaction(() -> {
             TicketRepositoryJPA repository = new TicketRepositoryJPA(jpaApi);
             try {
                 TicketCategory expectedTicketCategory = new TicketCategory(null, "Studenten Ticket", "Ticket für Studenten", null, 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20") );
@@ -54,13 +44,13 @@ public class TicketCategoryPersistenceTesting extends WithApplication {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
         });
     }
 
     @Test
     public void testReferenceFromTicketCategoryToEvent(){
-        this.jpaApi.withTransaction(() -> {
+        final JPAApi jpaApi = this.app.injector().instanceOf(JPAApi.class);
+        jpaApi.withTransaction(() -> {
             TicketRepositoryJPA ticketCategoriesRepositoryJPA = new TicketRepositoryJPA(jpaApi);
             EventsRepositoryJPA eventsRepositoryJPA = new EventsRepositoryJPA(jpaApi);
             try {
