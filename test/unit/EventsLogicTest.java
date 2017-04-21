@@ -10,11 +10,9 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
 import models.events.Event;
-import org.junit.Before;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
-import play.test.Helpers;
 import play.test.WithApplication;
 
 import static junit.framework.TestCase.assertEquals;
@@ -25,11 +23,10 @@ import static play.inject.Bindings.bind;
  */
 
 public class EventsLogicTest extends WithApplication {
-    private Application application;
 
-    @Before
-    public void initalize(){
-        this.application = new GuiceApplicationBuilder()
+    @Override
+    protected Application provideApplication() {
+        return new GuiceApplicationBuilder()
                 .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
                 .overrides(bind(TicketRepository.class).to(TicketMock.class))
@@ -39,10 +36,8 @@ public class EventsLogicTest extends WithApplication {
 
     @Test
     public void testGetExistingEvent(){
-        Helpers.running(this.application, () -> {
-            EventsLogic domain = this.application.injector().instanceOf(EventsLogic.class);
-            Event event = domain.getEventById(2);
-            assertEquals(new Integer (2), event.getId());
-        });
+        EventsLogic domain = this.app.injector().instanceOf(EventsLogic.class);
+        Event event = domain.getEventById(2);
+        assertEquals(new Integer (2), event.getId());
     }
 }
