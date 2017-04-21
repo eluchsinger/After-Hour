@@ -20,7 +20,7 @@ import static junit.framework.TestCase.assertTrue;
  * Created by Fabian on 09.04.2017.
  */
 public class TicketCategoryPersistenceTesting extends WithApplication {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Before
     public void setup() {
