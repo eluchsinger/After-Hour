@@ -13,15 +13,13 @@ import models.users.User;
 import org.junit.Before;
 import org.junit.Test;
 import play.Application;
-import play.inject.Injector;
 import play.inject.guice.GuiceApplicationBuilder;
+import play.test.Helpers;
 import play.test.WithApplication;
 
 import java.text.SimpleDateFormat;
 
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.*;
 import static play.inject.Bindings.bind;
 
 /**
@@ -31,7 +29,6 @@ public class UsersLogicTest extends WithApplication {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     private Application application;
-    private Injector injector;
 
     @Before
     public void initalize(){
@@ -41,27 +38,32 @@ public class UsersLogicTest extends WithApplication {
                 .overrides(bind(TicketRepository.class).to(TicketMock.class))
                 .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
                 .build();
-        this.injector = application.injector();
     }
 
     @Test
     public void testGetExistingUserById() {
-        UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
-        User expectedUser = domain.getUserById(1);
-        assertNotNull(expectedUser);
+        Helpers.running(this.application, () -> {
+            UsersLogic domain = this.application.injector().instanceOf(UsersLogic.class);
+            User expectedUser = domain.getUserById(1);
+            assertNotNull(expectedUser);
+        });
     }
 
     @Test
     public void testGetNonExistingUserById() {
-        UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
-        User expectedUser = domain.getUserById(123123123);
-        assertNull(expectedUser);
+        Helpers.running(this.application, () -> {
+            UsersLogic domain = this.application.injector().instanceOf(UsersLogic.class);
+            User expectedUser = domain.getUserById(123123123);
+            assertNull(expectedUser);
+        });
     }
 
     @Test
     public void testUserGeneratingId(){
-        UsersLogic domain = this.injector.instanceOf(UsersLogic.class);
-        User user = domain.getUserById(2);
-        assertEquals(user.getId(), new Integer(2));
+        Helpers.running(this.application, () -> {
+            UsersLogic domain = this.application.injector().instanceOf(UsersLogic.class);
+            User user = domain.getUserById(2);
+            assertEquals(user.getId(), new Integer(2));
+        });
     }
 }

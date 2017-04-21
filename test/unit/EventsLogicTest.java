@@ -13,8 +13,8 @@ import models.events.Event;
 import org.junit.Before;
 import org.junit.Test;
 import play.Application;
-import play.inject.Injector;
 import play.inject.guice.GuiceApplicationBuilder;
+import play.test.Helpers;
 import play.test.WithApplication;
 
 import static junit.framework.TestCase.assertEquals;
@@ -26,7 +26,6 @@ import static play.inject.Bindings.bind;
 
 public class EventsLogicTest extends WithApplication {
     private Application application;
-    private Injector injector;
 
     @Before
     public void initalize(){
@@ -36,13 +35,14 @@ public class EventsLogicTest extends WithApplication {
                 .overrides(bind(TicketRepository.class).to(TicketMock.class))
                 .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
                 .build();
-        this.injector = application.injector();
     }
 
     @Test
     public void testGetExistingEvent(){
-        EventsLogic domain = this.injector.instanceOf(EventsLogic.class);
-        Event event= domain.getEventById(2);
-        assertEquals(new Integer (2), event.getId());
+        Helpers.running(this.application, () -> {
+            EventsLogic domain = this.application.injector().instanceOf(EventsLogic.class);
+            Event event = domain.getEventById(2);
+            assertEquals(new Integer (2), event.getId());
+        });
     }
 }
