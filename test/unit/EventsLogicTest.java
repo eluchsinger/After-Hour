@@ -4,8 +4,8 @@ import config.StartupConfiguration;
 import config.StartupConfigurationMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
-import dal.tickets.TicketMock;
 import dal.tickets.TicketRepository;
+import dal.tickets.TicketRepositoryMock;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
@@ -19,9 +19,10 @@ import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
 
 /**
- * Created by Fabian on 08.04.17.
+ * Created by Fabian Schwyter on 08.04.17.
+ * Tests the logic of the "Events"-Domain.
+ * To test logic-only, the database is mocked.
  */
-
 public class EventsLogicTest extends WithApplication {
 
     @Override
@@ -29,15 +30,15 @@ public class EventsLogicTest extends WithApplication {
         return new GuiceApplicationBuilder()
                 .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
-                .overrides(bind(TicketRepository.class).to(TicketMock.class))
+                .overrides(bind(TicketRepository.class).to(TicketRepositoryMock.class))
                 .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
                 .build();
     }
 
     @Test
     public void testGetExistingEvent(){
-        EventsLogic domain = this.app.injector().instanceOf(EventsLogic.class);
-        Event event = domain.getEventById(2);
+        final EventsLogic eventsLogic = this.app.injector().instanceOf(EventsLogic.class);
+        final Event event = eventsLogic.getEventById(2);
         assertEquals(new Integer (2), event.getId());
     }
 }

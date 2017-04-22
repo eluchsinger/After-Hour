@@ -30,6 +30,7 @@ public class UsersController extends Controller {
         return notFound("Not implemented");
     }
 
+    @Transactional
     public Result getUserByEmail(String email){
         User user = this.usersLogic.getUserByEmail(email);
         return ok(Json.toJson(user));
