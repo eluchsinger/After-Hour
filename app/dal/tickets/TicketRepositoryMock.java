@@ -6,13 +6,12 @@ import models.tickets.Ticket;
 import java.util.List;
 
 /**
- * Created by Fabian on 17.04.2017.
+ * Created by Fabian Schwyter on 17.04.2017.
+ * Handles the ticket operations using a mocked datasource.
  */
-public class TicketMock implements TicketRepository {
+public class TicketRepositoryMock implements TicketRepository {
     private List<TicketCategory> ticketCategories;
     private List<Ticket> tickets;
-
-
 
     @Override
     public void registerTicketCategory(TicketCategory ticketCategory) {

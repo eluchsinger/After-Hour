@@ -12,6 +12,8 @@ import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
+ * The EventsRepository handles the CRUD operations in regards of {@link User}
+ * Uses a mock to persist changes.
  */
 public class UsersRepositoryMock implements UsersRepository {
     private final static int INITIAL_USER_CAPACITY = 10;

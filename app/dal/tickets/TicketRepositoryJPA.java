@@ -9,9 +9,10 @@ import javax.persistence.EntityManager;
 
 /**
  * Created by Fabian on 09.04.2017.
+ * Handles the ticketing operations using the database.
  */
 public class TicketRepositoryJPA implements TicketRepository {
-    public JPAApi jpaApi;
+    private final JPAApi jpaApi;
 
     @Inject
     public TicketRepositoryJPA(JPAApi jpaApi){

@@ -7,7 +7,9 @@ import play.Logger;
 import javax.inject.Inject;
 
 /**
- * Created by Fabian on 17.04.2017.
+ * Created by Fabian Schwyter on 17.04.2017.
+ * Configures the application after initialization
+ * using the default "mock" configuration.
  */
 public class StartupConfigurationMock implements StartupConfiguration{
     private final DataGenerator dataGenerator;

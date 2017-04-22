@@ -5,25 +5,24 @@ import dal.users.UsersRepository;
 import models.events.TicketCategory;
 import models.tickets.Ticket;
 import models.users.User;
-import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
 
 /**
  * Created by Fabian on 08.04.17.
+ * Handles the whole sales problem domain.
+ * (Buying tickets, drinks, etc.)
  */
 public class SalesLogicImpl implements SalesLogic{
 
-    private TicketRepository ticketRepository;
-    private UsersRepository usersRepository;
-    private JPAApi jpaApi;
+    private final TicketRepository ticketRepository;
+    private final UsersRepository usersRepository;
 
     @Inject
-    public SalesLogicImpl(JPAApi jpaApi, final TicketRepository ticketRepository,
+    public SalesLogicImpl(final TicketRepository ticketRepository,
                           final UsersRepository usersRepository) {
         this.ticketRepository = ticketRepository;
         this.usersRepository = usersRepository;
-        this.jpaApi = jpaApi;
     }
 
     /**

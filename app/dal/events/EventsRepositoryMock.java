@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Fabian on 08.04.17.
+ * Created by Fabian Schwyter on 08.04.17.
  */
 public class EventsRepositoryMock implements EventsRepository {
     private List<Event> events;
