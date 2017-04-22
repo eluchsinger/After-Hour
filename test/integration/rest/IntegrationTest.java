@@ -74,7 +74,7 @@ public class IntegrationTest extends WithApplication{
 
         final Http.RequestBuilder checkUserRequest = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/user/elon.musk@hsr.ch");
+                .uri("/users/mail/elon.musk@hsr.ch");
         final Result checkUserResult = route(checkUserRequest);
         TestCase.assertEquals(OK, checkUserResult.status());
     }
