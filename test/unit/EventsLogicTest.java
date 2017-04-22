@@ -19,9 +19,10 @@ import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
 
 /**
- * Created by Fabian on 08.04.17.
+ * Created by Fabian Schwyter on 08.04.17.
+ * Tests the logic of the "Events"-Domain.
+ * To test logic-only, the database is mocked.
  */
-
 public class EventsLogicTest extends WithApplication {
 
     @Override
@@ -36,8 +37,8 @@ public class EventsLogicTest extends WithApplication {
 
     @Test
     public void testGetExistingEvent(){
-        EventsLogic domain = this.app.injector().instanceOf(EventsLogic.class);
-        Event event = domain.getEventById(2);
+        final EventsLogic eventsLogic = this.app.injector().instanceOf(EventsLogic.class);
+        final Event event = eventsLogic.getEventById(2);
         assertEquals(new Integer (2), event.getId());
     }
 }
