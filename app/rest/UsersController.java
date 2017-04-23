@@ -10,6 +10,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.Map;
 
 public class UsersController extends Controller {
     private DemoData demoData;
@@ -32,13 +33,12 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result login(){
-        JsonNode json = request().body().asJson();
-        String loginData = Json.fromJson(json, String.class);
-        String[] emailAndPassword = loginData.split(";");
-        String email = emailAndPassword[0];
-        String password = emailAndPassword[1];
-        User user = this.usersLogic.getUserByEmail(email);
-        if(user.compareWithPassword(password)){
+        Map<String, String[]> loginData = request().body().asFormUrlEncoded();
+        User user = this.usersLogic.getUserByEmail(loginData.get("email")[0]);
+        if (user == null) {
+            return badRequest("Incorrect username!");
+        }
+        if(user.compareWithPassword(loginData.get("password")[0])){
             return ok();
         } else {
             return badRequest("Incorrect password!");

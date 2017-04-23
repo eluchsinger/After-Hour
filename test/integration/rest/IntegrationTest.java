@@ -12,6 +12,10 @@ import play.test.WithApplication;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import static play.test.Helpers.*;
 
@@ -47,22 +51,26 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testLoginCorrect(){
-        JsonNode loginData = Json.toJson("silvio.berlusconi@italy.it;123456");
+        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        loginData.put("email", new String[]{"silvio.berlusconi@italy.it"});
+        loginData.put("password", new String[]{"123456"});
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(POST)
                 .uri("/users/login")
-                .bodyJson(loginData);
+                .bodyFormArrayValues(loginData);
         final Result result = route(request);
         TestCase.assertEquals(OK, result.status());
     }
 
     @Test
     public void testLoginIncorrect(){
-        JsonNode loginData = Json.toJson("silvio.berlusconi@italy.it;123457");
+        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        loginData.put("email", new String[]{"silvio.berlusconi@italy.it"});
+        loginData.put("password", new String[]{"1234567"});
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(POST)
                 .uri("/users/login")
-                .bodyJson(loginData);
+                .bodyFormArrayValues(loginData);
         final Result result = route(request);
         TestCase.assertEquals(BAD_REQUEST, result.status());
     }
