@@ -31,6 +31,16 @@ public class UsersController extends Controller {
     }
 
     @Transactional
+    public Result login(String email, String password){
+        User user = this.usersLogic.getUserByEmail(email);
+        if(user.compareWithPassword(password)){
+            return ok();
+        } else {
+            return badRequest("Incorrect password!");
+        }
+    }
+
+    @Transactional
     public Result getUserByEmail(String email){
         User user = this.usersLogic.getUserByEmail(email);
         return ok(Json.toJson(user));
