@@ -31,7 +31,12 @@ public class UsersController extends Controller {
     }
 
     @Transactional
-    public Result login(String email, String password){
+    public Result login(){
+        JsonNode json = request().body().asJson();
+        String loginData = Json.fromJson(json, String.class);
+        String[] emailAndPassword = loginData.split(";");
+        String email = emailAndPassword[0];
+        String password = emailAndPassword[1];
         User user = this.usersLogic.getUserByEmail(email);
         if(user.compareWithPassword(password)){
             return ok();

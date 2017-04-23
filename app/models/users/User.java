@@ -58,9 +58,22 @@ public class User {
         tickets = new ArrayList<>(TICKETS_INIT_SIZE);
     }
 
+    //Default Password
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(id, email, lastName, firstName, dateOfBirth, gender, "123456");
+    }
+
+    //DB generated ID
     public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password) {
         this(null, email, lastName, firstName, dateOfBirth, gender, password);
     }
+
+    //DB generated ID and default password
+    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(null, email, lastName, firstName, dateOfBirth, gender, "123456");
+    }
+
+
     //endregion Constructors
 
     public Date getDateOfBirth(){

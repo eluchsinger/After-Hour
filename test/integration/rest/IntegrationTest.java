@@ -45,6 +45,27 @@ public class IntegrationTest extends WithApplication{
         TestCase.assertEquals(OK, result.status());
     }
 
+    @Test
+    public void testLoginCorrect(){
+        JsonNode loginData = Json.toJson("silvio.berlusconi@italy.it;123456");
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/login")
+                .bodyJson(loginData);
+        final Result result = route(request);
+        TestCase.assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testLoginIncorrect(){
+        JsonNode loginData = Json.toJson("silvio.berlusconi@italy.it;123457");
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/login")
+                .bodyJson(loginData);
+        final Result result = route(request);
+        TestCase.assertEquals(BAD_REQUEST, result.status());
+    }
 
     @Test
     public void testCreateUserFromJson() throws ParseException {
