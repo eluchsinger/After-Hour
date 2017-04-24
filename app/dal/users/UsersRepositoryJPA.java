@@ -3,19 +3,19 @@ package dal.users;
 import models.users.User;
 import play.Logger;
 import play.db.jpa.JPAApi;
-import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
-import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
+ * The EventsRepository handles the CRUD operations in regards of {@link User}
+ * Uses a database to persist the changes.
  */
 public class UsersRepositoryJPA implements UsersRepository {
-    public JPAApi jpaApi;
+    private final JPAApi jpaApi;
 
     @Inject
     public UsersRepositoryJPA(JPAApi jpaApi) {
@@ -23,14 +23,12 @@ public class UsersRepositoryJPA implements UsersRepository {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User getUserById(Integer userId) {
         EntityManager em = jpaApi.em();
         return em.find(User.class, userId);
     }
 
     @Override
-    @Transactional
     public User getUserByEmail(String email) {
         EntityManager em = jpaApi.em();
         TypedQuery<User> q = em.createNamedQuery("User.getUserByEmail", User.class);
@@ -39,14 +37,12 @@ public class UsersRepositoryJPA implements UsersRepository {
     }
 
     @Override
-    @Transactional
     public void registerUser(User user) {
         EntityManager em = jpaApi.em();
         em.persist(user);
     }
 
     @Override
-    @Transactional
     public boolean removeUserById(Integer userId) {
         EntityManager em = jpaApi.em();
         User userToRemove = em.find(User.class, userId);
@@ -77,7 +73,6 @@ public class UsersRepositoryJPA implements UsersRepository {
      * @return True, if resetted successfully.
      */
     @Override
-    @Transactional
     public void resetRepository() {
         Logger.warn("Resetting the Users Repository.");
         EntityManager em = jpaApi.em();

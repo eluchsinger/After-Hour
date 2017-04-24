@@ -9,6 +9,8 @@ import javax.inject.Inject;
 
 /**
  * Created by Esteban Luchsinger on 08.04.2017.
+ * Configures the application after initialization
+ * using the default "production" configuration.
  */
 public class StartupConfigurationImpl implements StartupConfiguration {
 
@@ -16,7 +18,8 @@ public class StartupConfigurationImpl implements StartupConfiguration {
     private final JPAApi jpaApi;
 
     @Inject
-    public StartupConfigurationImpl(final DataGenerator dataGenerator, final JPAApi jpaApi) throws GenerateException {
+    public StartupConfigurationImpl(final DataGenerator dataGenerator,
+                                    final JPAApi jpaApi) throws GenerateException {
         this.dataGenerator = dataGenerator;
         this.jpaApi = jpaApi;
         init();
@@ -32,6 +35,5 @@ public class StartupConfigurationImpl implements StartupConfiguration {
                 Logger.error(exception.getMessage());
             }
         });
-
     }
 }

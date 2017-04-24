@@ -35,6 +35,7 @@ public class User {
     private Date dateOfBirth;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    private String password;
 
     // Mapped by the name of the attribute on the other side.
     @OneToMany(mappedBy = "user")
@@ -45,19 +46,34 @@ public class User {
         this.id = null;
     }
 
-    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender){
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password){
         this.id = id;
         this.email = email;
         this.lastName = lastName;
         this.firstName = firstName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+        this.password = password;
+
         tickets = new ArrayList<>(TICKETS_INIT_SIZE);
     }
 
-    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
-        this(null, email, lastName, firstName, dateOfBirth, gender);
+    //Default Password
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(id, email, lastName, firstName, dateOfBirth, gender, "123456");
     }
+
+    //DB generated ID
+    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password) {
+        this(null, email, lastName, firstName, dateOfBirth, gender, password);
+    }
+
+    //DB generated ID and default password
+    public User(final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender) {
+        this(null, email, lastName, firstName, dateOfBirth, gender, "123456");
+    }
+
+
     //endregion Constructors
 
     public Date getDateOfBirth(){
@@ -96,6 +112,10 @@ public class User {
     }
 
     public Gender getGender(){ return this.gender; }
+
+    public boolean compareWithPassword(String inputPassword){
+        return inputPassword.equals(password);
+    }
 
     //region Overrides
     @Override
