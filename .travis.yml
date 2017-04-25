@@ -25,9 +25,13 @@ addons:
   code_climate:
     repo_token: 6e864b6e0d8b24e43bd1e907c19017075af69fc4d50a8e183dbfdf174be4fa02
   sonarqube:
-    organization: ""
+    organization: "after-hour"
     token:
       secure: "NxI4829YMyreieJn6MhffpaqWIurbhPt1lvvJ2hbKcE2DGrhUUeunq/rfuKICKcAa0hJFbAB1HbmBHjKp/hFFunvQnQ0I7nuT8/VJ3P1LoQv6lO0caTB3QlhxDFkx5Vx61eW/pJihN8mLnVQqAVZ8Vy/aCbkMLd6ink7mcPD1HDTUlsCLWLfV53IhWpqVz6XSUJp9m0LV7k0nkXxzPFLpGEFVOgahU3N6SFyCeS1NZM8pfWOlIrBgYf5ku/g07f2Our2tiDbr17qp9rk12qrmEBnQfN2yiIp3u0ZTqJ31SpHr1D1C5c8b/6HhIdTsPNhjYtzUiPmKsc/pTlxpZIKqTEJu1HxuXj2n9s0F3VbR39tgfgXcHcZt16BkvBcWz8V10oKcVFAHyDa2E2G9/EoDhXHQRHTfh38/x/Z0jneV2E4fZvfNIikg9U4GwWYT//Hdf1K7vc5WB1PObi885nVYBxlpkM106DTA+WG7fJpsXOUa5ALjqxmP6Pdz6sU6ZvxyJlo9KI22T5b8OjXhLsMFZzUEwI99/Bz46cd7CoRKEBFXQk8tNvzVwMgCdTUuEkM8LC60t3YWE6fhpN/lwERzWGBm7cixL3uPA9fw+0ptH1Thmt4iC2gvVvK4xV0DiX5u0x7NGyl2C1CQAcIK1TMzFU7OA2UyFZWAjPS7fb8mhs="
+    branches:
+      - master
+      - developer
+      - sonar-qube
 script:
   - sonar-scanner
 env:
