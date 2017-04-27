@@ -39,7 +39,7 @@ public class UsersController extends Controller {
             return badRequest("Incorrect username!");
         }
         if(user.compareWithPassword(loginData.get("password")[0])){
-            return ok();
+            return ok(Json.toJson(user));
         } else {
             return badRequest("Incorrect password!");
         }
