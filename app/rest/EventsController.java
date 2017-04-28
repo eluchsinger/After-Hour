@@ -3,9 +3,6 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
-import demoData.DemoData;
-import play.Application;
-import play.Environment;
 import play.Logger;
 import play.api.Play;
 import play.db.jpa.Transactional;
@@ -18,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 22.03.2017.
