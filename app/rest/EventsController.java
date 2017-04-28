@@ -4,11 +4,20 @@ import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
 import demoData.DemoData;
+import play.Application;
+import play.Environment;
+import play.Logger;
+import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -42,5 +51,23 @@ public class EventsController extends Controller {
     public Result getTicket(Integer userId, Integer eventId){
         String result = "User: " + userId + "Ticket: " + eventId;
         return ok(Json.toJson(result));
+    }
+
+    public Result getEventImage(Integer eventId){
+        BufferedImage img;
+
+        try {
+            File file = Play.current().getFile("app/pictures/fab.jpg");
+            img = ImageIO.read(file);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(img, "jpg", baos);
+            byte[] bytes = baos.toByteArray();
+            return ok(bytes);
+        } catch (IOException e) {
+            Logger.error("Tried to Read Image: " + e.getMessage());
+        }
+        return badRequest();
+
     }
 }

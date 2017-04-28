@@ -8,6 +8,7 @@ GET /                                       rest.HomeController.index
 # REST Events
 GET /events                                 rest.EventsController.getAllEvents
 GET /events/:id                             rest.EventsController.getEvent(id: Integer)
+GET  /events/:eventId/image                      rest.EventsController.getEventImage(eventId: Integer)
 
 # REST Users
 GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userId: Integer, eventId: Integer)
