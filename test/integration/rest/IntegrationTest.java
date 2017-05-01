@@ -5,6 +5,7 @@ import junit.framework.TestCase;
 import models.users.Gender;
 import models.users.User;
 import org.junit.Test;
+import play.Logger;
 import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
