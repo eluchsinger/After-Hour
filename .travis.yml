@@ -29,7 +29,7 @@ addons:
     branches:
       - master
       - developer
-      - sonar-qube
+      - refactoring
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test
   - sonar-scanner
