@@ -32,7 +32,7 @@ public class DataGenerator {
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
     private final TicketRepository ticketRepository;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Initializes the DataGenerator using the respositories.
