@@ -3,8 +3,6 @@ sudo: false
 language: scala
 scala:
 - 2.11.7
-script:
-- sbt ++$TRAVIS_SCALA_VERSION test
 jdk:
 - oraclejdk8
 services:
@@ -33,6 +31,7 @@ addons:
       - developer
       - sonar-qube
 script:
+  - sbt ++$TRAVIS_SCALA_VERSION test
   - sonar-scanner
 env:
   global:
