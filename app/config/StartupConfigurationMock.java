@@ -26,7 +26,7 @@ public class StartupConfigurationMock implements StartupConfiguration{
             this.dataGenerator.initializeData();
         }
         catch(Exception exception) {
-            Logger.error(exception.getMessage());
+            Logger.error("Initialization error", exception);
         }
     }
 }

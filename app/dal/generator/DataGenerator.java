@@ -155,7 +155,7 @@ public class DataGenerator {
             }
             return tickets.size();
         } catch (Exception exception) {
-            throw new GenerateException("Failed to generate ticket categories", exception);
+            throw new GenerateException("Failed to generate tickets", exception);
         }
     }
 
