@@ -32,7 +32,7 @@ addons:
       - refactoring
 script:
   - sbt ++$TRAVIS_SCALA_VERSION test
-  - sonar-scanner
+  - sonar-scanner -X
 env:
   global:
     secure: dUtie0BhosErAMGWnxL5lGoYCaTd3FNHIipyXf6dDTVkVEf1fp2UpxMsdYUQi69y2HYXd6MoJX/vmso3VPajtQ4wgG23jFumfqLqSqmj8UhvN6XrIhsqf/YKCHhj++1z0LZFV5I24EzZ2xaiymw5z6tXGN83PoHsrCY4pB70c0s7GuDydilCveVVhoafeE+nma4pO8IGfOccjdCfr8JJzWrws5iBjjlg3StDWxtp8+sazIQ9/gmwNGm6DiACA1D1lK1hmuOibESNNnwyE3DAkAFwQQGhRYODJ+uysJgJK7gz//MVpYk+YOtJffnyBCFrwvcxiQkI4mRWe4ZPM75yaMT2pNbhyT5EppzPqqqQiVoIBX2D3yQOQqmpgzOHqdnIxF9QymHT/5Tvun6r2bZUZX66E6zQN9RWRjr2JGkU9/GJZM1tGUZmiuwqYuYfe5axx5dErheeiZPJVUnvQYb/jjLSD50/JvP5NfXW+FXPoUmuQKcvJszCZL3+GiaKlcjxymcnDyguj14n0bAO/jqKK8veHu3fR4qZrOrWm3OFMswGdyjvu2wa+k+46M3kY1bFZe31b3DIVoy+1VTyD6UilLm74BfnUGD83kQKEaKSOwwqY8t13dYdP0UUDhaNoEASv9FXxbS2WduFDGBWznaKQ6k4nhGeClZn9uggztTFAFs=
