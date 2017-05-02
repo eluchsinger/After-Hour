@@ -3,13 +3,12 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
-import demoData.DemoData;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 22.03.2017.

@@ -32,7 +32,7 @@ public class DataGenerator {
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
     private final TicketRepository ticketRepository;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Initializes the DataGenerator using the respositories.
@@ -294,6 +294,13 @@ public class DataGenerator {
 
         /* Duschi Party */
         tickets.add(duschi1.sellTicket(guenther));
+        tickets.add(duschi2.sellTicket(silvio));
+        tickets.add(duschi3.sellTicket(franz));
+        tickets.add(duschi4.sellTicket(irina));
+
+        tickets.add(silvio1.sellTicket(silvio));
+        tickets.add(silvio1.sellTicket(franz));
+        tickets.add(silvio2.sellTicket(irina));
 
         return tickets;
     }

@@ -1,7 +1,6 @@
 package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import demoData.DemoData;
 import logic.users.UsersLogic;
 import models.users.User;
 import play.db.jpa.Transactional;
@@ -13,12 +12,10 @@ import javax.inject.Inject;
 import java.util.Map;
 
 public class UsersController extends Controller {
-    private DemoData demoData;
     private UsersLogic usersLogic;
 
     @Inject
     public UsersController(UsersLogic usersLogic){
-        this.demoData = DemoData.getInstance();
         this.usersLogic = usersLogic;
     }
 
