@@ -294,6 +294,13 @@ public class DataGenerator {
 
         /* Duschi Party */
         tickets.add(duschi1.sellTicket(guenther));
+        tickets.add(duschi2.sellTicket(silvio));
+        tickets.add(duschi3.sellTicket(franz));
+        tickets.add(duschi4.sellTicket(irina));
+
+        tickets.add(silvio1.sellTicket(silvio));
+        tickets.add(silvio1.sellTicket(franz));
+        tickets.add(silvio2.sellTicket(irina));
 
         return tickets;
     }
