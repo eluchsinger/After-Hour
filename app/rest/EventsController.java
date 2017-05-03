@@ -8,6 +8,7 @@ import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
+import scala.Int;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Base64;
 
 /**
  * Created by Esteban Luchsinger on 22.03.2017.
@@ -55,11 +57,9 @@ public class EventsController extends Controller {
         try {
             File file = Play.current().getFile("app/pictures/fab.jpg");
             img = ImageIO.read(file);
-
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(img, "jpg", baos);
-            byte[] bytes = baos.toByteArray();
-            return ok(bytes);
+            return ok(Base64.getEncoder().encodeToString(baos.toByteArray()));
         } catch (IOException e) {
             Logger.error("Tried to Read Image: " + e.getMessage());
         }
