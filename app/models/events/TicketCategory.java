@@ -34,12 +34,12 @@ public class TicketCategory {
 
     //region Constructors
 
-    public TicketCategory(){
+    public TicketCategory() {
         this.id = null;
         this.soldTickets = new ArrayList<>();
     }
 
-    public TicketCategory(final Integer id, final String name, final String description, final Event event, final Double price, final Date startAvailability, final Date endAvailability){
+    public TicketCategory(final Integer id, final String name, final String description, final Event event, final Double price, final Date startAvailability, final Date endAvailability) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -52,27 +52,45 @@ public class TicketCategory {
 
     //endregion
 
-    public Ticket sellTicket(final User user) {
-        final Ticket soldTicket = this.ticketFactory.createTicket(user);
-        this.soldTickets.add(soldTicket);
-        return soldTicket;
-    }
+    //region Getters / Setters
 
-    @JsonIgnore
-    public List<Ticket> getSoldTickets(){
-        return soldTickets;
-    }
-
-    public Integer getId(){
+    public Integer getId() {
         return id;
     }
 
-    public String getDescription(){
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() { return name; }
+
+    public String getDescription() {
         return description;
     }
 
     public Double getPrice() {
         return price;
+    }
+
+    public Date getStartAvailability() {
+        return startAvailability;
+    }
+
+    public Date getEndAvailability() {
+        return endAvailability;
+    }
+
+    @JsonIgnore
+    public List<Ticket> getSoldTickets() {
+        return soldTickets;
+    }
+
+    //endregion Getters / Setters
+
+    public Ticket sellTicket(final User user) {
+        final Ticket soldTicket = this.ticketFactory.createTicket(user);
+        this.soldTickets.add(soldTicket);
+        return soldTicket;
     }
 
 

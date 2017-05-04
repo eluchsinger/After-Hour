@@ -3,11 +3,10 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
-import play.Logger;
-import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 import scala.Int;
 
 import javax.imageio.ImageIO;

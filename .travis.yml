@@ -1,37 +1,38 @@
 dist: trusty
 sudo: false
-
 language: scala
-
 scala:
-  - 2.11.7
-
-script:
-  - sbt ++$TRAVIS_SCALA_VERSION test
-
+- 2.11.7
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 services:
-  - postgresql
-
+- postgresql
 notifications:
   email: false
-
 before_cache:
-  # Cleanup the cached directories to avoid unnecessary cache updates
-  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
-  - find $HOME/.sbt        -name "*.lock"               -print -delete
-
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print -delete
+- find $HOME/.sbt        -name "*.lock"               -print -delete
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt
-
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt"
 before_script:
-  - psql -c 'create database ahdb;' -U postgres
-  - psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';" -U postgres
-
+- psql -c 'create database ahdb;' -U postgres
+- psql -c "CREATE USER ahuser WITH PASSWORD 'p4ssw0rd';" -U postgres
 addons:
-    code_climate:
-        repo_token: 6e864b6e0d8b24e43bd1e907c19017075af69fc4d50a8e183dbfdf174be4fa02
+  code_climate:
+    repo_token: 6e864b6e0d8b24e43bd1e907c19017075af69fc4d50a8e183dbfdf174be4fa02
+  sonarqube:
+    organization: "after-hour"
+    token:
+      secure: "NxI4829YMyreieJn6MhffpaqWIurbhPt1lvvJ2hbKcE2DGrhUUeunq/rfuKICKcAa0hJFbAB1HbmBHjKp/hFFunvQnQ0I7nuT8/VJ3P1LoQv6lO0caTB3QlhxDFkx5Vx61eW/pJihN8mLnVQqAVZ8Vy/aCbkMLd6ink7mcPD1HDTUlsCLWLfV53IhWpqVz6XSUJp9m0LV7k0nkXxzPFLpGEFVOgahU3N6SFyCeS1NZM8pfWOlIrBgYf5ku/g07f2Our2tiDbr17qp9rk12qrmEBnQfN2yiIp3u0ZTqJ31SpHr1D1C5c8b/6HhIdTsPNhjYtzUiPmKsc/pTlxpZIKqTEJu1HxuXj2n9s0F3VbR39tgfgXcHcZt16BkvBcWz8V10oKcVFAHyDa2E2G9/EoDhXHQRHTfh38/x/Z0jneV2E4fZvfNIikg9U4GwWYT//Hdf1K7vc5WB1PObi885nVYBxlpkM106DTA+WG7fJpsXOUa5ALjqxmP6Pdz6sU6ZvxyJlo9KI22T5b8OjXhLsMFZzUEwI99/Bz46cd7CoRKEBFXQk8tNvzVwMgCdTUuEkM8LC60t3YWE6fhpN/lwERzWGBm7cixL3uPA9fw+0ptH1Thmt4iC2gvVvK4xV0DiX5u0x7NGyl2C1CQAcIK1TMzFU7OA2UyFZWAjPS7fb8mhs="
+    branches:
+      - master
+      - developer
+      - refactoring
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sonar-scanner
+env:
+  global:
+    secure: dUtie0BhosErAMGWnxL5lGoYCaTd3FNHIipyXf6dDTVkVEf1fp2UpxMsdYUQi69y2HYXd6MoJX/vmso3VPajtQ4wgG23jFumfqLqSqmj8UhvN6XrIhsqf/YKCHhj++1z0LZFV5I24EzZ2xaiymw5z6tXGN83PoHsrCY4pB70c0s7GuDydilCveVVhoafeE+nma4pO8IGfOccjdCfr8JJzWrws5iBjjlg3StDWxtp8+sazIQ9/gmwNGm6DiACA1D1lK1hmuOibESNNnwyE3DAkAFwQQGhRYODJ+uysJgJK7gz//MVpYk+YOtJffnyBCFrwvcxiQkI4mRWe4ZPM75yaMT2pNbhyT5EppzPqqqQiVoIBX2D3yQOQqmpgzOHqdnIxF9QymHT/5Tvun6r2bZUZX66E6zQN9RWRjr2JGkU9/GJZM1tGUZmiuwqYuYfe5axx5dErheeiZPJVUnvQYb/jjLSD50/JvP5NfXW+FXPoUmuQKcvJszCZL3+GiaKlcjxymcnDyguj14n0bAO/jqKK8veHu3fR4qZrOrWm3OFMswGdyjvu2wa+k+46M3kY1bFZe31b3DIVoy+1VTyD6UilLm74BfnUGD83kQKEaKSOwwqY8t13dYdP0UUDhaNoEASv9FXxbS2WduFDGBWznaKQ6k4nhGeClZn9uggztTFAFs=

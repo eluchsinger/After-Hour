@@ -1,10 +1,10 @@
 package dal.users;
 
 
-import demoData.DemoData;
 import models.users.User;
 import play.Logger;
 
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -15,12 +15,13 @@ import java.util.Optional;
  * The EventsRepository handles the CRUD operations in regards of {@link User}
  * Uses a mock to persist changes.
  */
+@Singleton
 public class UsersRepositoryMock implements UsersRepository {
     private final static int INITIAL_USER_CAPACITY = 10;
     private List<User> users = new ArrayList<>(INITIAL_USER_CAPACITY);
 
     public UsersRepositoryMock() {
-        this.users = DemoData.getInstance().getUsers();
+        this.users = new ArrayList<>(INITIAL_USER_CAPACITY);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class UsersRepositoryMock implements UsersRepository {
             Optional<User> maxUserId = this.users.stream().max(Comparator.comparingInt(User::getId));
 
             if(maxUserId.isPresent())
-                user.setId(maxUserId.get().getId());
+                user.setId(maxUserId.get().getId() + 1);
             else
                 user.setId(1);
         }
