@@ -12,9 +12,7 @@ import play.test.WithApplication;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import static play.test.Helpers.*;
