@@ -3,12 +3,15 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
+import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 /**
  * Created by Esteban Luchsinger on 22.03.2017.
@@ -41,5 +44,23 @@ public class EventsController extends Controller {
     public Result getTicket(Integer userId, Integer eventId){
         String result = "User: " + userId + "Ticket: " + eventId;
         return ok(Json.toJson(result));
+    }
+
+    public Result getEventImage(Integer eventId){
+        BufferedImage img;
+        File file = Play.current().getFile("app/pictures/fab.jpg");
+        return ok(file);
+
+//        try {
+//            File file = Play.current().getFile("app/pictures/fab.jpg");
+//            img = ImageIO.read(file);
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            ImageIO.write(img, "jpg", baos);
+//            return ok(Base64.getEncoder().encodeToString(baos.toByteArray()));
+//        } catch (IOException e) {
+//            Logger.error("Tried to Read Image: " + e.getMessage());
+//        }
+//        return badRequest();
+
     }
 }
