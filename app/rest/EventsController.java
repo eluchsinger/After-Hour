@@ -50,17 +50,5 @@ public class EventsController extends Controller {
         BufferedImage img;
         File file = Play.current().getFile("app/pictures/fab.jpg");
         return ok(file);
-
-//        try {
-//            File file = Play.current().getFile("app/pictures/fab.jpg");
-//            img = ImageIO.read(file);
-//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//            ImageIO.write(img, "jpg", baos);
-//            return ok(Base64.getEncoder().encodeToString(baos.toByteArray()));
-//        } catch (IOException e) {
-//            Logger.error("Tried to Read Image: " + e.getMessage());
-//        }
-//        return badRequest();
-
     }
 }
