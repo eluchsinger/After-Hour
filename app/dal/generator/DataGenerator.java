@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -191,13 +192,14 @@ public class DataGenerator {
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, new Date()));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza));
+                "DIE Party für Studis", plaza, new Date()));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten));
+                "Party für Fussballer nach dem Duschen", kaufleuten, new Date()));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
-                "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
+                "Silvios exklusive Party für die 'gehobene' Gesellschaft",
+                kaufleuten, new Date()));
         return events;
     }
 
