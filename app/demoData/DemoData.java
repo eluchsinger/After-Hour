@@ -47,7 +47,8 @@ public class DemoData {
             this.users.add(new User(2, "i.beller@cervelat.de", "Beller", "Irina", dateFormat.parse("1900-03-12"), Gender.FEMALE));
             this.users.add(new User(3, "franz.becki@idc.yolo", "Beckenbauer", "Franz Anton",dateFormat.parse("1945-09-11"), Gender.MALE));
             this.users.add(new User(4, "g.n@netz.los", "Netzer", "Günther", dateFormat.parse("1944-09-14"), Gender.MALE));
-
+            this.users.add(new User(4, "emp@hsr.ch", "emp", "emp", dateFormat.parse("1944-09-14"), Gender.MALE, "123456",true));
+            this.users.add(new User(4, "ma@hsr.ch", "emp", "emp", dateFormat.parse("1944-09-14"), Gender.MALE, "",true));
         } catch (ParseException e) {
             e.printStackTrace();
         }

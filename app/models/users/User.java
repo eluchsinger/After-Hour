@@ -36,6 +36,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private String password;
+    private boolean isEmployee;
 
     // Mapped by the name of the attribute on the other side.
     @OneToMany(mappedBy = "user")
@@ -46,7 +47,7 @@ public class User {
         this.id = null;
     }
 
-    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password){
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password, final boolean isEmployee){
         this.id = id;
         this.email = email;
         this.lastName = lastName;
@@ -54,8 +55,13 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.password = password;
+        this.isEmployee = isEmployee;
 
         tickets = new ArrayList<>(TICKETS_INIT_SIZE);
+    }
+
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password){
+        this(id, email, lastName, firstName, dateOfBirth, gender, password, false);
     }
 
     //Default Password
