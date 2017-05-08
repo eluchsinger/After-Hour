@@ -11,11 +11,8 @@ import java.util.Date;
  * Created by marco on 23.04.2017.
  */
 public interface CoatChecksRepository {
-    CoatCheck getCoatCheck(Ticket ticket);
 
-    CoatCheck getAllCoatChecksOfUser(User user);
+    CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger, Date handOverOn);
 
-    CoatCheck createNewCoatCheck(Ticket ticket, CoatHanger coatHanger, Date handOverOn);
-
-    void fetchJacket(Date fetchedOn, CoatCheck coatCheck);
+    CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck);
 }

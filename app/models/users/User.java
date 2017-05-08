@@ -1,6 +1,7 @@
 package models.users;
 
 
+import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.utils.TimeIgnoringDateComparator;
 
@@ -25,6 +26,7 @@ import java.util.List;
 })
 public class User {
     private final static int TICKETS_INIT_SIZE = 2;
+    private final static int COATCHECKS_INIT_SIZE = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,6 +43,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ticket> tickets;
 
+    @OneToMany(mappedBy = "user")
+    private List<CoatCheck> coatChecks;
+
     //region Constructors
     public User(){
         this.id = null;
@@ -56,6 +61,7 @@ public class User {
         this.password = password;
 
         tickets = new ArrayList<>(TICKETS_INIT_SIZE);
+        coatChecks = new ArrayList<>(COATCHECKS_INIT_SIZE);
     }
 
     //Default Password
@@ -107,6 +113,8 @@ public class User {
         return tickets;
     }
 
+    public List<CoatCheck> getCoatChecks() { return coatChecks; }
+
     public void addTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
@@ -130,6 +138,7 @@ public class User {
         if (!firstName.equals(user.firstName)) return false;
         if (new TimeIgnoringDateComparator().compare(dateOfBirth, user.dateOfBirth) != 0) return false;
         if (gender != user.gender) return false;
+        if (coatChecks.equals(user.coatChecks)) return false;
         return tickets.equals(user.tickets);
     }
 
@@ -140,6 +149,7 @@ public class User {
         result = 31 * result + firstName.hashCode();
         result = 31 * result + dateOfBirth.hashCode();
         result = 31 * result + gender.hashCode();
+        result = 31 * result + coatChecks.hashCode();
         result = 31 * result + tickets.hashCode();
         return result;
     }

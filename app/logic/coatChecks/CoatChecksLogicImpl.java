@@ -1,32 +1,34 @@
 package logic.coatChecks;
 
+import dal.coatChecks.CoatChecksRepository;
+import models.events.CoatHanger;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
+import org.joda.time.DateTime;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.inject.Inject;
 import java.util.Date;
 
 /**
  * Created by marco on 23.04.2017.
  */
 public class CoatChecksLogicImpl implements CoatChecksLogic {
-    @Override
-    public CoatCheck getCoatCheck(Ticket ticket, User user) {
-        return null;
+    private final CoatChecksRepository coatChecksRepository;
+
+    @Inject
+    public CoatChecksLogicImpl(CoatChecksRepository coatChecksRepository){
+        this.coatChecksRepository = coatChecksRepository;
     }
 
     @Override
-    public CoatCheck getAllCoatChecksOfUser(User user) {
-        return null;
+    public CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger) {
+        return coatChecksRepository.createNewCoatCheck(user, coatHanger, new Date());
     }
 
     @Override
-    public CoatCheck createNewCoatCheck(Ticket ticket, User user) {
-        return null;
-    }
-
-    @Override
-    public CoatCheck fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
-        return null;
+    public CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
+        return coatChecksRepository.fetchJacket(fetchedOn, coatCheck);
     }
 }

@@ -14,6 +14,7 @@ import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static junit.framework.Assert.*;
 import static play.inject.Bindings.bind;
@@ -54,5 +55,10 @@ public class UsersLogicTest extends WithApplication {
         final UsersLogic usersLogic = this.app.injector().instanceOf(UsersLogic.class);
         final User user = usersLogic.getUserById(2);
         assertEquals(user.getId(), new Integer(2));
+    }
+
+    @Test
+    public void testGetAllCoatChecks() {
+        throw new NotImplementedException();
     }
 }

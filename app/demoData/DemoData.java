@@ -1,12 +1,16 @@
 package demoData;
 
+import models.events.CoatHanger;
 import models.events.Event;
+import models.events.Location;
+import models.tickets.CoatCheck;
 import models.users.Gender;
 import models.users.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Fabian on 29.03.2017.
@@ -16,6 +20,8 @@ public class DemoData {
     private static DemoData ourInstance = new DemoData();
     private ArrayList<Event> events = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<CoatCheck> coatChecks = new ArrayList<>();
+    private ArrayList<CoatHanger> coatHangers = new ArrayList<>(5);
     private SimpleDateFormat dateFormat;
 
     public static DemoData getInstance() {
@@ -28,6 +34,8 @@ public class DemoData {
         initUsers();
         initTicketCategories();
         initSoldTickets();
+        initCoatHangers();
+        initCoatChecks();
     }
 
     private void initEvents() {
@@ -82,5 +90,27 @@ public class DemoData {
 //        category.addSoldTicket(soldTicket);
 //        users.get(userId - 1).addTicket(soldTicket);
     }
+
+    private void initCoatHangers(){
+        Location location = new Location();
+        Location location2 = new Location();
+        this.coatHangers.add(new CoatHanger(1,1, location));
+        this.coatHangers.add(new CoatHanger(2,1, location2));
+        this.coatHangers.add(new CoatHanger(3,2, location));
+        this.coatHangers.add(new CoatHanger(4,3, location));
+        this.coatHangers.add(new CoatHanger(5,4, location));
+    }
+
+    private void initCoatChecks(){
+        try {
+            this.coatChecks.add(new CoatCheck(coatHangers.get(1), dateFormat.parse("2017-09-11"), users.get(0)));
+            this.coatChecks.add(new CoatCheck(coatHangers.get(2), dateFormat.parse("2017-10-11"), users.get(1)));
+            this.coatChecks.add(new CoatCheck(coatHangers.get(3), dateFormat.parse("2017-11-11"), users.get(0)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<CoatCheck> getCoatChecks(){return coatChecks;}
 
 }

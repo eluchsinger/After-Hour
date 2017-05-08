@@ -23,26 +23,18 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     }
 
     @Override
-    public CoatCheck getCoatCheck(Ticket ticket) {
+    public CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger, Date handOverOn) {
         final EntityManager em = jpaApi.em();
-        throw new NotImplementedException();
+        CoatCheck coatCheck = new CoatCheck(coatHanger, handOverOn, user);
+        em.persist(coatCheck);
+        return coatCheck;
     }
 
     @Override
-    public CoatCheck getAllCoatChecksOfUser(User user) {
+    public CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
         final EntityManager em = jpaApi.em();
-    }
-
-    @Override
-    public CoatCheck createNewCoatCheck(Ticket ticket, CoatHanger coatHanger, Date handOverOn) {
-        final EntityManager em = jpaApi.em();
-        CoatCheck coatCheck = new CoatCheck();
-    }
-
-    @Override
-    public void fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
-        final EntityManager em = jpaApi.em();
-        coatCheck.setFetchedOn(fetchedOn);
+        CoatHanger hangerToFetchJacket = coatCheck.fetch(fetchedOn);
         em.refresh(coatCheck);
+        return hangerToFetchJacket;
     }
 }
