@@ -31,7 +31,9 @@ public class UsersController extends Controller {
     @Transactional
     public Result login(){
         Map<String, String[]> loginData = request().body().asFormUrlEncoded();
-        User user = this.usersLogic.getUserByEmail(loginData.get("email")[0]);
+        String email = loginData.get("email")[0];
+        email = replaceCharacterEntities(email);
+        User user = this.usersLogic.getUserByEmail(email);
         if (user == null) {
             return badRequest("Incorrect username!");
         }
@@ -44,8 +46,16 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getUserByEmail(String email){
+        email = replaceCharacterEntities(email);
         User user = this.usersLogic.getUserByEmail(email);
         return ok(Json.toJson(user));
+    }
+
+    private String replaceCharacterEntities(String email) {
+        if(email.contains("%40")){
+            email = email.replace("%40", "@");
+        }
+        return email;
     }
 
     @Transactional
