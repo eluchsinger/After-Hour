@@ -11,7 +11,7 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   javaJpa,
-  "org.hibernate" % "hibernate-entitymanager" % "5.2.9.Final" // replace by your jpa implementation
+  "org.hibernate" % "hibernate-entitymanager" % "5.2.10.Final" // replace by your jpa implementation
 )
 
 // https://mvnrepository.com/artifact/org.postgresql/postgresql

@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class DataGenerator {
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
     private final TicketRepository ticketRepository;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Initializes the DataGenerator using the respositories.
@@ -155,7 +156,7 @@ public class DataGenerator {
             }
             return tickets.size();
         } catch (Exception exception) {
-            throw new GenerateException("Failed to generate ticket categories", exception);
+            throw new GenerateException("Failed to generate tickets", exception);
         }
     }
 
@@ -191,13 +192,14 @@ public class DataGenerator {
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, new Date()));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza));
+                "DIE Party für Studis", plaza, new Date()));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten));
+                "Party für Fussballer nach dem Duschen", kaufleuten, new Date()));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
-                "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
+                "Silvios exklusive Party für die 'gehobene' Gesellschaft",
+                kaufleuten, new Date()));
         return events;
     }
 
@@ -294,6 +296,13 @@ public class DataGenerator {
 
         /* Duschi Party */
         tickets.add(duschi1.sellTicket(guenther));
+        tickets.add(duschi2.sellTicket(silvio));
+        tickets.add(duschi3.sellTicket(franz));
+        tickets.add(duschi4.sellTicket(irina));
+
+        tickets.add(silvio1.sellTicket(silvio));
+        tickets.add(silvio1.sellTicket(franz));
+        tickets.add(silvio2.sellTicket(irina));
 
         return tickets;
     }
