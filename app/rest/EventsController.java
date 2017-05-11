@@ -10,7 +10,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
@@ -46,9 +45,10 @@ public class EventsController extends Controller {
         return ok(Json.toJson(result));
     }
 
+    @Transactional
     public Result getEventImage(Integer eventId){
-        BufferedImage img;
-        File file = Play.current().getFile("app/pictures/fab.jpg");
+        final Event event = eventsLogic.getEventById(eventId);
+        File file = Play.current().getFile("app/pictures/" + event.getPictureName());
         return ok(file);
     }
 }
