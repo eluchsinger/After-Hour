@@ -6,6 +6,7 @@ import models.events.TicketCategory;
 import models.tickets.Ticket;
 import models.users.User;
 import org.joda.time.DateTime;
+import play.Logger;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -37,39 +38,42 @@ public class SalesLogicImpl implements SalesLogic{
      */
     @Override
     public Ticket buyTicket(final Integer userId, final Integer ticketCategoryId) {
+        return buyTicket(userId, ticketCategoryId, new Date());
+    }
+
+    public Ticket buyTicket(final Integer userId, final Integer ticketCategoryId, Date date){
         TicketCategory ticketCategory = this.ticketRepository
                 .getTicketCategoryById(ticketCategoryId);
 
         User buyingUser = this.usersRepository.getUserById(userId);
-        Ticket soldTicket = ticketCategory.sellTicket(buyingUser);
 
-        if (validateUser(buyingUser) && validateTicket(ticketCategory) && validateTicketBought(ticketCategoryId, userId)){
+        Logger.info("Tickets " + buyingUser.getTickets().size());
+
+        if (validateUser(buyingUser)
+                && validateTicket(ticketCategory, date)
+                && validateTicketBought(ticketCategoryId, userId)) {
+            Ticket soldTicket = ticketCategory.sellTicket(buyingUser);
             this.ticketRepository.persistTicket(soldTicket);
-
             return soldTicket;
         }
         return null;
     }
 
-    public boolean validateUser(final User buyingUser){
+    private boolean validateUser(final User buyingUser){
         return buyingUser != null;
     }
 
-    public boolean validateTicket(final TicketCategory ticketCategory){
+    private static boolean validateTicket(final TicketCategory ticketCategory, Date date){
         return ticketCategory != null
-                && ticketCategory.getEndAvailability().before(new Date())
-                && ticketCategory.getStartAvailability().after(new Date());
+                && ticketCategory.getStartAvailability().before(date)
+                && ticketCategory.getEndAvailability().after(date);
     }
 
-    public boolean validateTicketBought(final Integer ticketCategoryId, final Integer userId){
-        Optional<Ticket> optionalTicket = this.usersRepository.getUserById(1).getTickets().stream()
-                .filter(x -> x.getTicketCategory().getId().equals(ticketCategoryId))
+    private boolean validateTicketBought(final Integer ticketCategoryId, final Integer userId){
+        Optional<Ticket> optionalTicket = this.usersRepository.getUserById(userId).getTickets().stream()
+                .filter(x -> x.getTicketCategory().getId() == ticketCategoryId)
                 .findFirst();
-        if (!optionalTicket.isPresent()){
-            return true;
-        } else {
-            return false;
-        }
+        return !optionalTicket.isPresent();
     }
 
 }

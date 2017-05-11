@@ -2,6 +2,8 @@ package logic.sales;
 
 import models.tickets.Ticket;
 
+import java.util.Date;
+
 /**
  * Created by Fabian on 08.04.17.
  * Handles the whole sales problem domain.
@@ -15,4 +17,6 @@ public interface SalesLogic {
      * @return Returns the newly created ticket.
      */
     Ticket buyTicket(Integer userId, Integer ticketCategoryId);
+
+    Ticket buyTicket(Integer userId, Integer ticketCategoryId, Date date);
 }
