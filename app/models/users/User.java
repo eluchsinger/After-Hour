@@ -106,6 +106,14 @@ public class User {
         return this.email;
     }
 
+    public boolean isEmployee() {
+        return isEmployee;
+    }
+
+    public void setEmployee(boolean employee) {
+        isEmployee = employee;
+    }
+
     public void addTicket(Ticket ticket){
         tickets.add(ticket);
     }
@@ -120,13 +128,6 @@ public class User {
 
     public Gender getGender(){ return this.gender; }
 
-    public boolean isEmployee() {
-        return isEmployee;
-    }
-
-    public void setEmployee(boolean employee) {
-        isEmployee = employee;
-    }
 
     public boolean compareWithPassword(String inputPassword){
         return inputPassword.equals(password);
