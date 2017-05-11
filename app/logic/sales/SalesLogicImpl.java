@@ -47,8 +47,6 @@ public class SalesLogicImpl implements SalesLogic{
 
         User buyingUser = this.usersRepository.getUserById(userId);
 
-        Logger.info("Tickets " + buyingUser.getTickets().size());
-
         if (validateUser(buyingUser)
                 && validateTicket(ticketCategory, date)
                 && validateTicketBought(ticketCategoryId, userId)) {
@@ -63,7 +61,7 @@ public class SalesLogicImpl implements SalesLogic{
         return buyingUser != null;
     }
 
-    private static boolean validateTicket(final TicketCategory ticketCategory, Date date){
+    private boolean validateTicket(final TicketCategory ticketCategory, Date date){
         return ticketCategory != null
                 && ticketCategory.getStartAvailability().before(date)
                 && ticketCategory.getEndAvailability().after(date);
