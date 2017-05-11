@@ -9,25 +9,19 @@ import dal.tickets.TicketRepositoryMock;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.sales.SalesLogic;
-import logic.sales.SalesLogicImpl;
-import logic.users.UsersLogic;
-import models.events.TicketCategory;
+import models.exceptions.ServerException;
+import models.exceptions.TicketAlreadyBoughtException;
 import models.tickets.Ticket;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import play.Application;
-import play.api.test.Helpers;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static play.inject.Bindings.bind;
 
 /**
@@ -55,15 +49,14 @@ public class SalesLogicTest extends WithApplication {
    }
 
    @Test
-   public void buyTicket() throws ParseException {
+   public void buyTicket() throws ParseException, ServerException {
         Ticket ticket = salesLogic.buyTicket(2,1, dateFormat.parse("2017-4-22"));
         assertNotNull(ticket);
    }
 
-   @Test
-    public void buyTicketAlreadyBought(){
-        Ticket ticket1 = salesLogic.buyTicket(1,1);
-        assertNull(ticket1);
+   @Test (expected = TicketAlreadyBoughtException.class)
+    public void buyTicketAlreadyBought() throws ServerException {
+        salesLogic.buyTicket(1,1);
    }
 
 }
