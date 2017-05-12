@@ -187,7 +187,8 @@ public class DataGenerator {
         return users;
     }
 
-    private List<Event> getDemoEvents(final EventsRepository eventsRepository) {
+
+    private List<Event> getDemoEvents(final EventsRepository eventsRepository) throws ParseException {
 
         final String pictureKaufleuten = "kaufleuten.png";
         final String picturePlaza = "nachtseminar.png";
@@ -220,11 +221,11 @@ public class DataGenerator {
         ticketCategories.add(new TicketCategory(null,
                 "Vorverkauf", "Das Vorverkaufsticket der Extraklasse",
                 bobbaFettParty, 15.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                dateFormat.parse("2017-5-19")));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Das übliche Ticket an der Abendkasse",
-                bobbaFettParty, 25.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                bobbaFettParty, 25.00, dateFormat.parse("2017-5-20"),
+                dateFormat.parse("2017-5-21")));
 
         /* Studi Party */
         ticketCategories.add(new TicketCategory(null,

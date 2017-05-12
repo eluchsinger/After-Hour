@@ -90,6 +90,7 @@ public class TicketCategory {
     public Ticket sellTicket(final User user) {
         final Ticket soldTicket = this.ticketFactory.createTicket(user);
         this.soldTickets.add(soldTicket);
+        user.addTicket(soldTicket);
         return soldTicket;
     }
 
