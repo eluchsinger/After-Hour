@@ -1,9 +1,11 @@
 package logic.users;
 
 import dal.users.UsersRepository;
+import models.tickets.Ticket;
 import models.users.User;
 
 import javax.inject.Inject;
+import java.util.Optional;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
@@ -41,4 +43,17 @@ public class UsersLogicImpl implements UsersLogic {
      */
     @Override
     public User getUserByEmail(String email){return this.usersRepository.getUserByEmail(email);}
+
+    @Override
+    public Ticket getTicket(Integer userId, Integer eventId){
+        User user = this.usersRepository.getUserById(1);
+
+        Optional<Ticket> ticket = user.getTickets().stream()
+                .filter(x -> x.getTicketCategory().getEvent().getId() == eventId)
+                .findFirst();
+        if (ticket.isPresent()){
+            return ticket.get();
+        }
+        return null;
+    }
 }

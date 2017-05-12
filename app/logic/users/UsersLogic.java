@@ -1,5 +1,6 @@
 package logic.users;
 
+import models.tickets.Ticket;
 import models.users.User;
 
 /**
@@ -26,4 +27,6 @@ public interface UsersLogic {
      * @return Returns the found user or null, if nothing was found.
      */
     User getUserByEmail(String email);
+
+    Ticket getTicket(Integer userId, Integer eventId);
 }

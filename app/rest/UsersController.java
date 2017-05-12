@@ -19,9 +19,9 @@ public class UsersController extends Controller {
         this.usersLogic = usersLogic;
     }
 
-
+    @Transactional
     public Result getTicket(Integer userId, Integer eventId){
-        return notFound("Not implemented");
+        return ok(Json.toJson(usersLogic.getTicket(userId, eventId)));
     }
 
     public Result getEvents(Integer userId){
