@@ -11,6 +11,8 @@ import dal.users.UsersRepositoryMock;
 import logic.sales.SalesLogic;
 import models.exceptions.ServerException;
 import models.exceptions.TicketAlreadyBoughtException;
+import models.exceptions.TicketCategoryInvalidException;
+import models.exceptions.UserDoesNotExistException;
 import models.tickets.Ticket;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +43,6 @@ public class SalesLogicTest extends WithApplication {
                 .build();
     }
 
-
    @Before
     public void setup(){
        salesLogic = this.app.injector().instanceOf(SalesLogic.class);
@@ -49,14 +50,29 @@ public class SalesLogicTest extends WithApplication {
    }
 
    @Test
-   public void buyTicket() throws ParseException, ServerException {
+   public void testBuyTicket() throws ParseException, ServerException {
         Ticket ticket = salesLogic.buyTicket(2,1, dateFormat.parse("2017-4-22"));
         assertNotNull(ticket);
    }
 
    @Test (expected = TicketAlreadyBoughtException.class)
-    public void buyTicketAlreadyBought() throws ServerException {
+    public void testBuyTicketAlreadyBought() throws ServerException {
         salesLogic.buyTicket(1,1);
+   }
+
+   @Test (expected = TicketCategoryInvalidException.class)
+    public void testBuyNotExistingTicketCategory() throws ServerException {
+        salesLogic.buyTicket(1,100);
+   }
+
+   @Test (expected = TicketCategoryInvalidException.class)
+    public void testBuyNotAvailableTicketCategory() throws ServerException, ParseException {
+        salesLogic.buyTicket(1,2, dateFormat.parse("2017-5-20"));
+   }
+
+   @Test (expected = UserDoesNotExistException.class)
+    public void testBuyWithNotExistingUser() throws ParseException, ServerException {
+       Ticket ticket = salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
    }
 
 }
