@@ -187,19 +187,26 @@ public class DataGenerator {
         return users;
     }
 
+
     private List<Event> getDemoEvents(final EventsRepository eventsRepository) throws ParseException {
+
+        final String pictureKaufleuten = "kaufleuten.png";
+        final String picturePlaza = "nachtseminar.png";
+        final String pictureSilvio = "bunga-bunga.jpg";
+        final String pictureShower = "shower.png";
+
         final Location kaufleuten = eventsRepository.getLocationById(1);
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten, dateFormat.parse("2017-5-20")));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, new Date(), pictureKaufleuten));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza, new Date()));
+                "DIE Party für Studis", plaza, new Date(), picturePlaza));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten, new Date()));
+                "Party für Fussballer nach dem Duschen", kaufleuten, new Date(), pictureShower));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
                 "Silvios exklusive Party für die 'gehobene' Gesellschaft",
-                kaufleuten, new Date()));
+                kaufleuten, new Date(), pictureSilvio));
         return events;
     }
 
