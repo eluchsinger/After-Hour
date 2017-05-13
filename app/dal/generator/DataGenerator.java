@@ -187,6 +187,10 @@ public class DataGenerator {
                 "Klitschko", "Wladimir", this.dateFormat.parse("1976-03-25"), Gender.MALE, "123456", true));
         users.add(new User(null, "vitali.klitschko@kauf.ch",
                 "Klitschko", "Vitali", this.dateFormat.parse("1971-06-19"), Gender.MALE, "123456", true));
+        users.add(new User(null, "bachelor@kauf.ch",
+                "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true));
+
+
 
         return users;
     }
