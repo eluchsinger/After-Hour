@@ -1,7 +1,10 @@
 package rest;
 
 import logic.sales.SalesLogic;
+import models.exceptions.ServerException;
+import models.tickets.Ticket;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -20,9 +23,10 @@ public class SalesController extends Controller {
 
     @Transactional
     public Result buyTicket(Integer userId, Integer ticketCategory){
-        if (salesLogic.buyTicket(userId, ticketCategory) != null){
-            return ok("Ticket bought");
+        try {
+            return ok(Json.toJson(salesLogic.buyTicket(userId, ticketCategory)));
+        } catch (ServerException e){
+            return badRequest(Json.toJson(e));
         }
-        return badRequest("Ticket not bought");
     }
 }

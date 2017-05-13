@@ -17,24 +17,18 @@ import java.util.Optional;
 public class TicketRepositoryMock implements TicketRepository {
     private List<TicketCategory> ticketCategories;
     private List<Ticket> tickets;
+    private int ticketCategoryIdCounter;
 
     public TicketRepositoryMock() {
         this.ticketCategories = new ArrayList<>();
         this.tickets = new ArrayList<>();
+        ticketCategoryIdCounter = 1;
     }
 
     @Override
     public void registerTicketCategory(TicketCategory ticketCategory) {
-        if(ticketCategory.getId() == null) {
-            Optional<TicketCategory> ticketCategoryMaxId = this.ticketCategories
-                    .stream()
-                    .max(Comparator.comparingInt(TicketCategory::getId));
-
-            if(ticketCategoryMaxId.isPresent())
-                ticketCategory.setId(ticketCategoryMaxId.get().getId() + 1);
-            else
-                ticketCategory.setId(1);
-        }
+        ticketCategory.setId(ticketCategoryIdCounter++);
+        ticketCategories.add(ticketCategory);
         ticketCategories.add(ticketCategory);
     }
 

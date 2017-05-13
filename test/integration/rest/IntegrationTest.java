@@ -5,6 +5,8 @@ import junit.framework.TestCase;
 import models.users.Gender;
 import models.users.User;
 import org.junit.Test;
+
+import play.test.Helpers;
 import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -15,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.*;
 
 public class IntegrationTest extends WithApplication{
@@ -57,7 +60,21 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/login")
                 .bodyFormArrayValues(loginData);
         final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
+        TestCase.assertTrue(Helpers.contentAsString(result).contains("silvio.berlusconi@italy.it"));
+    }
+
+    @Test
+    public void testLoginCorrectWithCharReplacement(){
+        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        loginData.put("email", new String[]{"silvio.berlusconi%40italy.it"});
+        loginData.put("password", new String[]{"123456"});
+
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/login")
+                .bodyFormArrayValues(loginData);
+        final Result result = route(request);
+        TestCase.assertTrue(Helpers.contentAsString(result).contains("silvio.berlusconi@italy.it"));
     }
 
     @Test
@@ -84,8 +101,10 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testRegisterUser() throws ParseException {
+        String email = "elon.musk@hsr.ch";
+
         final User createdUser = new User(null,
-                "elon.musk@hsr.ch",
+                email,
                 "Musk",
                 "Elon",
                 dateFormat.parse("1971-06-28"),
@@ -103,7 +122,8 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/mail/elon.musk@hsr.ch");
         final Result checkUserResult = route(checkUserRequest);
-        TestCase.assertEquals(OK, checkUserResult.status());
+        String resultUserString = Helpers.contentAsString(checkUserResult);
+        assertTrue(resultUserString.contains(email));
     }
 
     @Test

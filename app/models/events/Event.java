@@ -33,6 +33,9 @@ public class Event {
     @Transient
     private ArrayList<CoatCheck> coatChecks;
 
+    @JsonIgnore
+    private String pictureName;
+
 
     //region Constructors
 
@@ -41,10 +44,10 @@ public class Event {
     }
 
     public Event(final Integer id, final String title, final String description) {
-        this(id, title, description, null, new Date());
+        this(id, title, description, null, new Date(), "");
     }
     public Event(final Integer id, final String title, final String description,
-                 final Location location, final Date eventDate) {
+                 final Location location, final Date eventDate, final String pictureName) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -52,6 +55,7 @@ public class Event {
         this.eventDate = eventDate;
         this.ticketCategories = new ArrayList<>();
         this.coatChecks = new ArrayList<>();
+        this.pictureName = pictureName;
     }
 
     //endregion
@@ -116,6 +120,14 @@ public class Event {
 
     public List<CoatCheck> getCoatChecks(){
         return coatChecks;
+    }
+
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
     }
 
     //endregion

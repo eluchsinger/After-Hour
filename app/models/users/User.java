@@ -86,11 +86,12 @@ public class User {
         return dateOfBirth;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
     public Integer getId(){
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName(){
@@ -103,6 +104,14 @@ public class User {
 
     public String getEmail() {
         return this.email;
+    }
+
+    public boolean isEmployee() {
+        return isEmployee;
+    }
+
+    public void setEmployee(boolean employee) {
+        isEmployee = employee;
     }
 
     public void addTicket(Ticket ticket){
@@ -118,6 +127,7 @@ public class User {
     }
 
     public Gender getGender(){ return this.gender; }
+
 
     public boolean compareWithPassword(String inputPassword){
         return inputPassword.equals(password);
