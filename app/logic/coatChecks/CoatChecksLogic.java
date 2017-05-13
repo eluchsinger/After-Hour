@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public interface CoatChecksLogic {
 
-    CoatCheck createNewCoatCheck(Integer userID, Integer coatHangerNumber, String locationName);
+    CoatCheck createNewCoatCheck(String email, Integer coatHangerNumber, String locationName);
 
     CoatHanger fetchJacket(Date date, Integer coatHangerID);
 }

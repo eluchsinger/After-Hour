@@ -29,12 +29,12 @@ public class CoatController {
         this.dateFormat = new SimpleDateFormat("yyyy-mm-dd");
     }
 
-    public Result handOverJacket(Integer userID, Integer coatHangerNumber, String locationName) {
-        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck(userID, coatHangerNumber, locationName);
-        return coatCheck == null ? ok(Json.toJson(coatCheck)) : badRequest("CoatCheck creation failed");
+    public Result handOverJacket(String email, Integer coatHangerNumber, String locationName) {
+        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck(email, coatHangerNumber, locationName);
+        return coatCheck != null ? ok(Json.toJson(coatCheck)) : badRequest("CoatCheck creation failed");
     }
 
-    public Result fetchJacket(String fetchedOn, Integer coatCheckID) {
+    public Result fetchJacket(String fetchedOn, Integer coatCheckPublicID) {
         Date date;
         try {
             date = dateFormat.parse(fetchedOn);
@@ -42,7 +42,7 @@ public class CoatController {
             return badRequest("Bad date String");
         }
 
-        CoatHanger hanger = coatChecksLogic.fetchJacket(date, new Integer(coatCheckID));
+        CoatHanger hanger = coatChecksLogic.fetchJacket(date, new Integer(coatCheckPublicID));
         return hanger == null ? ok(Json.toJson(hanger)) : notFound("CoatCheck not found or jacket alread Fetched");
     }
 }

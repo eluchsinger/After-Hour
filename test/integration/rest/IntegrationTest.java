@@ -81,7 +81,7 @@ public class IntegrationTest extends WithApplication{
         final User user = new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
         final User userResult = Json.fromJson(json, User.class);
 
-        TestCase.assertEquals(user, userResult);
+        TestCase.assertEquals(user.getEmail(), userResult.getEmail());
     }
 
     @Test
@@ -121,7 +121,16 @@ public class IntegrationTest extends WithApplication{
     public void testHandOverJacket(){
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
-                .uri("/handOverJacket/1/1");
+                .uri("/handOverJacket/g.n@netz.los/3/Plaza");
+        final Result result = route(request);
+        TestCase.assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testFetchJacket(){
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/fetchJacket/g.n@netz.los/3/Plaza");
         final Result result = route(request);
         TestCase.assertEquals(OK, result.status());
     }

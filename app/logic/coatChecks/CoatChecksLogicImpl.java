@@ -27,8 +27,8 @@ public class CoatChecksLogicImpl implements CoatChecksLogic {
     }
 
     @Override
-    public CoatCheck createNewCoatCheck(Integer userID, Integer coatHangerNumber, String locationName) {
-        User user = usersRepository.getUserById(userID);
+    public CoatCheck createNewCoatCheck(String email, Integer coatHangerNumber, String locationName) {
+        User user = usersRepository.getUserByEmail(email);
         Location location = eventsRepository.getLocationByName(locationName);
         return coatChecksRepository.createNewCoatCheck(user, location, new Date(), coatHangerNumber);
     }

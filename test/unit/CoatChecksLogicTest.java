@@ -40,19 +40,18 @@ public class CoatChecksLogicTest extends WithApplication{
                 .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
                 .build();
     }
-
-    /*@Test
+/*
+    @Test
     public void testHandoverAndFetchJacket() {
         final CoatChecksLogic coatChecksLogic = this.app.injector().instanceOf(CoatChecksLogic.class);
         CoatHanger expectedCoatHanger = new CoatHanger(24, 2, new Location());
-        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck(new Integer(1), new Integer(24), );
+        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck( );
 
         final CoatHanger resultingCoatHanger = coatChecksLogic.fetchJacket(new Date(), coatCheck.getId());
 
         assertEquals(expectedCoatHanger, resultingCoatHanger);
-    }*/
+    }
 
-    /*
     @Test
     public void testGetAlreadyFetchedJacket() {
         final CoatChecksLogic coatChecksLogic = this.app.injector().instanceOf(CoatChecksLogic.class);

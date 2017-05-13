@@ -19,8 +19,8 @@ POST /users/register                        rest.UsersController.registerUser()
 POST /users/login                           rest.UsersController.login()
 
 # REST CoatChecks
-GET /handOverJacket/:userID/:coatHangerNumber/:locationName     rest.CoatController.handOverJacket(userID: Integer, coatHangerNumber: Integer, locationName: String)
-GET /fetchJacket/:fetchedOn/:coatCheckID    rest.CoatController.fetchJacket(String: fetchedOn, coatCheckID: Integer)
+GET /handOverJacket/:email/:coatHangerNumber/:locationName     rest.CoatController.handOverJacket(email: String, coatHangerNumber: Integer, locationName: String)
+GET /fetchJacket/:coatCheckPublicID    rest.CoatController.fetchJacket(coatCheckPublicID: Integer)
 
 # REST Ticket Sales
 GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)
