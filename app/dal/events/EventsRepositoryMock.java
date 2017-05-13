@@ -46,6 +46,13 @@ public class EventsRepositoryMock implements EventsRepository {
     }
 
     @Override
+    public Location getLocationByName(String name) {
+        return this.locations.stream()
+                .filter(location -> location.getName().equals(name))
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public void addLocation(Location location) {
         location.setId(locationIdCounter++);
         this.locations.add(location);

@@ -2,6 +2,7 @@ package integration.database;
 
 import dal.events.EventsRepositoryJPA;
 import models.events.Event;
+import models.events.Location;
 import org.junit.Test;
 import play.db.jpa.JPAApi;
 import play.test.WithApplication;
@@ -25,6 +26,18 @@ public class EventPersistenceTesting extends WithApplication {
             final Event actualEvent = repository.getEventById(expectedEvent.getId());
 
             assertEquals(expectedEvent, actualEvent);
+        });
+    }
+
+    @Test
+    public void testGetLocationByName(){
+        final JPAApi jpaApi = this.app.injector().instanceOf(JPAApi.class);
+        jpaApi.withTransaction(() -> {
+            final EventsRepositoryJPA repository = new EventsRepositoryJPA(jpaApi);
+
+            final Location retreivedLocation = repository.getLocationByName("Plaza");
+
+            assertEquals("Plaza", retreivedLocation.getName());
         });
     }
 

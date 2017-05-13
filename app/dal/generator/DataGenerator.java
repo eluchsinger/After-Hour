@@ -1,8 +1,10 @@
 package dal.generator;
 
+import dal.coatChecks.CoatChecksRepository;
 import dal.events.EventsRepository;
 import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
+import models.events.CoatHanger;
 import models.events.Event;
 import models.events.Location;
 import models.events.TicketCategory;
@@ -28,10 +30,12 @@ public class DataGenerator {
     private static final int INITIAL_TICKET_CATEGORY_CAPACITY = 10;
     private static final int INITIAL_TICKET_CAPACITY = 20;
     private static final int INITIAL_LOCATION_CAPACITY = 3;
+    private static final int INITIAL_COAT_HANGER_CAPACITY = 10;
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
     private final TicketRepository ticketRepository;
+    private final CoatChecksRepository coatChecksRepository;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
     /**
@@ -44,10 +48,12 @@ public class DataGenerator {
     @Inject
     public DataGenerator(final UsersRepository usersRepository,
                          final EventsRepository eventsRepository,
-                         final TicketRepository ticketRepository) {
+                         final TicketRepository ticketRepository,
+                         final CoatChecksRepository coatChecksRepository) {
         this.usersRepository = usersRepository;
         this.eventsRepository = eventsRepository;
         this.ticketRepository = ticketRepository;
+        this.coatChecksRepository = coatChecksRepository;
     }
 
     /**
@@ -64,12 +70,14 @@ public class DataGenerator {
         final int amountOfTicketCategories = generateTicketCategories(this.ticketRepository);
         final int amountOfTickets = generateTickets(this.usersRepository,
                 this.ticketRepository);
+        final int amountOfCoatHangers = generateCoatHangers(this.coatChecksRepository);
 
         Logger.info("Generated " + amountOfUsers + " users");
         Logger.info("Generated " + amountOfEvents + " events");
         Logger.info("Generated " + amountOfTicketCategories + " ticketCategories");
         Logger.info("Generated " + amountOfTickets + " tickets");
         Logger.info("Generated " + amountOfLocations + " locations");
+        Logger.info("Generated " + amountOfCoatHangers + " CoatHangers");
     }
 
     /**
@@ -169,6 +177,19 @@ public class DataGenerator {
             return locations.size();
         } catch (Exception exception) {
             throw new GenerateException("Failed to generate locations", exception);
+        }
+    }
+
+    @Transactional
+    private int generateCoatHangers(CoatChecksRepository coatChecksRepository) throws GenerateException {
+        try {
+            List<CoatHanger> coatHangers = this.getDemoCoatHangers();
+            for (CoatHanger c : coatHangers) {
+                coatChecksRepository.addNewCoatHanger(c);
+            }
+            return coatHangers.size();
+        } catch (Exception exception) {
+            throw new GenerateException("Failed to generate CoatHangers", exception);
         }
     }
 
@@ -296,6 +317,27 @@ public class DataGenerator {
         tickets.add(duschi1.sellTicket(guenther));
 
         return tickets;
+    }
+
+    private List<CoatHanger> getDemoCoatHangers(){
+        List<CoatHanger> coatHangers = new ArrayList<>(INITIAL_COAT_HANGER_CAPACITY);
+
+        Location kaufleuten = eventsRepository.getLocationByName("Kaufleuten");
+        Location plaza = eventsRepository.getLocationByName("Plaza");
+
+        coatHangers.add(new CoatHanger(null, 1, kaufleuten));
+        coatHangers.add(new CoatHanger(null, 2, kaufleuten));
+        coatHangers.add(new CoatHanger(null, 3, kaufleuten));
+        coatHangers.add(new CoatHanger(null, 4, kaufleuten));
+        coatHangers.add(new CoatHanger(null, 5, kaufleuten));
+
+        coatHangers.add(new CoatHanger(null, 1, plaza));
+        coatHangers.add(new CoatHanger(null, 2, plaza));
+        coatHangers.add(new CoatHanger(null, 3, plaza));
+        coatHangers.add(new CoatHanger(null, 4, plaza));
+        coatHangers.add(new CoatHanger(null, 5, plaza));
+
+        return coatHangers;
     }
 
     private List<Location> getDemoLocations() {

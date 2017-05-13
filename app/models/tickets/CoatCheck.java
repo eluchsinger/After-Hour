@@ -12,10 +12,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "tbl_coatChecks")
+@NamedQueries({
+        @NamedQuery(name = "CoatCheck.getByPublicIdentifier", query="SELECT c FROM CoatCheck c WHERE c.publicIdentifier = :publicIdentifier")
+})
 public class CoatCheck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer publicIdentifier;
     @ManyToOne(targetEntity = CoatHanger.class)
     private CoatHanger coatHanger;
     private Date handOverOn;
@@ -32,14 +36,31 @@ public class CoatCheck {
         this.handOverOn = handOverOn;
         this.user = user;
         this.fetchedOn = null;
+        this.publicIdentifier = user.hashCode() + handOverOn.hashCode() + coatHanger.hashCode();
     }
 
-    public Integer getId(){
+    public Integer getId() {
         return id;
     }
 
-    public CoatHanger getCoatHanger(){
+    public Integer getPublicIdentifier(){
+        return publicIdentifier;
+    }
+
+    public CoatHanger getCoatHanger() {
         return coatHanger;
+    }
+
+    public Date getHandOverOn() {
+        return handOverOn;
+    }
+
+    public Date getFetchedOn() {
+        return fetchedOn;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     /**

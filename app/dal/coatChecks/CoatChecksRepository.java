@@ -1,8 +1,8 @@
 package dal.coatChecks;
 
 import models.events.CoatHanger;
+import models.events.Location;
 import models.tickets.CoatCheck;
-import models.tickets.Ticket;
 import models.users.User;
 
 import java.util.Date;
@@ -12,7 +12,21 @@ import java.util.Date;
  */
 public interface CoatChecksRepository {
 
-    CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger, Date handOverOn);
+    void persistNewCoatHanger(CoatHanger coatHanger);
 
-    CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck);
+    CoatHanger getCoatHangerByNumberAndLocationID(Integer coatHangerNumber, String locationID);
+
+    CoatHanger getCoatHangerByID(Integer id);
+
+    CoatHanger addNewCoatHanger(CoatHanger coatHanger);
+
+    CoatCheck getCoatCheckByID(Integer id);
+
+    CoatCheck getCoatCheckByPublicIdentifier(Integer pid);
+
+    CoatCheck addNewCoatCheck(CoatCheck coatCheck);
+
+    CoatCheck createNewCoatCheck(User user, Location location, Date handOverOn, Integer coatHangerNumber);
+
+    CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckID);
 }

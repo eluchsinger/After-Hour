@@ -2,8 +2,6 @@ package logic.coatChecks;
 
 import models.events.CoatHanger;
 import models.tickets.CoatCheck;
-import models.tickets.Ticket;
-import models.users.User;
 
 import java.util.Date;
 
@@ -12,7 +10,7 @@ import java.util.Date;
  */
 public interface CoatChecksLogic {
 
-    CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger);
+    CoatCheck createNewCoatCheck(Integer userID, Integer coatHangerNumber, String locationName);
 
-    CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck);
+    CoatHanger fetchJacket(Date date, Integer coatHangerID);
 }

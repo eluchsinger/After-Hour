@@ -1,12 +1,12 @@
 package logic.coatChecks;
 
 import dal.coatChecks.CoatChecksRepository;
+import dal.events.EventsRepository;
+import dal.users.UsersRepository;
 import models.events.CoatHanger;
+import models.events.Location;
 import models.tickets.CoatCheck;
-import models.tickets.Ticket;
 import models.users.User;
-import org.joda.time.DateTime;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -16,19 +16,25 @@ import java.util.Date;
  */
 public class CoatChecksLogicImpl implements CoatChecksLogic {
     private final CoatChecksRepository coatChecksRepository;
+    private final UsersRepository usersRepository;
+    private final EventsRepository eventsRepository;
 
     @Inject
-    public CoatChecksLogicImpl(CoatChecksRepository coatChecksRepository){
+    public CoatChecksLogicImpl(CoatChecksRepository coatChecksRepository, UsersRepository usersRepository, EventsRepository eventsRepository){
         this.coatChecksRepository = coatChecksRepository;
+        this.usersRepository = usersRepository;
+        this.eventsRepository = eventsRepository;
     }
 
     @Override
-    public CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger) {
-        return coatChecksRepository.createNewCoatCheck(user, coatHanger, new Date());
+    public CoatCheck createNewCoatCheck(Integer userID, Integer coatHangerNumber, String locationName) {
+        User user = usersRepository.getUserById(userID);
+        Location location = eventsRepository.getLocationByName(locationName);
+        return coatChecksRepository.createNewCoatCheck(user, location, new Date(), coatHangerNumber);
     }
 
     @Override
-    public CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
-        return coatChecksRepository.fetchJacket(fetchedOn, coatCheck);
+    public CoatHanger fetchJacket(Date date, Integer coatHangerID) {
+        return coatChecksRepository.fetchJacket(date, coatHangerID);
     }
 }

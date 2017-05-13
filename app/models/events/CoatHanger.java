@@ -11,6 +11,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tbl_coatHangers")
+@NamedQueries({
+        @NamedQuery(name = "CoatHanger.get", query="SELECT c FROM CoatHanger c WHERE c.coatHangerNumber = :coatHangerNumber and c.location.placeId = :locationPlaceID")
+})
 public class CoatHanger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,17 +29,46 @@ public class CoatHanger {
         this.coatChecks = new ArrayList<>();
     }
 
-    public CoatHanger(Integer coatHangerNumber, Location location){
-        this.coatHangerNumber = coatHangerNumber;
-        this.location = location;
-        this.id = null;
-    }
-
     public CoatHanger(Integer id, Integer coatHangerNumber, Location location){
         this.id = id;
         this.coatHangerNumber = coatHangerNumber;
         this.location = location;
-        this.id = null;
+    }
+
+    public CoatHanger(Integer coatHangerNumber, Location location){
+        this(null, coatHangerNumber, location);
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getCoatHangerNumber() {
+        return coatHangerNumber;
+    }
+
+    public void setCoatHangerNumber(Integer coatHangerNumber) {
+        this.coatHangerNumber = coatHangerNumber;
+    }
+
+    public List<CoatCheck> getCoatChecks() {
+        return coatChecks;
+    }
+
+    public void setCoatChecks(List<CoatCheck> coatChecks) {
+        this.coatChecks = coatChecks;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

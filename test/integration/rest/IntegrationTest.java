@@ -116,4 +116,13 @@ public class IntegrationTest extends WithApplication{
         final Result result = route(request);
         TestCase.assertEquals(OK, result.status());
     }
+
+    @Test
+    public void testHandOverJacket(){
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/handOverJacket/1/1");
+        final Result result = route(request);
+        TestCase.assertEquals(OK, result.status());
+    }
 }

@@ -10,6 +10,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tbl_location")
+@NamedQueries({
+        @NamedQuery(name = "Location.getLocationByName", query="SELECT l FROM Location l WHERE l.name = :name")
+})
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

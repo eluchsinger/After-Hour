@@ -2,9 +2,9 @@ package dal.coatChecks;
 
 import demoData.DemoData;
 import models.events.CoatHanger;
+import models.events.Location;
 import models.tickets.CoatCheck;
 import models.users.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Date;
 import java.util.List;
@@ -20,21 +20,47 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
     }
 
     @Override
-    public CoatCheck createNewCoatCheck(User user, CoatHanger coatHanger, Date handOverOn) {
-        CoatCheck coatCheck = new CoatCheck(coatHanger, handOverOn, user);
-        coatChecks.add(coatCheck);
-        return coatCheck;
+    public void persistNewCoatHanger(CoatHanger coatHanger) {
+
     }
 
     @Override
-    public CoatHanger fetchJacket(Date fetchedOn, CoatCheck coatCheck) {
-        CoatCheck dBCoatCheck = coatChecks
-                                            .stream()
-                                            .filter(c -> coatCheck.getCoatHanger() == null ? false : coatCheck.getCoatHanger().equals(c.getCoatHanger()))
-                                            .findFirst()
-                                            .orElse(null);
+    public CoatHanger getCoatHangerByNumberAndLocationID(Integer coatHangerNumber, String locationID) {
+        return null;
+    }
 
+    @Override
+    public CoatHanger getCoatHangerByID(Integer id) {
+        return null;
+    }
 
-        return dBCoatCheck != null ? dBCoatCheck.fetch(fetchedOn) : null;
+    @Override
+    public CoatHanger addNewCoatHanger(CoatHanger coatHanger) {
+        return null;
+    }
+
+    @Override
+    public CoatCheck getCoatCheckByID(Integer id) {
+        return null;
+    }
+
+    @Override
+    public CoatCheck getCoatCheckByPublicIdentifier(Integer pid) {
+        return null;
+    }
+
+    @Override
+    public CoatCheck addNewCoatCheck(CoatCheck coatCheck) {
+        return null;
+    }
+
+    @Override
+    public CoatCheck createNewCoatCheck(User user, Location location, Date handOverOn, Integer coatHangerNumber) {
+        return null;
+    }
+
+    @Override
+    public CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckID) {
+        return null;
     }
 }
