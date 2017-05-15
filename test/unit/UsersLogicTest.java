@@ -9,7 +9,12 @@ import dal.tickets.TicketRepositoryMock;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.users.UsersLogic;
+import models.exceptions.ServerException;
+import models.exceptions.UserDoesNotExistException;
+import models.exceptions.UserHasNoTicketException;
+import models.tickets.Ticket;
 import models.users.User;
+import org.junit.Before;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -24,6 +29,7 @@ import static play.inject.Bindings.bind;
  * To test logic-only, the database is mocked.
  */
 public class UsersLogicTest extends WithApplication {
+    private UsersLogic usersLogic;
 
     @Override
     protected Application provideApplication() {
@@ -35,24 +41,42 @@ public class UsersLogicTest extends WithApplication {
                 .build();
     }
 
+    @Before
+    public void setup(){
+        usersLogic = this.app.injector().instanceOf(UsersLogic.class);
+    }
+
     @Test
     public void testGetExistingUserById() {
-        final UsersLogic usersLogic = this.app.injector().instanceOf(UsersLogic.class);
         final User expectedUser = usersLogic.getUserById(1);
-        assertNotNull(expectedUser);
+        assertEquals(new Integer(1),expectedUser.getId());
     }
 
     @Test
     public void testGetNonExistingUserById() {
-        final UsersLogic usersLogic = this.app.injector().instanceOf(UsersLogic.class);
         final User expectedUser = usersLogic.getUserById(123123123);
         assertNull(expectedUser);
     }
 
     @Test
     public void testUserGeneratingId(){
-        final UsersLogic usersLogic = this.app.injector().instanceOf(UsersLogic.class);
         final User user = usersLogic.getUserById(2);
         assertEquals(user.getId(), new Integer(2));
+    }
+
+    @Test
+    public void testGetTicket() throws ServerException {
+        Ticket ticket = usersLogic.getTicket(1,1);
+        assertNotNull(ticket);
+    }
+
+    @Test (expected = UserHasNoTicketException.class)
+    public void testGetTicketUserHasNoTicket() throws ServerException {
+        usersLogic.getTicket(1,100);
+    }
+
+    @Test  (expected = UserDoesNotExistException.class)
+    public void testGetTicketUserDoesNotExist() throws ServerException {
+        usersLogic.getTicket(100,1);
     }
 }
