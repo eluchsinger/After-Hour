@@ -1,22 +1,29 @@
 package dal.coatChecks;
 
-import demoData.DemoData;
 import models.events.CoatHanger;
 import models.events.Location;
 import models.tickets.CoatCheck;
 import models.users.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by marco on 23.04.2017.
  */
 public class CoatChecksRepositoryMock implements CoatChecksRepository {
     private List<CoatCheck> coatChecks;
+    private List<CoatHanger> coatHangers;
 
     public CoatChecksRepositoryMock(){
-        this.coatChecks = DemoData.getInstance().getCoatChecks();
+        this.coatChecks = new ArrayList<>();
+        this.coatHangers = new ArrayList<>();
+        Location plaza = new Location(1, "Plaza", "", "Plaza");
+        coatHangers.add(new CoatHanger(1, 1, plaza));
+        coatHangers.add(new CoatHanger(2, 2, plaza));
+        coatHangers.add(new CoatHanger(2, 3, plaza));
     }
 
     @Override
@@ -26,7 +33,11 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
 
     @Override
     public CoatHanger getCoatHangerByNumberAndLocationID(Integer coatHangerNumber, String locationID) {
-        return null;
+        return coatHangers
+                .stream()
+                .filter(c -> Objects.equals(c.getCoatHangerNumber(), coatHangerNumber) && Objects.equals(c.getLocation().getPlaceId(), locationID))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
@@ -56,7 +67,10 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
 
     @Override
     public CoatCheck createNewCoatCheck(User user, Location location, Date handOverOn, Integer coatHangerNumber) {
-        return null;
+        CoatHanger coatHanger = getCoatHangerByNumberAndLocationID(coatHangerNumber, location.getPlaceId());
+        CoatCheck coatCheck = new CoatCheck(coatHanger, handOverOn, user);
+        coatChecks.add(coatCheck);
+        return coatCheck;
     }
 
     @Override

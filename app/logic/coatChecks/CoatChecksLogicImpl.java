@@ -7,6 +7,7 @@ import models.events.CoatHanger;
 import models.events.Location;
 import models.tickets.CoatCheck;
 import models.users.User;
+import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import java.util.Date;

@@ -3,6 +3,7 @@ package rest;
 import logic.coatChecks.CoatChecksLogic;
 import models.events.CoatHanger;
 import models.tickets.CoatCheck;
+import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Result;
 
@@ -29,20 +30,15 @@ public class CoatController {
         this.dateFormat = new SimpleDateFormat("yyyy-mm-dd");
     }
 
+    @Transactional
     public Result handOverJacket(String email, Integer coatHangerNumber, String locationName) {
         CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck(email, coatHangerNumber, locationName);
         return coatCheck != null ? ok(Json.toJson(coatCheck)) : badRequest("CoatCheck creation failed");
     }
 
-    public Result fetchJacket(String fetchedOn, Integer coatCheckPublicID) {
-        Date date;
-        try {
-            date = dateFormat.parse(fetchedOn);
-        } catch (ParseException e) {
-            return badRequest("Bad date String");
-        }
-
-        CoatHanger hanger = coatChecksLogic.fetchJacket(date, new Integer(coatCheckPublicID));
-        return hanger == null ? ok(Json.toJson(hanger)) : notFound("CoatCheck not found or jacket alread Fetched");
+    @Transactional
+    public Result fetchJacket(Integer coatCheckPublicID) {
+        CoatHanger hanger = coatChecksLogic.fetchJacket(new Date(), coatCheckPublicID);
+        return hanger != null ? ok(Json.toJson(hanger)) : notFound("CoatCheck not found or jacket alread Fetched");
     }
 }

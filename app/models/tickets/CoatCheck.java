@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_coatChecks")
 @NamedQueries({
-        @NamedQuery(name = "CoatCheck.getByPublicIdentifier", query="SELECT c FROM CoatCheck c WHERE c.publicIdentifier = :publicIdentifier")
+        @NamedQuery(name = "CoatCheck.getByPublic Identifier", query="SELECT c FROM CoatCheck c WHERE c.publicIdentifier = :publicIdentifier")
 })
 public class CoatCheck {
     @Id
@@ -86,20 +86,23 @@ public class CoatCheck {
 
         CoatCheck coatCheck = (CoatCheck) o;
 
-        if (!id.equals(coatCheck.id)) return false;
-        if (!coatHanger.equals(coatCheck.coatHanger)) return false;
-        if (!handOverOn.equals(coatCheck.handOverOn)) return false;
+        if (id != null ? !id.equals(coatCheck.id) : coatCheck.id != null) return false;
+        if (publicIdentifier != null ? !publicIdentifier.equals(coatCheck.publicIdentifier) : coatCheck.publicIdentifier != null)
+            return false;
+        if (coatHanger != null ? !coatHanger.equals(coatCheck.coatHanger) : coatCheck.coatHanger != null) return false;
+        if (handOverOn != null ? !handOverOn.equals(coatCheck.handOverOn) : coatCheck.handOverOn != null) return false;
         if (fetchedOn != null ? !fetchedOn.equals(coatCheck.fetchedOn) : coatCheck.fetchedOn != null) return false;
-        return user.equals(coatCheck.user);
+        return user != null ? user.equals(coatCheck.user) : coatCheck.user == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + coatHanger.hashCode();
-        result = 31 * result + handOverOn.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (publicIdentifier != null ? publicIdentifier.hashCode() : 0);
+        result = 31 * result + (coatHanger != null ? coatHanger.hashCode() : 0);
+        result = 31 * result + (handOverOn != null ? handOverOn.hashCode() : 0);
         result = 31 * result + (fetchedOn != null ? fetchedOn.hashCode() : 0);
-        result = 31 * result + user.hashCode();
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 }
