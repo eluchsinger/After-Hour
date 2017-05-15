@@ -10,10 +10,16 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
 import models.events.Event;
+import models.exceptions.EventDoesNotExistException;
+import models.exceptions.ServerException;
+import org.junit.Before;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
@@ -24,6 +30,8 @@ import static play.inject.Bindings.bind;
  * To test logic-only, the database is mocked.
  */
 public class EventsLogicTest extends WithApplication {
+    private EventsLogic eventsLogic;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected Application provideApplication() {
@@ -35,10 +43,31 @@ public class EventsLogicTest extends WithApplication {
                 .build();
     }
 
+    @Before
+    public void setup(){
+        eventsLogic = this.app.injector().instanceOf(EventsLogic.class);
+    }
+
     @Test
     public void testGetExistingEvent(){
-        final EventsLogic eventsLogic = this.app.injector().instanceOf(EventsLogic.class);
         final Event event = eventsLogic.getEventById(2);
         assertEquals(new Integer (2), event.getId());
+    }
+
+    @Test
+    public void testGetEventWithTicketCategoriesOnlyAvailable() throws ParseException, ServerException {
+       Event event = eventsLogic.getEventWithTicketCategories(1,true , dateFormat.parse("2017-4-22"));
+       assertEquals(1,event.getTicketCategories().size());
+    }
+
+    @Test
+    public void testGetEventWithTicketCategories() throws ParseException, ServerException {
+        Event event = eventsLogic.getEventWithTicketCategories(2,true , dateFormat.parse("2017-4-22"));
+        assertEquals(2,event.getTicketCategories().size());
+    }
+
+    @Test (expected = EventDoesNotExistException.class)
+    public void testGetEventWithTicketCategoriesWithNotExistingEvent() throws ServerException {
+       eventsLogic.getEventWithTicketCategories(99,true);
     }
 }

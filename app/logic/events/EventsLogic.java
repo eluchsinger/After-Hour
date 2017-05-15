@@ -1,7 +1,9 @@
 package logic.events;
 
 import models.events.Event;
+import models.exceptions.ServerException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +26,8 @@ public interface EventsLogic {
      * The list can be empty but not null.
      */
     List<Event> getEvents();
+
+    Event getEventWithTicketCategories(Integer eventId, Boolean available) throws ServerException;
+
+    Event getEventWithTicketCategories(Integer eventId, Boolean available, Date date) throws ServerException;
 }

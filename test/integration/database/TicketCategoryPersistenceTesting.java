@@ -32,7 +32,6 @@ public class TicketCategoryPersistenceTesting extends WithApplication {
             final TicketRepositoryJPA repository = new TicketRepositoryJPA(jpaApi);
             final TicketCategory expectedTicketCategory = new TicketCategory(null, "Studenten Ticket",
                     "Ticket für Studenten",
-                    null,
                     15.00,
                     validFrom,
                     validUntil);
