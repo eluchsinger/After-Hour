@@ -37,17 +37,17 @@ public class UsersController extends Controller {
     @Transactional
     public Result login(){
         Map<String, String[]> loginData = request().body().asFormUrlEncoded();
+
         String email = loginData.get("email")[0];
         email = replaceCharacterEntities(email);
-        User user = this.usersLogic.getUserByEmail(email);
-        if (user == null) {
-            return badRequest("Incorrect username!");
+        String password = loginData.get("password")[0];
+
+        try {
+            return ok(Json.toJson(usersLogic.login(email,password)));
+        } catch (ServerException e){
+            return badRequest(Json.toJson(e));
         }
-        if(user.compareWithPassword(loginData.get("password")[0])){
-            return ok(Json.toJson(user));
-        } else {
-            return badRequest("Incorrect password!");
-        }
+
     }
 
     @Transactional

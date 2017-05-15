@@ -69,7 +69,7 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testLoginIncorrect(){
-        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        Map<String, String[]> loginData = new TreeMap<>();
         loginData.put("email", new String[]{"silvio.berlusconi@italy.it"});
         loginData.put("password", new String[]{"1234567"});
         final Http.RequestBuilder request = new Http.RequestBuilder()

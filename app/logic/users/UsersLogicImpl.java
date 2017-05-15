@@ -4,6 +4,7 @@ import dal.users.UsersRepository;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.exceptions.UserHasNoTicketException;
+import models.exceptions.UserWrongPasswordException;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -46,6 +47,21 @@ public class UsersLogicImpl implements UsersLogic {
      */
     @Override
     public User getUserByEmail(String email){return this.usersRepository.getUserByEmail(email);}
+
+    @Override
+    public User login(String email, String password) throws ServerException {
+        User user = usersRepository.getUserByEmail(email);
+
+        if (!validateUser(user)){
+            throw new UserDoesNotExistException();
+        }
+
+        if (user.compareWithPassword(password)){
+            return user;
+        } else {
+            throw new UserWrongPasswordException();
+        }
+    }
 
     @Override
     public Ticket getTicket(Integer userId, Integer eventId) throws ServerException {

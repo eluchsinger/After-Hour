@@ -29,5 +29,7 @@ public interface UsersLogic {
      */
     User getUserByEmail(String email);
 
+    User login(String email, String password) throws ServerException;
+
     Ticket getTicket(Integer userId, Integer eventId) throws ServerException;
 }
