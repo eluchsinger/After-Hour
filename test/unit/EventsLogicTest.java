@@ -21,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
 import static play.inject.Bindings.bind;
 
 /**
@@ -55,9 +54,14 @@ public class EventsLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetEventWithTicketCategoriesAvailable() throws ParseException, ServerException {
-       // Event event = eventsLogic.getEventWithTicketCategories(2,false , dateFormat.parse("2017-4-22"));
-      // assertEquals(1,event.getTicketCategories().size());
-        assertNull(null);
+    public void testGetEventWithTicketCategoriesOnlyAvailable() throws ParseException, ServerException {
+       Event event = eventsLogic.getEventWithTicketCategories(1,true , dateFormat.parse("2017-4-22"));
+       assertEquals(1,event.getTicketCategories().size());
+    }
+
+    @Test
+    public void testGetEventWithTicketCategories() throws ParseException, ServerException {
+        Event event = eventsLogic.getEventWithTicketCategories(2,true , dateFormat.parse("2017-4-22"));
+        assertEquals(2,event.getTicketCategories().size());
     }
 }
