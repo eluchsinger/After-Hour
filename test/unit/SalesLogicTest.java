@@ -72,7 +72,7 @@ public class SalesLogicTest extends WithApplication {
 
    @Test (expected = UserDoesNotExistException.class)
     public void testBuyTicketWithNotExistingUser() throws ParseException, ServerException {
-       Ticket ticket = salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
+       salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
    }
 
 }
