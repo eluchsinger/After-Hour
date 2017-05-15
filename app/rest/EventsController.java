@@ -1,8 +1,8 @@
 package rest;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
+import models.exceptions.EventDoesNotExistException;
 import models.exceptions.ServerException;
 import play.api.Play;
 import play.db.jpa.Transactional;
@@ -28,17 +28,16 @@ public class EventsController extends Controller {
 
     @Transactional
     public Result getAllEvents() {
-        JsonNode jsonNode = Json.toJson(eventsLogic.getEvents());
-        return ok(jsonNode);
+        return ok(Json.toJson(eventsLogic.getEvents()));
     }
 
     @Transactional
     public Result getEvent(Integer id) {
-        Event event = eventsLogic.getEventById(id);
-        if (event != null){
-            return ok(Json.toJson(event));
+        try {
+            return ok(Json.toJson(eventsLogic.getEventById(id)));
+        } catch (EventDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
         }
-        return badRequest("Ticket not found");
     }
 
     @Transactional
@@ -53,8 +52,12 @@ public class EventsController extends Controller {
 
     @Transactional
     public Result getEventImage(Integer eventId){
-        final Event event = eventsLogic.getEventById(eventId);
-        File file = Play.current().getFile("app/pictures/" + event.getPictureName());
-        return ok(file);
+        try {
+            final Event event = eventsLogic.getEventById(eventId);
+            File file = Play.current().getFile("app/pictures/" + event.getPictureName());
+            return ok(file);
+        } catch (EventDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
     }
 }
