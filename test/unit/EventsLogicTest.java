@@ -10,6 +10,7 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
 import models.events.Event;
+import models.exceptions.EventDoesNotExistException;
 import models.exceptions.ServerException;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,5 +64,10 @@ public class EventsLogicTest extends WithApplication {
     public void testGetEventWithTicketCategories() throws ParseException, ServerException {
         Event event = eventsLogic.getEventWithTicketCategories(2,true , dateFormat.parse("2017-4-22"));
         assertEquals(2,event.getTicketCategories().size());
+    }
+
+    @Test (expected = EventDoesNotExistException.class)
+    public void testGetEventWithTicketCategoriesWithNotExistingEvent() throws ServerException {
+       eventsLogic.getEventWithTicketCategories(99,true);
     }
 }
