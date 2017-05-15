@@ -75,4 +75,10 @@ public class SalesLogicTest extends WithApplication {
        salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
    }
 
+   @Test (expected = TicketAlreadyBoughtException.class)
+    public void testBuyTicketDiffrentTicketCategories() throws ParseException, ServerException {
+       salesLogic.buyTicket(5,7, dateFormat.parse("2017-4-23"));
+       salesLogic.buyTicket(5,8, dateFormat.parse("2017-4-23"));
+   }
+
 }
