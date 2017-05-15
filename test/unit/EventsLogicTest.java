@@ -49,9 +49,14 @@ public class EventsLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetExistingEvent(){
+    public void testGetExistingEvent() throws EventDoesNotExistException {
         final Event event = eventsLogic.getEventById(2);
         assertEquals(new Integer (2), event.getId());
+    }
+
+    @Test (expected = EventDoesNotExistException.class)
+    public void testGetNonExistingEvent() throws EventDoesNotExistException {
+        eventsLogic.getEventById(323132);
     }
 
     @Test
