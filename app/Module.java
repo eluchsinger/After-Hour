@@ -55,7 +55,7 @@ public class Module extends AbstractModule {
         bind(UsersRepository.class).to(UsersRepositoryJPA.class).asEagerSingleton();
         bind(EventsRepository.class).to(EventsRepositoryJPA.class).asEagerSingleton();
         bind(TicketRepository.class).to(TicketRepositoryJPA.class).asEagerSingleton();
-        bind(CoatChecksRepository.class).to(CoatChecksRepositoryJPA.class);
+        bind(CoatChecksRepository.class).to(CoatChecksRepositoryJPA.class).asEagerSingleton();
 
         bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();
     }

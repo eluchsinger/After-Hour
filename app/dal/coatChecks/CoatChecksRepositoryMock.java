@@ -5,6 +5,7 @@ import models.events.Location;
 import models.tickets.CoatCheck;
 import models.users.User;
 
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Objects;
 /**
  * Created by marco on 23.04.2017.
  */
+@Singleton
 public class CoatChecksRepositoryMock implements CoatChecksRepository {
     private List<CoatCheck> coatChecks;
     private List<CoatHanger> coatHangers;
@@ -20,15 +22,11 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
     public CoatChecksRepositoryMock(){
         this.coatChecks = new ArrayList<>();
         this.coatHangers = new ArrayList<>();
-        Location plaza = new Location(1, "Plaza", "", "Plaza");
-        coatHangers.add(new CoatHanger(1, 1, plaza));
-        coatHangers.add(new CoatHanger(2, 2, plaza));
-        coatHangers.add(new CoatHanger(2, 3, plaza));
     }
 
     @Override
     public void persistNewCoatHanger(CoatHanger coatHanger) {
-
+        coatHangers.add(coatHanger);
     }
 
     @Override
@@ -42,27 +40,42 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
 
     @Override
     public CoatHanger getCoatHangerByID(Integer id) {
-        return null;
+        return coatHangers
+                .stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
     }
 
     @Override
     public CoatHanger addNewCoatHanger(CoatHanger coatHanger) {
-        return null;
+        coatHangers.add(coatHanger);
+        return  coatHanger;
     }
 
     @Override
     public CoatCheck getCoatCheckByID(Integer id) {
-        return null;
+        return coatChecks
+                .stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public CoatCheck getCoatCheckByPublicIdentifier(Integer pid) {
-        return null;
+        return coatChecks
+                .stream()
+                .filter(c -> c.getPublicIdentifier().equals(pid))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public CoatCheck addNewCoatCheck(CoatCheck coatCheck) {
-        return null;
+        coatChecks.add(coatCheck);
+        return coatCheck;
     }
 
     @Override
@@ -75,6 +88,18 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
 
     @Override
     public CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckID) {
-        return null;
+        CoatHanger hanger = null;
+
+        for(int i = 0; i < coatChecks.size(); i++){
+            CoatCheck c = coatChecks.get(i);
+            if(c.getPublicIdentifier().equals(coatCheckID)){
+                hanger = c.fetch(fetchedOn);
+                c.setCoatHanger(null);
+                coatChecks.set(i, c);
+                break;
+            }
+        }
+
+        return hanger;
     }
 }

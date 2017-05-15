@@ -1,5 +1,6 @@
 package models.tickets;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.events.CoatHanger;
 import models.users.User;
 
@@ -13,17 +14,20 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_coatChecks")
 @NamedQueries({
-        @NamedQuery(name = "CoatCheck.getByPublic Identifier", query="SELECT c FROM CoatCheck c WHERE c.publicIdentifier = :publicIdentifier")
+        @NamedQuery(name = "CoatCheck.getByPublicIdentifier", query="SELECT c FROM CoatCheck c WHERE c.publicIdentifier = :publicIdentifier")
 })
 public class CoatCheck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     private Integer publicIdentifier;
     @ManyToOne(targetEntity = CoatHanger.class)
     private CoatHanger coatHanger;
     private Date handOverOn;
+    @JsonIgnore
     private Date fetchedOn;
+    @JsonIgnore
     @ManyToOne(targetEntity = User.class)
     private User user;
 
@@ -43,12 +47,20 @@ public class CoatCheck {
         return id;
     }
 
+    public void setPublicIdentifier(Integer id){
+        this.publicIdentifier = id;
+    }
+
     public Integer getPublicIdentifier(){
         return publicIdentifier;
     }
 
     public CoatHanger getCoatHanger() {
         return coatHanger;
+    }
+
+    public void setCoatHanger(CoatHanger coatHanger){
+        this.coatHanger = coatHanger;
     }
 
     public Date getHandOverOn() {
@@ -72,7 +84,6 @@ public class CoatCheck {
         CoatHanger hangerToFetchJacket = this.coatHanger;
         if(hangerToFetchJacket != null) {
             this.fetchedOn = fetchedOn;
-            this.coatHanger = null;
             return hangerToFetchJacket;
         } else {
             return null;

@@ -8,6 +8,7 @@ import models.events.CoatHanger;
 import models.events.Event;
 import models.events.Location;
 import models.events.TicketCategory;
+import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.Gender;
 import models.users.User;
@@ -32,6 +33,7 @@ public class DataGenerator {
     private static final int INITIAL_TICKET_CAPACITY = 20;
     private static final int INITIAL_LOCATION_CAPACITY = 3;
     private static final int INITIAL_COAT_HANGER_CAPACITY = 10;
+    private static final int INITIAL_COAT_CHECK_CAPACITY = 2;
 
     private final UsersRepository usersRepository;
     private final EventsRepository eventsRepository;
@@ -63,7 +65,8 @@ public class DataGenerator {
     public void initializeData() throws GenerateException {
         confirmRepositoryNotNull(this.usersRepository,
                 this.eventsRepository,
-                this.ticketRepository);
+                this.ticketRepository,
+                this.coatChecksRepository);
 
         final int amountOfLocations = generateLocations(this.eventsRepository);
         final int amountOfUsers = generateUsers(this.usersRepository);
@@ -72,6 +75,7 @@ public class DataGenerator {
         final int amountOfTickets = generateTickets(this.usersRepository,
                 this.ticketRepository);
         final int amountOfCoatHangers = generateCoatHangers(this.coatChecksRepository);
+        final int amountOfCoatChecks = generateCoatChecks(this.coatChecksRepository);
 
         Logger.info("Generated " + amountOfUsers + " users");
         Logger.info("Generated " + amountOfEvents + " events");
@@ -79,6 +83,7 @@ public class DataGenerator {
         Logger.info("Generated " + amountOfTickets + " tickets");
         Logger.info("Generated " + amountOfLocations + " locations");
         Logger.info("Generated " + amountOfCoatHangers + " CoatHangers");
+        Logger.info("Generated " + amountOfCoatChecks + " CoatChecks");
     }
 
     /**
@@ -191,6 +196,19 @@ public class DataGenerator {
             return coatHangers.size();
         } catch (Exception exception) {
             throw new GenerateException("Failed to generate CoatHangers", exception);
+        }
+    }
+
+    @Transactional
+    private int generateCoatChecks(CoatChecksRepository coatChecksRepository) throws GenerateException {
+        try {
+            List<CoatCheck> coatChecks = this.getDemoCoatChecks();
+            for (CoatCheck c : coatChecks) {
+                coatChecksRepository.addNewCoatCheck(c);
+            }
+            return coatChecks.size();
+        } catch (Exception exception) {
+            throw new GenerateException("Failed to generate CoatChecks", exception);
         }
     }
 
@@ -362,6 +380,25 @@ public class DataGenerator {
         coatHangers.add(new CoatHanger(null, 5, plaza));
 
         return coatHangers;
+    }
+
+    private List<CoatCheck> getDemoCoatChecks(){
+        List<CoatCheck> coatChecks = new ArrayList<>(INITIAL_COAT_CHECK_CAPACITY);
+
+        CoatHanger kaufleutenHanger2 = coatChecksRepository.getCoatHangerByNumberAndLocationID(2, "ChIJ7ZMwUgEKkEcRjV6Q7jc2y1I");
+        CoatHanger plazaHanger2 = coatChecksRepository.getCoatHangerByNumberAndLocationID(2, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
+        User user1 = usersRepository.getUserByEmail("i.beller@cervelat.de");
+        User user2 = usersRepository.getUserByEmail("silvio.berlusconi@italy.it");
+
+        CoatCheck c1 = new CoatCheck(kaufleutenHanger2, new Date(), user1);
+        CoatCheck c2 = new CoatCheck(plazaHanger2, new Date(), user2);
+        c1.setPublicIdentifier(new Integer(654321));
+        c2.setPublicIdentifier(new Integer(123456));
+
+        coatChecks.add(c1);
+        coatChecks.add(c2);
+
+        return coatChecks;
     }
 
     private List<Location> getDemoLocations() {

@@ -1,5 +1,6 @@
 package models.events;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.CoatCheck;
 
 import javax.persistence.*;
@@ -17,8 +18,10 @@ import java.util.List;
 public class CoatHanger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
     private Integer coatHangerNumber;
+    @JsonIgnore
     @OneToMany(mappedBy = "coatHanger")
     private List<CoatCheck> coatChecks;
     @ManyToOne(targetEntity = Location.class)

@@ -38,7 +38,7 @@ public class CoatChecksLogicTest extends WithApplication{
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
                 .overrides(bind(TicketRepository.class).to(TicketRepositoryMock.class))
                 .overrides(bind(CoatChecksRepository.class).to(CoatChecksRepositoryMock.class))
-                .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
+                .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class).eagerly())
                 .build();
     }
 
@@ -48,19 +48,20 @@ public class CoatChecksLogicTest extends WithApplication{
         CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck("silvio.berlusconi@italy.it", 2, "Plaza");
 
         assertNotNull(coatCheck);
+        assertEquals(new Integer(2), coatCheck.getCoatHanger().getCoatHangerNumber());
+        assertEquals("silvio.berlusconi@italy.it", coatCheck.getUser().getEmail());
     }
-/*
+
     @Test
     public void testGetAlreadyFetchedJacket() {
         final CoatChecksLogic coatChecksLogic = this.app.injector().instanceOf(CoatChecksLogic.class);
-        CoatHanger expectedCoatHanger = new CoatHanger(1, new Location());
-        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck(2, 1, );
+        CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck("silvio.berlusconi@italy.it", 2, "Plaza");
 
-        final CoatHanger firstFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getId());
-        final CoatHanger secondFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getId());
+        final CoatHanger firstFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier());
+        final CoatHanger secondFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier());
 
-        assertEquals(expectedCoatHanger, firstFetch);
+        assertEquals("Plaza", firstFetch.getLocation().getName());
         assertNull(secondFetch);
-    }*/
+    }
 
 }

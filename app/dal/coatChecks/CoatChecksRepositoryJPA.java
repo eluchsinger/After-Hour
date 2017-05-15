@@ -85,7 +85,7 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
         final EntityManager em = jpaApi.em();
         CoatCheck coatCheck = getCoatCheckByPublicIdentifier(coatCheckPublicIdentifier);
         CoatHanger hangerToFetchJacket = coatCheck.fetch(fetchedOn);
-        em.refresh(coatCheck);
+        if(hangerToFetchJacket != null) coatCheck.setCoatHanger(null);
         return hangerToFetchJacket;
     }
 }
