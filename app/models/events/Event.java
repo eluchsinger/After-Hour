@@ -110,6 +110,10 @@ public class Event {
         ticketCategories.add(ticket);
     }
 
+    public void setTicketCategories(final List<TicketCategory> ticketCategories){
+        this.ticketCategories = ticketCategories;
+    }
+
     public List<TicketCategory> getTicketCategories(){
         return ticketCategories;
     }

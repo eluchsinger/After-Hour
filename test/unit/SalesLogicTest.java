@@ -61,18 +61,24 @@ public class SalesLogicTest extends WithApplication {
    }
 
    @Test (expected = TicketCategoryInvalidException.class)
-    public void testBuyNotExistingTicketCategory() throws ServerException {
+    public void testBuyTicketNotExistingTicketCategory() throws ServerException {
         salesLogic.buyTicket(1,100);
    }
 
    @Test (expected = TicketCategoryInvalidException.class)
-    public void testBuyNotAvailableTicketCategory() throws ServerException, ParseException {
+    public void testBuyTicketNotAvailableTicketCategory() throws ServerException, ParseException {
         salesLogic.buyTicket(1,2, dateFormat.parse("2017-5-20"));
    }
 
    @Test (expected = UserDoesNotExistException.class)
-    public void testBuyWithNotExistingUser() throws ParseException, ServerException {
-       Ticket ticket = salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
+    public void testBuyTicketWithNotExistingUser() throws ParseException, ServerException {
+       salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
+   }
+
+   @Test (expected = TicketAlreadyBoughtException.class)
+    public void testBuyTicketDiffrentTicketCategories() throws ParseException, ServerException {
+       salesLogic.buyTicket(5,7, dateFormat.parse("2017-4-23"));
+       salesLogic.buyTicket(5,8, dateFormat.parse("2017-4-23"));
    }
 
 }

@@ -1,7 +1,9 @@
 package logic.events;
 
 import models.events.Event;
+import models.exceptions.EventDoesNotExistException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +17,7 @@ public interface EventsLogic {
      * @return Returns an {@link Event} object, if one was found.
      * Else returns null.
      */
-    Event getEventById(Integer EventId);
+    Event getEventById(Integer EventId) throws EventDoesNotExistException;
 
     /**
      * Gets a list of all available events.
@@ -24,4 +26,8 @@ public interface EventsLogic {
      * The list can be empty but not null.
      */
     List<Event> getEvents();
+
+    Event getEventWithTicketCategories(Integer eventId, Boolean available) throws EventDoesNotExistException;
+
+    Event getEventWithTicketCategories(Integer eventId, Boolean available, Date date) throws EventDoesNotExistException;
 }

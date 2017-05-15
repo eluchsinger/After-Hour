@@ -39,6 +39,16 @@ public class TicketCategory {
         this.soldTickets = new ArrayList<>();
     }
 
+    public TicketCategory(final Integer id, final String name, final String description, final Double price, final Date startAvailability, final Date endAvailability) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.startAvailability = startAvailability;
+        this.endAvailability = endAvailability;
+        this.soldTickets = new ArrayList<>();
+    }
+
     public TicketCategory(final Integer id, final String name, final String description, final Event event, final Double price, final Date startAvailability, final Date endAvailability) {
         this.id = id;
         this.name = name;
@@ -48,6 +58,10 @@ public class TicketCategory {
         this.startAvailability = startAvailability;
         this.endAvailability = endAvailability;
         this.soldTickets = new ArrayList<>();
+
+        if (event != null){
+            event.addTicketCategory(this);
+        }
     }
 
     //endregion
@@ -81,6 +95,11 @@ public class TicketCategory {
     }
 
     @JsonIgnore
+    public Event getEvent(){
+        return event;
+    }
+
+    @JsonIgnore
     public List<Ticket> getSoldTickets() {
         return soldTickets;
     }
@@ -94,7 +113,6 @@ public class TicketCategory {
         return soldTicket;
     }
 
-
     private class TicketFactory {
         private final TicketCategory ticketCategory;
 
@@ -106,5 +124,4 @@ public class TicketCategory {
             return new Ticket(user, new Date(), this.ticketCategory);
         }
     }
-
 }
