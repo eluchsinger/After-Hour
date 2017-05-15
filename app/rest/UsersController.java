@@ -2,6 +2,7 @@ package rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.users.UsersLogic;
+import models.exceptions.ServerException;
 import models.users.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -21,7 +22,12 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getTicket(Integer userId, Integer eventId){
-        return ok(Json.toJson(usersLogic.getTicket(userId, eventId)));
+        try {
+            return ok(Json.toJson(usersLogic.getTicket(userId, eventId)));
+        } catch (ServerException e){
+            return badRequest(Json.toJson(e));
+        }
+
     }
 
     public Result getEvents(Integer userId){

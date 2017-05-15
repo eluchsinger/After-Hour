@@ -1,6 +1,9 @@
 package logic.users;
 
 import dal.users.UsersRepository;
+import models.exceptions.ServerException;
+import models.exceptions.UserDoesNotExistException;
+import models.exceptions.UserHasNoTicketException;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -45,15 +48,27 @@ public class UsersLogicImpl implements UsersLogic {
     public User getUserByEmail(String email){return this.usersRepository.getUserByEmail(email);}
 
     @Override
-    public Ticket getTicket(Integer userId, Integer eventId){
-        User user = this.usersRepository.getUserById(1);
+    public Ticket getTicket(Integer userId, Integer eventId) throws ServerException {
+        User user = this.usersRepository.getUserById(userId);
+
+        if (!validateUser(user))
+            throw new UserDoesNotExistException();
 
         Optional<Ticket> ticket = user.getTickets().stream()
                 .filter(x -> x.getTicketCategory().getEvent().getId() == eventId)
                 .findFirst();
-        if (ticket.isPresent()){
-            return ticket.get();
-        }
-        return null;
+
+        if (!checkOptionalTicket(ticket))
+            throw new UserHasNoTicketException();
+
+        return ticket.get();
+    }
+
+    private boolean validateUser(final User user){
+        return user != null;
+    }
+
+    private boolean checkOptionalTicket(final Optional<Ticket> ticket){
+        return ticket.isPresent();
     }
 }

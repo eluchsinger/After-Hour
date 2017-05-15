@@ -1,5 +1,6 @@
 package logic.users;
 
+import models.exceptions.ServerException;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -28,5 +29,5 @@ public interface UsersLogic {
      */
     User getUserByEmail(String email);
 
-    Ticket getTicket(Integer userId, Integer eventId);
+    Ticket getTicket(Integer userId, Integer eventId) throws ServerException;
 }
