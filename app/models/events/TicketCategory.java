@@ -81,6 +81,11 @@ public class TicketCategory {
     }
 
     @JsonIgnore
+    public Event getEvent(){
+        return event;
+    }
+
+    @JsonIgnore
     public List<Ticket> getSoldTickets() {
         return soldTickets;
     }
