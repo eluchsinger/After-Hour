@@ -3,6 +3,7 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.events.EventsLogic;
 import models.events.Event;
+import models.exceptions.ServerException;
 import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -42,7 +43,12 @@ public class EventsController extends Controller {
 
     @Transactional
     public Result getTicketCategories(Integer eventId, Boolean available){
-        return ok(Json.toJson(eventsLogic.getEventWithTicketCategories(eventId, available)));
+        try {
+            return ok(Json.toJson(eventsLogic.getEventWithTicketCategories(eventId, available)));
+        } catch (ServerException e){
+            return badRequest(Json.toJson(e));
+        }
+
     }
 
     @Transactional

@@ -3,6 +3,8 @@ package logic.events;
 import dal.events.EventsRepository;
 import models.events.Event;
 import models.events.TicketCategory;
+import models.exceptions.EventDoesNotExistException;
+import models.exceptions.ServerException;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -47,12 +49,15 @@ public class EventsLogicImpl implements EventsLogic {
     }
 
     @Override
-    public Event getEventWithTicketCategories(Integer eventId, Boolean onlyAvailable) {
+    public Event getEventWithTicketCategories(Integer eventId, Boolean onlyAvailable) throws ServerException {
         return getEventWithTicketCategories(eventId, onlyAvailable, new Date());
     }
 
-    public Event getEventWithTicketCategories(Integer eventId, Boolean onlyAvailable, Date date){
+    public Event getEventWithTicketCategories(Integer eventId, Boolean onlyAvailable, Date date) throws ServerException {
         Event event = eventsRepository.getEventById(eventId);
+
+        if(!checkEvent(event))
+            throw new EventDoesNotExistException();
 
         if (onlyAvailable){
             List<TicketCategory> tickets= event.getTicketCategories().stream()
@@ -62,5 +67,9 @@ public class EventsLogicImpl implements EventsLogic {
             event.setTicketCategories(tickets);
         }
         return event;
+    }
+
+    private boolean checkEvent(Event event){
+        return event != null;
     }
 }
