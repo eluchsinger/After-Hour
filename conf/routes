@@ -23,9 +23,6 @@ POST /users/login                           rest.UsersController.login()
 # REST Ticket Sales
 GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)
 
-# Request Sample: http://localhost:9000/ticket?user=1&event=1
-GET /tickets                                rest.EventsController.getTicket(user: Integer, event: Integer)
-
 # Request for Update
 GET /update                                 admin.AdminController.executeUpdate
 

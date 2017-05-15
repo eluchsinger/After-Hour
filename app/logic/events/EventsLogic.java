@@ -24,4 +24,6 @@ public interface EventsLogic {
      * The list can be empty but not null.
      */
     List<Event> getEvents();
+
+    Event getEventWithTicketCategories(Integer eventId, Boolean available);
 }

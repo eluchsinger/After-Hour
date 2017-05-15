@@ -40,9 +40,9 @@ public class EventsController extends Controller {
         return badRequest("Ticket not found");
     }
 
-    public Result getTicket(Integer userId, Integer eventId){
-        String result = "User: " + userId + "Ticket: " + eventId;
-        return ok(Json.toJson(result));
+    @Transactional
+    public Result getTicketCategories(Integer eventId, Boolean available){
+        return ok(Json.toJson(eventsLogic.getEventWithTicketCategories(eventId, available)));
     }
 
     @Transactional
@@ -50,9 +50,5 @@ public class EventsController extends Controller {
         final Event event = eventsLogic.getEventById(eventId);
         File file = Play.current().getFile("app/pictures/" + event.getPictureName());
         return ok(file);
-    }
-
-    public Result getTicketCategories(Integer eventId, Boolean available){
-        return ok(Json.toJson(available));
     }
 }
