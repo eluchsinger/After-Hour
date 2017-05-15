@@ -51,4 +51,8 @@ public class EventsController extends Controller {
         File file = Play.current().getFile("app/pictures/" + event.getPictureName());
         return ok(file);
     }
+
+    public Result getTicketCategories(Integer eventId, Boolean available){
+        return ok(Json.toJson(available));
+    }
 }
