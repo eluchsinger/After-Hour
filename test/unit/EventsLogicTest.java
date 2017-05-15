@@ -54,6 +54,11 @@ public class EventsLogicTest extends WithApplication {
         assertEquals(new Integer (2), event.getId());
     }
 
+    @Test (expected = EventDoesNotExistException.class)
+    public void testGetNonExistingEvent() throws EventDoesNotExistException {
+        eventsLogic.getEventById(323132);
+    }
+
     @Test
     public void testGetEventWithTicketCategoriesOnlyAvailable() throws ParseException, ServerException {
        Event event = eventsLogic.getEventWithTicketCategories(1,true , dateFormat.parse("2017-4-22"));
