@@ -1,5 +1,4 @@
 import com.google.inject.AbstractModule;
-import java.time.Clock;
 
 import config.StartupConfiguration;
 import config.StartupConfigurationImpl;
@@ -22,6 +21,8 @@ import logic.users.UsersLogicImpl;
 import services.ApplicationTimer;
 import services.AtomicCounter;
 import services.Counter;
+
+import java.time.Clock;
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -51,9 +52,9 @@ public class Module extends AbstractModule {
         bind(CoatChecksLogic.class).to(CoatChecksLogicImpl.class);
 
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
-        bind(UsersRepository.class).to(UsersRepositoryJPA.class);
-        bind(EventsRepository.class).to(EventsRepositoryJPA.class);
-        bind(TicketRepository.class).to(TicketRepositoryJPA.class);
+        bind(UsersRepository.class).to(UsersRepositoryJPA.class).asEagerSingleton();
+        bind(EventsRepository.class).to(EventsRepositoryJPA.class).asEagerSingleton();
+        bind(TicketRepository.class).to(TicketRepositoryJPA.class).asEagerSingleton();
         bind(CoatChecksRepository.class).to(CoatChecksRepositoryJPA.class);
 
         bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();

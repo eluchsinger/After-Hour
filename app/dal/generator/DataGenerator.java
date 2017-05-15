@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -163,7 +164,7 @@ public class DataGenerator {
             }
             return tickets.size();
         } catch (Exception exception) {
-            throw new GenerateException("Failed to generate ticket categories", exception);
+            throw new GenerateException("Failed to generate tickets", exception);
         }
     }
 
@@ -203,22 +204,38 @@ public class DataGenerator {
                 "Beckenbauer", "Franz Anton", this.dateFormat.parse("1945-09-11"), Gender.MALE));
         users.add(new User(null, "g.n@netz.los",
                 "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
+        users.add(new User(null, "wladimir.klitschko@plaza.ch",
+                "Klitschko", "Wladimir", this.dateFormat.parse("1976-03-25"), Gender.MALE, "123456", true));
+        users.add(new User(null, "vitali.klitschko@kauf.ch",
+                "Klitschko", "Vitali", this.dateFormat.parse("1971-06-19"), Gender.MALE, "123456", true));
+        users.add(new User(null, "bachelor@kauf.ch",
+                "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true));
+
+
 
         return users;
     }
 
-    private List<Event> getDemoEvents(final EventsRepository eventsRepository) {
+
+    private List<Event> getDemoEvents(final EventsRepository eventsRepository) throws ParseException {
+
+        final String pictureKaufleuten = "kaufleuten.png";
+        final String picturePlaza = "nachtseminar.png";
+        final String pictureSilvio = "bunga-bunga.jpg";
+        final String pictureShower = "shower.png";
+
         final Location kaufleuten = eventsRepository.getLocationById(1);
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, new Date(), pictureKaufleuten));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza));
+                "DIE Party für Studis", plaza, new Date(), picturePlaza));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten));
+                "Party für Fussballer nach dem Duschen", kaufleuten, new Date(), pictureShower));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
-                "Silvios exklusive Party für die 'gehobene' Gesellschaft", kaufleuten));
+                "Silvios exklusive Party für die 'gehobene' Gesellschaft",
+                kaufleuten, new Date(), pictureSilvio));
         return events;
     }
 
@@ -233,11 +250,11 @@ public class DataGenerator {
         ticketCategories.add(new TicketCategory(null,
                 "Vorverkauf", "Das Vorverkaufsticket der Extraklasse",
                 bobbaFettParty, 15.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                dateFormat.parse("2017-5-19")));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Das übliche Ticket an der Abendkasse",
-                bobbaFettParty, 25.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                bobbaFettParty, 25.00, dateFormat.parse("2017-5-20"),
+                dateFormat.parse("2017-5-21")));
 
         /* Studi Party */
         ticketCategories.add(new TicketCategory(null,
@@ -315,6 +332,13 @@ public class DataGenerator {
 
         /* Duschi Party */
         tickets.add(duschi1.sellTicket(guenther));
+        tickets.add(duschi2.sellTicket(silvio));
+        tickets.add(duschi3.sellTicket(franz));
+        tickets.add(duschi4.sellTicket(irina));
+
+        tickets.add(silvio1.sellTicket(silvio));
+        tickets.add(silvio1.sellTicket(franz));
+        tickets.add(silvio2.sellTicket(irina));
 
         return tickets;
     }

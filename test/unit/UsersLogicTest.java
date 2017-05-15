@@ -32,7 +32,7 @@ public class UsersLogicTest extends WithApplication {
                 .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
                 .overrides(bind(TicketRepository.class).to(TicketRepositoryMock.class))
-                .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class))
+                .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class).eagerly())
                 .build();
     }
 

@@ -10,7 +10,7 @@ import play.libs.Json;
 public class JavaJsonCustomObjectMapper {
     JavaJsonCustomObjectMapper() {
         ObjectMapper mapper = Json.newDefaultMapper()
-//                .enable(SerializationFeature.INDENT_OUTPUT)
+                .enable(SerializationFeature.INDENT_OUTPUT)
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         Json.setObjectMapper(mapper);
     }
