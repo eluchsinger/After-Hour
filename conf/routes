@@ -13,7 +13,6 @@ GET /events/:eventId/ticketCategories       rest.EventsController.getTicketCateg
 
 # REST Users
 GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userId: Integer, eventId: Integer)
-GET /users/:userId/tickets                  rest.UsersController.getEvents(userId: Integer)
 GET /users/:userId                          rest.UsersController.getUser(userId: Integer)
 GET /users/mail/:email                      rest.UsersController.getUserByEmail(email: String)
 

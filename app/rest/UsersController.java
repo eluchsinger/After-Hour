@@ -31,10 +31,6 @@ public class UsersController extends Controller {
 
     }
 
-    public Result getEvents(Integer userId){
-        return notFound("Not implemented");
-    }
-
     @Transactional
     public Result login(){
         try {
