@@ -72,7 +72,7 @@ public class UsersLogicImpl implements UsersLogic {
                 .filter(x -> x.getTicketCategory().getEvent().getId() == eventId)
                 .findFirst();
 
-        if (!checkOptionalTicket(ticket))
+        if (!ticket.isPresent())
             throw new UserHasNoTicketException();
 
         return ticket.get();
@@ -80,9 +80,5 @@ public class UsersLogicImpl implements UsersLogic {
 
     private boolean validateUser(final User user){
         return user != null;
-    }
-
-    private boolean checkOptionalTicket(final Optional<Ticket> ticket){
-        return ticket.isPresent();
     }
 }
