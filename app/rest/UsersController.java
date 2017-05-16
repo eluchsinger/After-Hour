@@ -51,9 +51,15 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getUserByEmail(String email){
-        email = replaceCharacterEntities(email);
-        User user = this.usersLogic.getUserByEmail(email);
-        return ok(Json.toJson(user));
+        try {
+            email = replaceCharacterEntities(email);
+            User user = this.usersLogic.getUserByEmail(email);
+            return ok(Json.toJson(user));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
+
+
     }
 
     private String replaceCharacterEntities(String email) {

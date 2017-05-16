@@ -51,7 +51,15 @@ public class UsersLogicImpl implements UsersLogic {
      * @return Returns the found user or null, if nothing was found.
      */
     @Override
-    public User getUserByEmail(String email){return this.usersRepository.getUserByEmail(email);}
+    public User getUserByEmail(String email) throws UserDoesNotExistException {
+        User user = this.usersRepository.getUserByEmail(email);
+
+        if (!validateUser(user))
+            throw new UserDoesNotExistException();
+
+        return user;
+
+    }
 
     @Override
     public User login(String email, String password) throws ServerException {

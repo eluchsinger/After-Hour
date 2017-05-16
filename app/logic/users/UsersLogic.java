@@ -28,7 +28,7 @@ public interface UsersLogic {
      * @param email The email of the user to get.
      * @return Returns the found user or null, if nothing was found.
      */
-    User getUserByEmail(String email);
+    User getUserByEmail(String email) throws UserDoesNotExistException;
 
     User login(String email, String password) throws ServerException;
 

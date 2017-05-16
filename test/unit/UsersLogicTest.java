@@ -85,4 +85,15 @@ public class UsersLogicTest extends WithApplication {
         User user = usersLogic.login("silvio.berlusconi@italy.it", "123456");
         assertEquals("silvio.berlusconi@italy.it", user.getEmail());
     }
+
+    @Test
+    public void testGetUserByEmail() throws UserDoesNotExistException {
+        User user = usersLogic.getUserByEmail("silvio.berlusconi@italy.it");
+        assertEquals("Silvio",user.getFirstName());
+    }
+
+    @Test (expected = UserDoesNotExistException.class)
+    public void testGetUserByMailWithNotExistingUser() throws UserDoesNotExistException {
+        usersLogic.getUserByEmail("donald.trump@uso.com");
+    }
 }
