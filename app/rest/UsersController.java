@@ -36,16 +36,18 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result login(){
-        Map<String, String[]> loginData = request().body().asFormUrlEncoded();
-
-        String email = loginData.get("email")[0];
-        email = replaceCharacterEntities(email);
-        String password = loginData.get("password")[0];
-
         try {
+            Map<String, String[]> loginData = request().body().asFormUrlEncoded();
+
+            String email = loginData.get("email")[0];
+            email = replaceCharacterEntities(email);
+            String password = loginData.get("password")[0];
+
             return ok(Json.toJson(usersLogic.login(email,password)));
         } catch (ServerException e){
             return badRequest(Json.toJson(e));
+        } catch (NullPointerException e){
+            return badRequest("Empty Body");
         }
 
     }

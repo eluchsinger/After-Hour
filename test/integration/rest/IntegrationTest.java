@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.*;
 
@@ -28,7 +29,7 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/1");
         final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
+        assertEquals(OK, result.status());
     }
 
     @Test
@@ -37,7 +38,7 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/123123123");
         final Result result = route(request);
-        TestCase.assertEquals(NOT_FOUND, result.status());
+        assertEquals(NOT_FOUND, result.status());
     }
 
     @Test
@@ -77,7 +78,7 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/login")
                 .bodyFormArrayValues(loginData);
         final Result result = route(request);
-        TestCase.assertEquals(BAD_REQUEST, result.status());
+        assertEquals(BAD_REQUEST, result.status());
     }
 
     @Test
@@ -86,7 +87,7 @@ public class IntegrationTest extends WithApplication{
         final User user = new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
         final User userResult = Json.fromJson(json, User.class);
 
-        TestCase.assertEquals(user, userResult);
+        assertEquals(user, userResult);
     }
 
     @Test
@@ -106,7 +107,7 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/register")
                 .bodyJson(createdUserJson);
         final Result createUserResult = route(createUserRequest);
-        TestCase.assertEquals(OK, createUserResult.status());
+        assertEquals(OK, createUserResult.status());
 
         final Http.RequestBuilder checkUserRequest = new Http.RequestBuilder()
                 .method(GET)
@@ -117,11 +118,20 @@ public class IntegrationTest extends WithApplication{
     }
 
     @Test
+    public void testRegisterUserWithNoPostBody(){
+        final Http.RequestBuilder createUserRequest = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/login");
+        final Result createUserResult = route(createUserRequest);
+        assertEquals(BAD_REQUEST, createUserResult.status());
+    }
+
+    @Test
     public void testGetEventById() {
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
                 .uri("/events/1");
         final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
+        assertEquals(OK, result.status());
     }
 }
