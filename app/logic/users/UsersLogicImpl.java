@@ -52,15 +52,13 @@ public class UsersLogicImpl implements UsersLogic {
     public User login(String email, String password) throws ServerException {
         User user = usersRepository.getUserByEmail(email);
 
-        if (!validateUser(user)){
+        if (!validateUser(user))
             throw new UserDoesNotExistException();
-        }
 
-        if (user.compareWithPassword(password)){
-            return user;
-        } else {
+        if (!user.compareWithPassword(password))
             throw new UserWrongPasswordException();
-        }
+
+        return user;
     }
 
     @Override

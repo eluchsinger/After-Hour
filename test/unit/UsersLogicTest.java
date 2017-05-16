@@ -79,4 +79,10 @@ public class UsersLogicTest extends WithApplication {
     public void testGetTicketUserDoesNotExist() throws ServerException {
         usersLogic.getTicket(100,1);
     }
+
+    @Test
+    public void testLogin() throws ServerException {
+        User user = usersLogic.login("silvio.berlusconi@italy.it", "123456");
+        assertEquals("silvio.berlusconi@italy.it", user.getEmail());
+    }
 }
