@@ -55,7 +55,9 @@ public class SalesLogicImpl implements SalesLogic{
         if (!validateTicketCategory(ticketCategory, date))
             throw new TicketCategoryInvalidException();
 
-        if (!validateTicketBought(ticketCategoryId,userId))
+        Integer eventId = ticketCategory.getEvent().getId();
+
+        if (!validateTicketBought(eventId ,userId))
             throw new TicketAlreadyBoughtException();
 
         Ticket soldTicket = ticketCategory.sellTicket(buyingUser);
@@ -73,9 +75,9 @@ public class SalesLogicImpl implements SalesLogic{
                 && ticketCategory.getEndAvailability().after(date);
     }
 
-    private boolean validateTicketBought(final Integer ticketCategoryId, final Integer userId){
+    private boolean validateTicketBought(final Integer eventId, final Integer userId){
         Optional<Ticket> optionalTicket = this.usersRepository.getUserById(userId).getTickets().stream()
-                .filter(x -> x.getTicketCategory().getId() == ticketCategoryId)
+                .filter(x -> x.getTicketCategory().getEvent().getId() == eventId)
                 .findFirst();
         return !optionalTicket.isPresent();
     }

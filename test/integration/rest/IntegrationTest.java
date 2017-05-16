@@ -5,11 +5,10 @@ import junit.framework.TestCase;
 import models.users.Gender;
 import models.users.User;
 import org.junit.Test;
-
-import play.test.Helpers;
 import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.test.Helpers;
 import play.test.WithApplication;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -41,15 +40,6 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/123123123");
         final Result result = route(request);
         TestCase.assertEquals(NOT_FOUND, result.status());
-    }
-
-    @Test
-    public void testGetEvents() {
-        final Http.RequestBuilder request = new Http.RequestBuilder()
-                .method(GET)
-                .uri("/events");
-        final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
     }
 
     @Test
