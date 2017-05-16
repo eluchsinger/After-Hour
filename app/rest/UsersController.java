@@ -3,6 +3,7 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.users.UsersLogic;
 import models.exceptions.ServerException;
+import models.exceptions.UserDoesNotExistException;
 import models.users.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -75,13 +76,12 @@ public class UsersController extends Controller {
     }
 
     @Transactional
-    public Result getUser(Integer userId){
-        final User user = this.usersLogic.getUserById(userId);
-        if(user != null) {
-            JsonNode jsonUser = Json.toJson(user);
-            return ok(Json.toJson(jsonUser));
+    public Result getUser(Integer userId) {
+        try {
+            final User user = this.usersLogic.getUserById(userId);
+            return ok(Json.toJson(user));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
         }
-
-        return notFound("User not found");
     }
 }

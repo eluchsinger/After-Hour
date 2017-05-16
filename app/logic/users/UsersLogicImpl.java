@@ -26,11 +26,16 @@ public class UsersLogicImpl implements UsersLogic {
     /**
      * Gets a user by it's id.
      * @param userId The unique UserID of the user to get.
-     * @return Returns the found user or null, if nothing was found.
+     * @return Returns the found user or an UserDoesNotExistException, if nothing was found.
      */
     @Override
-    public User getUserById(Integer userId) {
-        return this.usersRepository.getUserById(userId);
+    public User getUserById(Integer userId) throws UserDoesNotExistException {
+        User user = this.usersRepository.getUserById(userId);
+
+        if (!validateUser(user))
+            throw new UserDoesNotExistException();
+
+        return user;
     }
 
     /**

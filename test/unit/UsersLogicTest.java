@@ -20,7 +20,8 @@ import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
 
 /**
@@ -47,19 +48,18 @@ public class UsersLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetExistingUserById() {
+    public void testGetExistingUserById() throws UserDoesNotExistException {
         final User expectedUser = usersLogic.getUserById(1);
         assertEquals(new Integer(1),expectedUser.getId());
     }
 
-    @Test
-    public void testGetNonExistingUserById() {
+    @Test (expected = UserDoesNotExistException.class)
+    public void testGetNonExistingUserById() throws UserDoesNotExistException {
         final User expectedUser = usersLogic.getUserById(123123123);
-        assertNull(expectedUser);
     }
 
     @Test
-    public void testUserGeneratingId(){
+    public void testUserGeneratingId() throws UserDoesNotExistException {
         final User user = usersLogic.getUserById(2);
         assertEquals(user.getId(), new Integer(2));
     }

@@ -38,7 +38,7 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/123123123");
         final Result result = route(request);
-        assertEquals(NOT_FOUND, result.status());
+        assertEquals(BAD_REQUEST, result.status());
     }
 
     @Test
