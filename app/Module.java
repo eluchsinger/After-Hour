@@ -1,12 +1,17 @@
 import com.google.inject.AbstractModule;
+
 import config.StartupConfiguration;
 import config.StartupConfigurationImpl;
+import dal.coatChecks.CoatChecksRepository;
+import dal.coatChecks.CoatChecksRepositoryJPA;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryJPA;
 import dal.tickets.TicketRepository;
 import dal.tickets.TicketRepositoryJPA;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryJPA;
+import logic.coatChecks.CoatChecksLogic;
+import logic.coatChecks.CoatChecksLogicImpl;
 import logic.events.EventsLogic;
 import logic.events.EventsLogicImpl;
 import logic.sales.SalesLogic;
@@ -44,11 +49,13 @@ public class Module extends AbstractModule {
         bind(UsersLogic.class).to(UsersLogicImpl.class);
         bind(EventsLogic.class).to(EventsLogicImpl.class);
         bind(SalesLogic.class).to(SalesLogicImpl.class);
+        bind(CoatChecksLogic.class).to(CoatChecksLogicImpl.class);
 
         // Every time your class expects a UserRespository (as @Inject), it gets a JPA one.
         bind(UsersRepository.class).to(UsersRepositoryJPA.class).asEagerSingleton();
         bind(EventsRepository.class).to(EventsRepositoryJPA.class).asEagerSingleton();
         bind(TicketRepository.class).to(TicketRepositoryJPA.class).asEagerSingleton();
+        bind(CoatChecksRepository.class).to(CoatChecksRepositoryJPA.class).asEagerSingleton();
 
         bind(StartupConfiguration.class).to(StartupConfigurationImpl.class).asEagerSingleton();
     }

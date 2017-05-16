@@ -20,6 +20,10 @@ GET /users/mail/:email                      rest.UsersController.getUserByEmail(
 POST /users/register                        rest.UsersController.registerUser()
 POST /users/login                           rest.UsersController.login()
 
+# REST CoatChecks
+GET /handOverJacket/:email/:coatHangerNumber/:locationName     rest.CoatController.handOverJacket(email: String, coatHangerNumber: Integer, locationName: String)
+GET /fetchJacket/:coatCheckPublicID         rest.CoatController.fetchJacket(coatCheckPublicID: Integer)
+
 # REST Ticket Sales
 GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userId: Integer, categoryId: Integer)
 
