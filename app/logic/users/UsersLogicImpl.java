@@ -1,6 +1,7 @@
 package logic.users;
 
 import dal.users.UsersRepository;
+import models.events.Event;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.exceptions.UserHasNoTicketException;
@@ -10,6 +11,8 @@ import models.tickets.Ticket;
 import models.users.User;
 
 import javax.inject.Inject;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -102,6 +105,33 @@ public class UsersLogicImpl implements UsersLogic {
 
         return ticket.get();
     }
+
+    @Override
+    public List<Event> getEventsAvailable(final Integer userId) throws UserDoesNotExistException {
+        return getEventsAvailable(userId, new Date());
+    }
+
+    @Override
+    public List<Event> getEventsAvailable(Integer userId, Date date) throws UserDoesNotExistException {
+        User user = this.usersRepository.getUserById(userId);
+
+        if (!validateUser(user))
+            throw new UserDoesNotExistException();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, -1);
+        Date dayBefore = calendar.getTime();
+
+        List <Event> events = user.getTickets()
+                .stream()
+                .map(x -> x.getTicketCategory().getEvent())
+                .filter(event -> event.getEventDate().after(dayBefore))
+                .collect(Collectors.toList());
+
+        return events;
+    }
+
 
     private boolean validateUser(final User user){
         return user != null;
