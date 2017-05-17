@@ -10,15 +10,14 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
 import play.test.WithApplication;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static play.mvc.Results.notFound;
 import static play.test.Helpers.*;
 
 public class IntegrationTest extends WithApplication{
@@ -30,7 +29,7 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/1");
         final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
+        assertEquals(OK, result.status());
     }
 
     @Test
@@ -39,7 +38,7 @@ public class IntegrationTest extends WithApplication{
                 .method(GET)
                 .uri("/users/123123123");
         final Result result = route(request);
-        TestCase.assertEquals(NOT_FOUND, result.status());
+        assertEquals(BAD_REQUEST, result.status());
     }
 
     @Test
@@ -79,7 +78,7 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/login")
                 .bodyFormArrayValues(loginData);
         final Result result = route(request);
-        TestCase.assertEquals(BAD_REQUEST, result.status());
+        assertEquals(BAD_REQUEST, result.status());
     }
 
     @Test
@@ -87,8 +86,7 @@ public class IntegrationTest extends WithApplication{
         final JsonNode json = Json.toJson(new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE));
         final User user = new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
         final User userResult = Json.fromJson(json, User.class);
-
-        TestCase.assertEquals(user.getEmail(), userResult.getEmail());
+        assertEquals(user.getEmail(), userResult.getEmail());
     }
 
     @Test
@@ -108,7 +106,7 @@ public class IntegrationTest extends WithApplication{
                 .uri("/users/register")
                 .bodyJson(createdUserJson);
         final Result createUserResult = route(createUserRequest);
-        TestCase.assertEquals(OK, createUserResult.status());
+        assertEquals(OK, createUserResult.status());
 
         final Http.RequestBuilder checkUserRequest = new Http.RequestBuilder()
                 .method(GET)
@@ -119,30 +117,35 @@ public class IntegrationTest extends WithApplication{
     }
 
     @Test
+    public void testRegisterUserWithWrongJson() throws ParseException {
+        final String createdUser = "Bla";
+        final JsonNode createdUserJson = Json.toJson(createdUser);
+
+        final Http.RequestBuilder createUserRequest = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/register")
+                .bodyJson(createdUserJson);
+        final Result createUserResult = route(createUserRequest);
+        assertEquals(BAD_REQUEST, createUserResult.status());
+    }
+
+    @Test
+    public void testRegisterUserWithNoPostBody(){
+        final Http.RequestBuilder createUserRequest = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/login");
+        final Result createUserResult = route(createUserRequest);
+        assertEquals(BAD_REQUEST, createUserResult.status());
+    }
+
+    @Test
     public void testGetEventById() {
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
                 .uri("/events/1");
         final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
-    }
 
-    @Test
-    public void testHandOverJacket(){
-        final Http.RequestBuilder request = new Http.RequestBuilder()
-                .method(GET)
-                .uri("/handOverJacket/g.n@netz.los/3/Plaza");
-        final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
-    }
-
-    @Test
-    public void testFetchJacket(){
-        final Http.RequestBuilder request = new Http.RequestBuilder()
-                .method(GET)
-                .uri("/fetchJacket/123456");
-        final Result result = route(request);
-        TestCase.assertEquals(OK, result.status());
+        assertEquals(OK, result.status());
     }
 
     @Test
