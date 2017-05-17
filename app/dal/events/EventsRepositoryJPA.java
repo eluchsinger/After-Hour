@@ -6,6 +6,7 @@ import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -34,6 +35,14 @@ public class EventsRepositoryJPA implements EventsRepository {
     public Location getLocationById(final Integer locationId) {
         final EntityManager em = this.jpaApi.em();
         return em.find(Location.class, locationId);
+    }
+
+    @Override
+    public Location getLocationByName(String name){
+        EntityManager em = jpaApi.em();
+        TypedQuery<Location> q = em.createNamedQuery("Location.getLocationByName", Location.class);
+        q.setParameter("name", name);
+        return q.getSingleResult();
     }
 
     @Override
