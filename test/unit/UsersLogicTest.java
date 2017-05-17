@@ -14,6 +14,7 @@ import logic.users.UsersLogic;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.exceptions.UserHasNoTicketException;
+import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
 import org.junit.Before;
@@ -22,6 +23,8 @@ import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -88,6 +91,13 @@ public class UsersLogicTest extends WithApplication {
     public void testLogin() throws ServerException {
         User user = usersLogic.login("silvio.berlusconi@italy.it", "123456");
         assertEquals("silvio.berlusconi@italy.it", user.getEmail());
+    }
+
+    @Test
+    public void testUserReturnedWithLoginHasValidCoatChecksOnly() throws ServerException {
+        User user = usersLogic.login("silvio.berlusconi@italy.it", "123456");
+        List<CoatCheck> coatChecks = user.getCoatChecks();
+        assertEquals(3, coatChecks.size());
     }
 
     @Test
