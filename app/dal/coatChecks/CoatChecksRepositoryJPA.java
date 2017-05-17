@@ -81,11 +81,14 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     }
 
     @Override
-    public CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckPublicIdentifier) {
+    public Boolean fetchJacket(Date fetchedOn, Integer coatCheckPublicIdentifier) {
         final EntityManager em = jpaApi.em();
         CoatCheck coatCheck = getCoatCheckByPublicIdentifier(coatCheckPublicIdentifier);
         CoatHanger hangerToFetchJacket = coatCheck.fetch(fetchedOn);
-        if(hangerToFetchJacket != null) coatCheck.setCoatHanger(null);
-        return hangerToFetchJacket;
+        if(hangerToFetchJacket != null) {
+            coatCheck.setCoatHanger(null);
+            return true;
+        }
+        return false;
     }
 }

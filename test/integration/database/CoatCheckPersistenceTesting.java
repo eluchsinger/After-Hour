@@ -18,9 +18,6 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by marco on 23.04.2017.
- */
 public class CoatCheckPersistenceTesting extends WithApplication{
 
     @Test
@@ -51,7 +48,7 @@ public class CoatCheckPersistenceTesting extends WithApplication{
             CoatHanger expectedCoatHanger = new CoatHanger(null, 50, location);
             repository.persistNewCoatHanger(expectedCoatHanger);
 
-            CoatHanger coatHanger = repository.getCoatHangerByNumberAndLocationID(new Integer(50), location.getPlaceId());
+            CoatHanger coatHanger = repository.getCoatHangerByNumberAndLocationID(50, location.getPlaceId());
 
             assertEquals(expectedCoatHanger.getCoatHangerNumber(), coatHanger.getCoatHangerNumber());
             assertEquals(location.getPlaceId(), coatHanger.getLocation().getPlaceId());
@@ -64,7 +61,7 @@ public class CoatCheckPersistenceTesting extends WithApplication{
         jpaApi.withTransaction(() -> {
             final CoatChecksRepositoryJPA repository = new CoatChecksRepositoryJPA(jpaApi);
 
-            CoatHanger coatHanger = repository.getCoatHangerByNumberAndLocationID(new Integer(5), "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
+            CoatHanger coatHanger = repository.getCoatHangerByNumberAndLocationID(5, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
 
             assertEquals(new Integer(5), coatHanger.getCoatHangerNumber());
             assertEquals("ChIJIXJ33hsKkEcRTTvRa3eNxd0", coatHanger.getLocation().getPlaceId());
@@ -82,7 +79,7 @@ public class CoatCheckPersistenceTesting extends WithApplication{
             User user = usersRepositoryJPA.getUserByEmail("silvio.berlusconi@italy.it");
             Location location = eventsRepositoryJPA.getLocationByName("Plaza");
 
-            CoatCheck coatCheck = repository.createNewCoatCheck(user, location, new Date(), new Integer(4));
+            CoatCheck coatCheck = repository.createNewCoatCheck(user, location, new Date(), 4);
 
             assertEquals(user.getEmail(), coatCheck.getUser().getEmail());
             assertEquals(new Integer(4), coatCheck.getCoatHanger().getCoatHangerNumber());
@@ -100,17 +97,10 @@ public class CoatCheckPersistenceTesting extends WithApplication{
             User user = usersRepositoryJPA.getUserByEmail("franz.becki@idc.yolo");
             Location location = eventsRepositoryJPA.getLocationByName("Plaza");
 
-            final Integer coatHangerNumber = new Integer(3);
+            final Integer coatHangerNumber = 3;
             CoatCheck coatCheck = repository.createNewCoatCheck(user, location, new Date(), coatHangerNumber);
 
-            CoatHanger coatHanger = repository.fetchJacket(new Date(), coatCheck.getPublicIdentifier());
-
-            System.out.print("public ID:");
-            System.out.print(coatCheck.getPublicIdentifier());
-
-            assertEquals(location.getPlaceId(), coatHanger.getLocation().getPlaceId());
-            assertEquals(coatHangerNumber, coatHanger.getCoatHangerNumber());
-            assertTrue(repository.getCoatCheckByPublicIdentifier(coatCheck.getPublicIdentifier()) != null);
+            assertTrue(repository.fetchJacket(new Date(), coatCheck.getPublicIdentifier()));
         });
     }
 }

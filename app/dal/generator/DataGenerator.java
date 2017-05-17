@@ -387,16 +387,26 @@ public class DataGenerator {
 
         CoatHanger kaufleutenHanger2 = coatChecksRepository.getCoatHangerByNumberAndLocationID(2, "ChIJ7ZMwUgEKkEcRjV6Q7jc2y1I");
         CoatHanger plazaHanger2 = coatChecksRepository.getCoatHangerByNumberAndLocationID(2, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
+        CoatHanger plazaHanger3 = coatChecksRepository.getCoatHangerByNumberAndLocationID(3, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
+        CoatHanger plazaHanger4 = coatChecksRepository.getCoatHangerByNumberAndLocationID(4, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
         User user1 = usersRepository.getUserByEmail("i.beller@cervelat.de");
         User user2 = usersRepository.getUserByEmail("silvio.berlusconi@italy.it");
 
         CoatCheck c1 = new CoatCheck(kaufleutenHanger2, new Date(), user1);
         CoatCheck c2 = new CoatCheck(plazaHanger2, new Date(), user2);
-        c1.setPublicIdentifier(new Integer(654321));
-        c2.setPublicIdentifier(new Integer(123456));
+        CoatCheck c3 = new CoatCheck(plazaHanger3, new Date(), user2);
+        CoatCheck c4 = new CoatCheck(plazaHanger4, new Date(), user2);
+
+        c1.setPublicIdentifier(654321);
+        c2.setPublicIdentifier(123456);
+        c4.fetch(new Date());
 
         coatChecks.add(c1);
         coatChecks.add(c2);
+        coatChecks.add(c3);
+        coatChecks.add(c4);
+
+        user2.setCoatChecks(coatChecks);
 
         return coatChecks;
     }

@@ -5,11 +5,14 @@ import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.exceptions.UserHasNoTicketException;
 import models.exceptions.UserWrongPasswordException;
+import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
@@ -66,6 +69,13 @@ public class UsersLogicImpl implements UsersLogic {
     @Override
     public User login(String email, String password) throws ServerException {
         User user = usersRepository.getUserByEmail(email);
+
+        List<CoatCheck> validCoatChecks = user.getCoatChecks()
+                .stream()
+                .filter(c -> c.getFetchedOn() == null)
+                .collect(Collectors.toList());
+
+        user.setCoatChecks(validCoatChecks);
 
         if (!validateUser(user))
             throw new UserDoesNotExistException();

@@ -21,9 +21,7 @@ import play.test.WithApplication;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static play.inject.Bindings.bind;
 
 /**
@@ -57,11 +55,8 @@ public class CoatChecksLogicTest extends WithApplication{
         final CoatChecksLogic coatChecksLogic = this.app.injector().instanceOf(CoatChecksLogic.class);
         CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck("silvio.berlusconi@italy.it", 2, "Plaza");
 
-        final CoatHanger firstFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier());
-        final CoatHanger secondFetch = coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier());
-
-        assertEquals("Plaza", firstFetch.getLocation().getName());
-        assertNull(secondFetch);
+        assertTrue(coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier()));
+        assertFalse(coatChecksLogic.fetchJacket(new Date(), coatCheck.getPublicIdentifier()));
     }
 
 }

@@ -130,6 +130,10 @@ public class User {
 
     public List<CoatCheck> getCoatChecks() { return coatChecks; }
 
+    public void setCoatChecks(List<CoatCheck> coatChecks) {
+        this.coatChecks = coatChecks;
+    }
+
     public void addTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
@@ -165,8 +169,6 @@ public class User {
         result = 31 * result + firstName.hashCode();
         result = 31 * result + dateOfBirth.hashCode();
         result = 31 * result + gender.hashCode();
-        result = 31 * result + coatChecks.hashCode();
-        result = 31 * result + tickets.hashCode();
         return result;
     }
 
