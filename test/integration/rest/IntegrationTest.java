@@ -10,7 +10,6 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
 import play.test.WithApplication;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static org.junit.Assert.assertTrue;
-import static play.mvc.Results.notFound;
 import static play.test.Helpers.*;
 
 public class IntegrationTest extends WithApplication{
