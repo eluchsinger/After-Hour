@@ -28,5 +28,5 @@ public interface CoatChecksRepository {
 
     CoatCheck createNewCoatCheck(User user, Location location, Date handOverOn, Integer coatHangerNumber);
 
-    CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckID);
+    Boolean fetchJacket(Date fetchedOn, Integer coatCheckID);
 }

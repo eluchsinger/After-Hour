@@ -3,11 +3,9 @@ package logic.coatChecks;
 import dal.coatChecks.CoatChecksRepository;
 import dal.events.EventsRepository;
 import dal.users.UsersRepository;
-import models.events.CoatHanger;
 import models.events.Location;
 import models.tickets.CoatCheck;
 import models.users.User;
-import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -35,7 +33,7 @@ public class CoatChecksLogicImpl implements CoatChecksLogic {
     }
 
     @Override
-    public CoatHanger fetchJacket(Date date, Integer coatHangerID) {
+    public Boolean fetchJacket(Date date, Integer coatHangerID) {
         return coatChecksRepository.fetchJacket(date, coatHangerID);
     }
 }

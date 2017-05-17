@@ -38,7 +38,6 @@ public class CoatController {
 
     @Transactional
     public Result fetchJacket(Integer coatCheckPublicID) {
-        CoatHanger hanger = coatChecksLogic.fetchJacket(new Date(), coatCheckPublicID);
-        return hanger != null ? ok(Json.toJson(hanger)) : notFound("CoatCheck not found or jacket alread Fetched");
+        return ok(Json.toJson(coatChecksLogic.fetchJacket(new Date(), coatCheckPublicID)));
     }
 }

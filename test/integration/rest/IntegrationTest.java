@@ -44,7 +44,7 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testLoginCorrect(){
-        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        Map<String, String[]> loginData = new TreeMap<>();
         loginData.put("email", new String[]{"silvio.berlusconi@italy.it"});
         loginData.put("password", new String[]{"123456"});
         final Http.RequestBuilder request = new Http.RequestBuilder()
@@ -57,7 +57,7 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testLoginCorrectWithCharReplacement(){
-        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        Map<String, String[]> loginData = new TreeMap<>();
         loginData.put("email", new String[]{"silvio.berlusconi%40italy.it"});
         loginData.put("password", new String[]{"123456"});
 
@@ -71,7 +71,7 @@ public class IntegrationTest extends WithApplication{
 
     @Test
     public void testLoginIncorrect(){
-        Map<String, String[]> loginData = new TreeMap<String, String[]>();
+        Map<String, String[]> loginData = new TreeMap<>();
         loginData.put("email", new String[]{"silvio.berlusconi@italy.it"});
         loginData.put("password", new String[]{"1234567"});
         final Http.RequestBuilder request = new Http.RequestBuilder()
@@ -152,12 +152,12 @@ public class IntegrationTest extends WithApplication{
                 .uri("/fetchJacket/654321");
         final Result result = route(request1);
 
-        TestCase.assertEquals(OK, result.status());
+        TestCase.assertEquals("true", Helpers.contentAsString(result));
 
         final Http.RequestBuilder request2 = new Http.RequestBuilder()
                 .method(GET)
                 .uri("/fetchJacket/654321");
         final Result finalResult = route(request2);
-        TestCase.assertEquals(Http.Status.NOT_FOUND, finalResult.status());
+        TestCase.assertEquals("false", Helpers.contentAsString(finalResult));
     }
 }

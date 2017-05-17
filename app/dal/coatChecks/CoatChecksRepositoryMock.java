@@ -87,7 +87,7 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
     }
 
     @Override
-    public CoatHanger fetchJacket(Date fetchedOn, Integer coatCheckID) {
+    public Boolean fetchJacket(Date fetchedOn, Integer coatCheckID) {
         CoatHanger hanger = null;
 
         for(int i = 0; i < coatChecks.size(); i++){
@@ -100,6 +100,6 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
             }
         }
 
-        return hanger;
+        return hanger != null;
     }
 }
