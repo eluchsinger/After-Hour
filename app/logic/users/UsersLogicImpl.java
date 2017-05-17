@@ -43,7 +43,9 @@ public class UsersLogicImpl implements UsersLogic {
      * @param user The new user to register.
      */
     @Override
-    public void registerUser(User user){ this.usersRepository.registerUser(user); }
+    public void registerUser(User user){
+        this.usersRepository.registerUser(user);
+    }
 
     /**
      * Returns a user by it's email.

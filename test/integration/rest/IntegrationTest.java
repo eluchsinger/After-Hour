@@ -117,6 +117,19 @@ public class IntegrationTest extends WithApplication{
     }
 
     @Test
+    public void testRegisterUserWithWrongJson() throws ParseException {
+        final String createdUser = "Bla";
+        final JsonNode createdUserJson = Json.toJson(createdUser);
+
+        final Http.RequestBuilder createUserRequest = new Http.RequestBuilder()
+                .method(POST)
+                .uri("/users/register")
+                .bodyJson(createdUserJson);
+        final Result createUserResult = route(createUserRequest);
+        assertEquals(BAD_REQUEST, createUserResult.status());
+    }
+
+    @Test
     public void testRegisterUserWithNoPostBody(){
         final Http.RequestBuilder createUserRequest = new Http.RequestBuilder()
                 .method(POST)

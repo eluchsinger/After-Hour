@@ -62,19 +62,17 @@ public class UsersController extends Controller {
 
     }
 
-    private String replaceCharacterEntities(String email) {
-        if(email.contains("%40")){
-            email = email.replace("%40", "@");
-        }
-        return email;
-    }
-
     @Transactional
     public Result registerUser(){
-        JsonNode json = request().body().asJson();
-        User user = Json.fromJson(json, User.class);
-        this.usersLogic.registerUser(user);
-        return ok();
+        try {
+            JsonNode json = request().body().asJson();
+            User user = Json.fromJson(json, User.class);
+            this.usersLogic.registerUser(user);
+            return ok();
+        } catch (Exception e) {
+            return badRequest("Registration Process couldn't start");
+        }
+
     }
 
     @Transactional
@@ -85,5 +83,12 @@ public class UsersController extends Controller {
         } catch (UserDoesNotExistException e) {
             return badRequest(Json.toJson(e));
         }
+    }
+
+    private String replaceCharacterEntities(String email) {
+        if(email.contains("%40")){
+            email = email.replace("%40", "@");
+        }
+        return email;
     }
 }
