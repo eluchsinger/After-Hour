@@ -31,6 +31,8 @@ public interface EventsRepository {
      */
     Location getLocationById(Integer locationId);
 
+    Location getLocationByName(String name);
+
     /**
      * Adds a new location into the repository.
      * @param location The location to be added to the repository.
