@@ -1,6 +1,7 @@
 package logic.users;
 
 import models.exceptions.ServerException;
+import models.exceptions.UserDoesNotExistException;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -14,7 +15,7 @@ public interface UsersLogic {
      * @param userId The unique UserID of the user to get.
      * @return Returns the found user or null, if nothing was found.
      */
-    User getUserById(Integer userId);
+    User getUserById(Integer userId) throws UserDoesNotExistException;
 
     /**
      * Registers a new user.
@@ -27,7 +28,9 @@ public interface UsersLogic {
      * @param email The email of the user to get.
      * @return Returns the found user or null, if nothing was found.
      */
-    User getUserByEmail(String email);
+    User getUserByEmail(String email) throws UserDoesNotExistException;
+
+    User login(String email, String password) throws ServerException;
 
     Ticket getTicket(Integer userId, Integer eventId) throws ServerException;
 }

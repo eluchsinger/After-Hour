@@ -3,6 +3,7 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.users.UsersLogic;
 import models.exceptions.ServerException;
+import models.exceptions.UserDoesNotExistException;
 import models.users.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -30,31 +31,58 @@ public class UsersController extends Controller {
 
     }
 
-    public Result getEvents(Integer userId){
-        return notFound("Not implemented");
-    }
-
     @Transactional
     public Result login(){
-        Map<String, String[]> loginData = request().body().asFormUrlEncoded();
-        String email = loginData.get("email")[0];
-        email = replaceCharacterEntities(email);
-        User user = this.usersLogic.getUserByEmail(email);
-        if (user == null) {
-            return badRequest("Incorrect username!");
+        try {
+            Map<String, String[]> loginData = request().body().asFormUrlEncoded();
+
+            String email = loginData.get("email")[0];
+            email = replaceCharacterEntities(email);
+            String password = loginData.get("password")[0];
+
+            return ok(Json.toJson(usersLogic.login(email,password)));
+        } catch (ServerException e){
+            return badRequest(Json.toJson(e));
+        } catch (NullPointerException e){
+            return badRequest("Empty Body");
         }
-        if(user.compareWithPassword(loginData.get("password")[0])){
-            return ok(Json.toJson(user));
-        } else {
-            return badRequest("Incorrect password!");
-        }
+
     }
 
     @Transactional
     public Result getUserByEmail(String email){
-        email = replaceCharacterEntities(email);
-        User user = this.usersLogic.getUserByEmail(email);
-        return ok(Json.toJson(user));
+        try {
+            email = replaceCharacterEntities(email);
+            User user = this.usersLogic.getUserByEmail(email);
+            return ok(Json.toJson(user));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
+
+
+    }
+
+    @Transactional
+    public Result registerUser(){
+        try {
+            JsonNode json = request().body().asJson();
+            User user = Json.fromJson(json, User.class);
+            this.usersLogic.registerUser(user);
+            return ok();
+        } catch (Exception e) {
+            return badRequest("Registration Process couldn't start");
+        }
+
+    }
+
+    @Transactional
+    public Result getUser(Integer userId) {
+        try {
+            final User user = this.usersLogic.getUserById(userId);
+            return ok(Json.toJson(user));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
     }
 
     private String replaceCharacterEntities(String email) {
@@ -62,24 +90,5 @@ public class UsersController extends Controller {
             email = email.replace("%40", "@");
         }
         return email;
-    }
-
-    @Transactional
-    public Result registerUser(){
-        JsonNode json = request().body().asJson();
-        User user = Json.fromJson(json, User.class);
-        this.usersLogic.registerUser(user);
-        return ok();
-    }
-
-    @Transactional
-    public Result getUser(Integer userId){
-        final User user = this.usersLogic.getUserById(userId);
-        if(user != null) {
-            JsonNode jsonUser = Json.toJson(user);
-            return ok(Json.toJson(jsonUser));
-        }
-
-        return notFound("User not found");
     }
 }
