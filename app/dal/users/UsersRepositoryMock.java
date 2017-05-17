@@ -36,9 +36,8 @@ public class UsersRepositoryMock implements UsersRepository {
     public User getUserByEmail(String email) {
         return users
                 .stream()
-                .filter(u -> u.getEmail().equals(email))
-                .findFirst()
-                .orElse(null);
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst().orElse(null);
     }
 
     @Override

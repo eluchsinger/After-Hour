@@ -23,7 +23,8 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
 
 /**
@@ -51,19 +52,18 @@ public class UsersLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetExistingUserById() {
+    public void testGetExistingUserById() throws UserDoesNotExistException {
         final User expectedUser = usersLogic.getUserById(1);
         assertEquals(new Integer(1),expectedUser.getId());
     }
 
-    @Test
-    public void testGetNonExistingUserById() {
+    @Test (expected = UserDoesNotExistException.class)
+    public void testGetNonExistingUserById() throws UserDoesNotExistException {
         final User expectedUser = usersLogic.getUserById(123123123);
-        assertNull(expectedUser);
     }
 
     @Test
-    public void testUserGeneratingId(){
+    public void testUserGeneratingId() throws UserDoesNotExistException {
         final User user = usersLogic.getUserById(2);
         assertEquals(user.getId(), new Integer(2));
     }
@@ -82,5 +82,22 @@ public class UsersLogicTest extends WithApplication {
     @Test  (expected = UserDoesNotExistException.class)
     public void testGetTicketUserDoesNotExist() throws ServerException {
         usersLogic.getTicket(100,1);
+    }
+
+    @Test
+    public void testLogin() throws ServerException {
+        User user = usersLogic.login("silvio.berlusconi@italy.it", "123456");
+        assertEquals("silvio.berlusconi@italy.it", user.getEmail());
+    }
+
+    @Test
+    public void testGetUserByEmail() throws UserDoesNotExistException {
+        User user = usersLogic.getUserByEmail("silvio.berlusconi@italy.it");
+        assertEquals("Silvio",user.getFirstName());
+    }
+
+    @Test (expected = UserDoesNotExistException.class)
+    public void testGetUserByMailWithNotExistingUser() throws UserDoesNotExistException {
+        usersLogic.getUserByEmail("donald.trump@uso.com");
     }
 }
