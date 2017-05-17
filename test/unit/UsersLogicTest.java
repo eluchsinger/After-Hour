@@ -2,6 +2,8 @@ package unit;
 
 import config.StartupConfiguration;
 import config.StartupConfigurationMock;
+import dal.coatChecks.CoatChecksRepository;
+import dal.coatChecks.CoatChecksRepositoryMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
 import dal.tickets.TicketRepository;
@@ -19,6 +21,7 @@ import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -38,6 +41,7 @@ public class UsersLogicTest extends WithApplication {
                 .overrides(bind(UsersRepository.class).to(UsersRepositoryMock.class))
                 .overrides(bind(EventsRepository.class).to(EventsRepositoryMock.class))
                 .overrides(bind(TicketRepository.class).to(TicketRepositoryMock.class))
+                .overrides(bind(CoatChecksRepository.class).to(CoatChecksRepositoryMock.class))
                 .overrides(bind(StartupConfiguration.class).to(StartupConfigurationMock.class).eagerly())
                 .build();
     }

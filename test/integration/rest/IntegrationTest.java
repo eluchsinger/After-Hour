@@ -10,6 +10,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
 import play.test.WithApplication;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import java.util.TreeMap;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static play.mvc.Results.notFound;
 import static play.test.Helpers.*;
 
 public class IntegrationTest extends WithApplication{
@@ -86,7 +88,6 @@ public class IntegrationTest extends WithApplication{
         final JsonNode json = Json.toJson(new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE));
         final User user = new User(1, "elon.musk@hsr.ch", "Musk", "Elon", dateFormat.parse("1971-06-28"), Gender.MALE);
         final User userResult = Json.fromJson(json, User.class);
-
         assertEquals(user, userResult);
     }
 
@@ -133,5 +134,39 @@ public class IntegrationTest extends WithApplication{
                 .uri("/events/1");
         final Result result = route(request);
         assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testHandOverJacket(){
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/handOverJacket/g.n@netz.los/3/Plaza");
+        final Result result = route(request);
+        TestCase.assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testFetchJacket(){
+        final Http.RequestBuilder request = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/fetchJacket/123456");
+        final Result result = route(request);
+        TestCase.assertEquals(OK, result.status());
+    }
+
+    @Test
+    public void testFetchJacketTwice(){
+        final Http.RequestBuilder request1 = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/fetchJacket/654321");
+        final Result result = route(request1);
+
+        TestCase.assertEquals(OK, result.status());
+
+        final Http.RequestBuilder request2 = new Http.RequestBuilder()
+                .method(GET)
+                .uri("/fetchJacket/654321");
+        final Result finalResult = route(request2);
+        TestCase.assertEquals(Http.Status.NOT_FOUND, finalResult.status());
     }
 }

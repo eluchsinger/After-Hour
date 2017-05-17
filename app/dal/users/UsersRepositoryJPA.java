@@ -3,6 +3,7 @@ package dal.users;
 import models.users.User;
 import play.Logger;
 import play.db.jpa.JPAApi;
+import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
