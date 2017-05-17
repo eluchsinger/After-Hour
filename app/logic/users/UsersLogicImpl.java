@@ -11,7 +11,6 @@ import models.tickets.Ticket;
 import models.users.User;
 
 import javax.inject.Inject;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -118,15 +117,10 @@ public class UsersLogicImpl implements UsersLogic {
         if (!validateUser(user))
             throw new UserDoesNotExistException();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE, -1);
-        Date dayBefore = calendar.getTime();
-
         List <Event> events = user.getTickets()
                 .stream()
                 .map(x -> x.getTicketCategory().getEvent())
-                .filter(event -> event.getEventDate().after(dayBefore))
+                .filter(event -> event.getEventDate().after(date))
                 .collect(Collectors.toList());
 
         return events;
