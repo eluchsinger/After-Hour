@@ -213,21 +213,30 @@ public class DataGenerator {
     }
 
     private List<User> getDemoUsers() throws ParseException {
+        final String berlusconi = "berlusconi.jpg";
+        final String beller = "beller.jpg";
+        final String beckenbauer = "beckenbauer.jpg";
+        final String netzer = "netzer.jpg";
+        final String klitschkoWladimir = "KlitschkoWladimir.jpg";
+        final String klitschkoVitali = "KlitschkoVitali.jpg";
+        final String gavric = "gavric.jpg";
+
+
         final List<User> users = new ArrayList<>(INITIAL_USERS_CAPACITY);
         users.add(new User(null, "silvio.berlusconi@italy.it",
-                "Berlusconi", "Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE));
+                "Berlusconi", "Silvio", this.dateFormat.parse("1950-09-11"), Gender.MALE, "123456", false, berlusconi));
         users.add(new User(null, "i.beller@cervelat.de",
-                "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE));
+                "Beller", "Irina", this.dateFormat.parse("1900-03-12"), Gender.FEMALE,"123456", false, beller));
         users.add(new User(null, "franz.becki@idc.yolo",
-                "Beckenbauer", "Franz Anton", this.dateFormat.parse("1945-09-11"), Gender.MALE));
+                "Beckenbauer", "Franz Anton", this.dateFormat.parse("1945-09-11"), Gender.MALE,"123456", false, beckenbauer));
         users.add(new User(null, "g.n@netz.los",
-                "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE));
+                "Netzer", "Günther", this.dateFormat.parse("1944-09-14"), Gender.MALE,"123456", false, netzer));
         users.add(new User(null, "wladimir.klitschko@plaza.ch",
-                "Klitschko", "Wladimir", this.dateFormat.parse("1976-03-25"), Gender.MALE, "123456", true));
+                "Klitschko", "Wladimir", this.dateFormat.parse("1976-03-25"), Gender.MALE, "123456", true, klitschkoWladimir));
         users.add(new User(null, "vitali.klitschko@kauf.ch",
-                "Klitschko", "Vitali", this.dateFormat.parse("1971-06-19"), Gender.MALE, "123456", true));
+                "Klitschko", "Vitali", this.dateFormat.parse("1971-06-19"), Gender.MALE, "123456", true, klitschkoVitali));
         users.add(new User(null, "bachelor@kauf.ch",
-                "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true));
+                "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true, gavric));
 
 
 
