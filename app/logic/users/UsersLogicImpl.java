@@ -9,6 +9,7 @@ import models.exceptions.UserWrongPasswordException;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
+import models.utils.TimeIgnoringDateComparator;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -120,7 +121,7 @@ public class UsersLogicImpl implements UsersLogic {
         List <Event> events = user.getTickets()
                 .stream()
                 .map(x -> x.getTicketCategory().getEvent())
-                .filter(event -> event.getEventDate().after(date))
+                .filter(event -> new TimeIgnoringDateComparator().compare(event.getEventDate(),date) > 0)
                 .collect(Collectors.toList());
 
         return events;
