@@ -32,6 +32,15 @@ public class UsersController extends Controller {
     }
 
     @Transactional
+    public Result getAvailableEvents(Integer userId){
+        try {
+            return ok(Json.toJson(usersLogic.getEventsAvailable(userId)));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
+    }
+
+    @Transactional
     public Result login(){
         try {
             Map<String, String[]> loginData = request().body().asFormUrlEncoded();

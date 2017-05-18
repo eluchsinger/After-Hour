@@ -11,6 +11,7 @@ import dal.tickets.TicketRepositoryMock;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.users.UsersLogic;
+import models.events.Event;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.exceptions.UserHasNoTicketException;
@@ -22,8 +23,9 @@ import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -37,6 +39,7 @@ import static play.inject.Bindings.bind;
  */
 public class UsersLogicTest extends WithApplication {
     private UsersLogic usersLogic;
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected Application provideApplication() {
@@ -109,5 +112,14 @@ public class UsersLogicTest extends WithApplication {
     @Test (expected = UserDoesNotExistException.class)
     public void testGetUserByMailWithNotExistingUser() throws UserDoesNotExistException {
         usersLogic.getUserByEmail("donald.trump@uso.com");
+    }
+
+    @Test
+    public void testGetAvailableEvents() throws ParseException, UserDoesNotExistException {
+        List<Event> events = usersLogic.getEventsAvailable(1, dateFormat.parse("2017-5-17"));
+        assertEquals(4, events.size());
+
+        events = usersLogic.getEventsAvailable(1, dateFormat.parse("2017-5-18"));
+        assertEquals(0, events.size());
     }
 }

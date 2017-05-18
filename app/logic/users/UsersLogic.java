@@ -1,9 +1,13 @@
 package logic.users;
 
+import models.events.Event;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.tickets.Ticket;
 import models.users.User;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Esteban Luchsinger on 04.04.2017.
@@ -33,4 +37,8 @@ public interface UsersLogic {
     User login(String email, String password) throws ServerException;
 
     Ticket getTicket(Integer userId, Integer eventId) throws ServerException;
+
+    List<Event> getEventsAvailable(Integer userId) throws UserDoesNotExistException;
+
+    List<Event> getEventsAvailable(Integer userId, Date date) throws UserDoesNotExistException;
 }
