@@ -57,6 +57,7 @@ public class EventsLogicImpl implements EventsLogic {
         return getEventWithTicketCategories(eventId, onlyAvailable, new Date());
     }
 
+    @Override
     public Event getEventWithTicketCategories(Integer eventId, Boolean onlyAvailable, Date date) throws EventDoesNotExistException {
         Event event = eventsRepository.getEventById(eventId);
 

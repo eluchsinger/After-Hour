@@ -1,6 +1,7 @@
 package models.users;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.utils.TimeIgnoringDateComparator;
@@ -47,12 +48,15 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<CoatCheck> coatChecks;
 
+    @JsonIgnore
+    private String pictureName;
+
     //region Constructors
     public User(){
         this.id = null;
     }
 
-    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password, final boolean isEmployee){
+    public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password, final boolean isEmployee, final String pictureName){
         this.id = id;
         this.email = email;
         this.lastName = lastName;
@@ -61,13 +65,14 @@ public class User {
         this.gender = gender;
         this.password = password;
         this.isEmployee = isEmployee;
+        this.pictureName = pictureName;
 
         tickets = new ArrayList<>(TICKETS_INIT_SIZE);
         coatChecks = new ArrayList<>(COATCHECKS_INIT_SIZE);
     }
 
     public User(final Integer id, final String email, final String lastName, final String firstName, final Date dateOfBirth, final Gender gender, final String password){
-        this(id, email, lastName, firstName, dateOfBirth, gender, password, false);
+        this(id, email, lastName, firstName, dateOfBirth, gender, password, false, "" );
     }
 
     //Default Password
@@ -140,6 +145,13 @@ public class User {
 
     public Gender getGender(){ return this.gender; }
 
+    public String getPictureName(){
+        return this.pictureName;
+    }
+
+    public void setPictureName(java.lang.String pictureName) {
+        this.pictureName = pictureName;
+    }
 
     public boolean compareWithPassword(String inputPassword){
         return inputPassword.equals(password);
