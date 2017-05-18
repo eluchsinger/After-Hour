@@ -5,12 +5,14 @@ import logic.users.UsersLogic;
 import models.exceptions.ServerException;
 import models.exceptions.UserDoesNotExistException;
 import models.users.User;
+import play.api.Play;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.util.Map;
 
 public class UsersController extends Controller {
@@ -89,6 +91,17 @@ public class UsersController extends Controller {
         try {
             final User user = this.usersLogic.getUserById(userId);
             return ok(Json.toJson(user));
+        } catch (UserDoesNotExistException e) {
+            return badRequest(Json.toJson(e));
+        }
+    }
+
+    @Transactional
+    public Result getProfileImage(Integer userId){
+        try {
+            final User user = usersLogic.getUserById(userId);
+            File file = Play.current().getFile("app/pictures/" + user.getPictureName());
+            return ok(file);
         } catch (UserDoesNotExistException e) {
             return badRequest(Json.toJson(e));
         }

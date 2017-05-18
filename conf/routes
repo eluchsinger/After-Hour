@@ -16,6 +16,7 @@ GET /users/:userId/tickets/:eventId         rest.UsersController.getTicket(userI
 GET /users/:userId                          rest.UsersController.getUser(userId: Integer)
 GET /users/mail/:email                      rest.UsersController.getUserByEmail(email: String)
 GET /users/:userId/events                   rest.UsersController.getAvailableEvents(userId: Integer)
+GET /users/:userId/image                    rest.UsersController.getProfileImage(userId : Integer)
 
 POST /users/register                        rest.UsersController.registerUser()
 POST /users/login                           rest.UsersController.login()
