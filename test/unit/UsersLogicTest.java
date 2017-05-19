@@ -31,6 +31,7 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
+import static utils.DateGenerator.generateDate;
 
 /**
  * Created by Fabian Schwyter on 03.04.17.
@@ -116,10 +117,10 @@ public class UsersLogicTest extends WithApplication {
 
     @Test
     public void testGetAvailableEvents() throws ParseException, UserDoesNotExistException {
-        List<Event> events = usersLogic.getEventsAvailable(1, dateFormat.parse("2017-5-17"));
-        assertEquals(4, events.size());
+        List<Event> events = usersLogic.getEventsAvailable(1, generateDate(0));
+        assertEquals(3, events.size());
 
-        events = usersLogic.getEventsAvailable(1, dateFormat.parse("2017-5-18"));
+        events = usersLogic.getEventsAvailable(1, generateDate(200));
         assertEquals(0, events.size());
     }
 }

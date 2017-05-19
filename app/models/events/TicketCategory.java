@@ -1,5 +1,6 @@
 package models.events;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.Ticket;
 import models.users.User;
@@ -26,7 +27,9 @@ public class TicketCategory {
     @OneToMany(mappedBy = "ticketCategory")
     private List<Ticket> soldTickets;
     private double price;
+    @JsonFormat(timezone = "Europe/Zurich")
     private Date startAvailability;
+    @JsonFormat(timezone = "Europe/Zurich")
     private Date endAvailability;
 
     @Transient
