@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
+import static utils.DateGenerator.generateDate;
 
 /**
  * Created by Fabian Schwyter on 08.04.17.
@@ -64,13 +65,13 @@ public class EventsLogicTest extends WithApplication {
 
     @Test
     public void testGetEventWithTicketCategoriesOnlyAvailable() throws ParseException, ServerException {
-       Event event = eventsLogic.getEventWithTicketCategories(1,true , dateFormat.parse("2017-4-22"));
+       Event event = eventsLogic.getEventWithTicketCategories(1,true , generateDate(2));
        assertEquals(1,event.getTicketCategories().size());
     }
 
     @Test
     public void testGetEventWithTicketCategories() throws ParseException, ServerException {
-        Event event = eventsLogic.getEventWithTicketCategories(2,true , dateFormat.parse("2017-4-22"));
+        Event event = eventsLogic.getEventWithTicketCategories(2,false , generateDate(2));
         assertEquals(2,event.getTicketCategories().size());
     }
 

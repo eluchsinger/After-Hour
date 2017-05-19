@@ -1,5 +1,6 @@
 package models.events;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import models.tickets.CoatCheck;
 
@@ -25,6 +26,7 @@ public class Event {
     private Location location;
     @Transient
     private Organizer organizer;
+    @JsonFormat(timezone = "Europe/Zurich")
     private Date eventDate;
 
     @OneToMany(mappedBy = "event")

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static utils.DateGenerator.generateDate;
+
 /**
  * Created by Esteban Luchsinger on 08.04.2017.
  * This class is used to generate demo-data.
@@ -255,14 +257,14 @@ public class DataGenerator {
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten, new Date(), pictureKaufleuten));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, generateDate(12, 22,00), pictureKaufleuten));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza, new Date(), picturePlaza));
+                "DIE Party für Studis", plaza, generateDate(14, 21,00), picturePlaza));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten, new Date(), pictureShower));
+                "Party für Fussballer nach dem Duschen", kaufleuten, generateDate(-2,20,00), pictureShower));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
                 "Silvios exklusive Party für die 'gehobene' Gesellschaft",
-                kaufleuten, new Date(), pictureSilvio));
+                kaufleuten, generateDate(100,19,00), pictureSilvio));
         return events;
     }
 
@@ -276,48 +278,48 @@ public class DataGenerator {
         /* Bobba Fett Party */
         ticketCategories.add(new TicketCategory(null,
                 "Vorverkauf", "Das Vorverkaufsticket der Extraklasse",
-                bobbaFettParty, 15.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-19")));
+                bobbaFettParty, 15.00, generateDate(0),
+                generateDate(10)));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Das übliche Ticket an der Abendkasse",
-                bobbaFettParty, 25.00, dateFormat.parse("2017-5-20"),
-                dateFormat.parse("2017-5-21")));
+                bobbaFettParty, 25.00, generateDate(10),
+                generateDate(13,02,00)));
 
         /* Studi Party */
         ticketCategories.add(new TicketCategory(null,
-                "Early Bird", "Wenn du vor 12 Uhr kommst, erhälst du gratis Eintritt.",
-                studiParty, 0.0, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                "Early Bird", "Vorverkaufsticket",
+                studiParty, 0.0, generateDate(0),
+                generateDate(13)));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Nach 12 Uhr musst du für den " +
                 "Eintritt bezahlen. Aber immernoch Studipreis :)",
-                studiParty, 5.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                studiParty, 5.00, generateDate(13),
+                generateDate(14, 2,00)));
 
         /* Duschi Party */
         ticketCategories.add(new TicketCategory(null,
                 "Stürmer Ticket", "Wenn du ein Stürmer bist. Inklusive Salat.",
-                duschiParty, 5.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                duschiParty, 5.00, generateDate(-10),
+                generateDate(-1,01,00)));
         ticketCategories.add(new TicketCategory(null,
                 "Mittelfeld Ticket",
                 "Für Mittelfeldspieler. Inklusive Rüebli.",
-                duschiParty, 10.00, dateFormat.parse("2017-4-20"),
-                dateFormat.parse("2017-5-20")));
+                duschiParty, 10.00, generateDate(-10),
+                generateDate(-1,01,00)));
         ticketCategories.add(new TicketCategory(null, "Verteidiger Ticket",
                 "Die Verteidiger müssen standhaft sein. Inklusive Cervelat",
-                duschiParty, 15.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+                duschiParty, 15.00, generateDate(-10), generateDate(-1,01,00)));
         ticketCategories.add(new TicketCategory(null, "Goalie Ticket",
                 "Flinke Hände. Red Bull Inklusive", duschiParty,
-                20.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+                20.00, generateDate(-10), generateDate(-1,01,00)));
 
         /* Silvios Party */
         ticketCategories.add(new TicketCategory(null, "Silvios Freundschaft",
                 "Wenn du mit Silvio befreundet bist.", silviosParty,
-                3455.00, dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+                3455.00, generateDate(0), generateDate(99)));
         ticketCategories.add(new TicketCategory(null, "Nur Bekannter Ticket",
                 "Nur ein Bekannter des Presidente.", silviosParty, 6545.00,
-                dateFormat.parse("2017-4-20"), dateFormat.parse("2017-5-20")));
+                generateDate(0), generateDate(99)));
         return ticketCategories;
     }
 
