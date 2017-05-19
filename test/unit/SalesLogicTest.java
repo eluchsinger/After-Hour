@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 
 import static org.junit.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
+import static utils.DateGenerator.generateDate;
 
 /**
  * Created by Fabian on 10.05.17.
@@ -54,7 +55,7 @@ public class SalesLogicTest extends WithApplication {
 
    @Test
    public void testBuyTicket() throws ParseException, ServerException {
-        Ticket ticket = salesLogic.buyTicket(2,1, dateFormat.parse("2017-4-22"));
+        Ticket ticket = salesLogic.buyTicket(2,1, generateDate(2));
         assertNotNull(ticket);
    }
 
@@ -70,18 +71,18 @@ public class SalesLogicTest extends WithApplication {
 
    @Test (expected = TicketCategoryInvalidException.class)
     public void testBuyTicketNotAvailableTicketCategory() throws ServerException, ParseException {
-        salesLogic.buyTicket(1,2, dateFormat.parse("2017-5-20"));
+        salesLogic.buyTicket(1,2, generateDate(2));
    }
 
    @Test (expected = UserDoesNotExistException.class)
     public void testBuyTicketWithNotExistingUser() throws ParseException, ServerException {
-       salesLogic.buyTicket(1313,1, dateFormat.parse("2017-4-22"));
+       salesLogic.buyTicket(1313,1);
    }
 
    @Test (expected = TicketAlreadyBoughtException.class)
     public void testBuyTicketDiffrentTicketCategories() throws ParseException, ServerException {
-       salesLogic.buyTicket(5,7, dateFormat.parse("2017-4-23"));
-       salesLogic.buyTicket(5,8, dateFormat.parse("2017-4-23"));
+       salesLogic.buyTicket(5,9, generateDate(2));
+       salesLogic.buyTicket(5,10, generateDate(2));
    }
 
 }
