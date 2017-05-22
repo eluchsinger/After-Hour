@@ -219,7 +219,7 @@ public class DataGenerator {
         final String beller = "beller.jpg";
         final String beckenbauer = "beckenbauer.jpg";
         final String netzer = "netzer.jpg";
-        final String klitschkoWladimir = "KlitschkoWladimir.jpg";
+        final String klitschkoWladimir = "klitschkoWladimir.jpg";
         final String klitschkoVitali = "KlitschkoVitali.jpg";
         final String gavric = "gavric.jpg";
 
