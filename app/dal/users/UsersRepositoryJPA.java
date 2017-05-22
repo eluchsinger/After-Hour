@@ -3,10 +3,10 @@ package dal.users;
 import models.users.User;
 import play.Logger;
 import play.db.jpa.JPAApi;
-import play.db.jpa.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.math.BigInteger;
 
@@ -31,10 +31,15 @@ public class UsersRepositoryJPA implements UsersRepository {
 
     @Override
     public User getUserByEmail(String email) {
-        EntityManager em = jpaApi.em();
-        TypedQuery<User> q = em.createNamedQuery("User.getUserByEmail", User.class);
-        q.setParameter("email", email);
-        return q.getSingleResult();
+        try {
+            EntityManager em = jpaApi.em();
+            TypedQuery<User> q = em.createNamedQuery("User.getUserByEmail", User.class);
+            q.setParameter("email", email);
+            return q.getSingleResult();
+        } catch (NoResultException e){
+            return null;
+        }
+
     }
 
     @Override

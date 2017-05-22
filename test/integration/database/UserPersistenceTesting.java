@@ -10,8 +10,7 @@ import play.test.WithApplication;
 
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by Esteban Luchsinger on 06.04.2017.
@@ -65,6 +64,17 @@ public class UserPersistenceTesting extends WithApplication {
             final User userActual = repository.getUserByEmail("max.muster@hsr.ch");
 
             assertEquals(user, userActual);
+        });
+    }
+
+    @Test
+    public void testGetUserByEmailNonExistingUser(){
+        final JPAApi jpaApi = this.app.injector().instanceOf(JPAApi.class);
+        jpaApi.withTransaction(() -> {
+            final UsersRepository repository = new UsersRepositoryJPA(jpaApi);
+            final User userActual = repository.getUserByEmail("fab.schwyter@gmail.ch");
+
+            assertNull(userActual);
         });
     }
 
