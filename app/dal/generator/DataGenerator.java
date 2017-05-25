@@ -1,6 +1,6 @@
 package dal.generator;
 
-import dal.coatChecks.CoatChecksRepository;
+import dal.coatchecks.CoatChecksRepository;
 import dal.events.EventsRepository;
 import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
@@ -92,8 +92,8 @@ public class DataGenerator {
      * Checks if repositories are null.
      *
      * @param repositories Repositories that can't be null
-     * @param <T>
-     * @throws GenerateException
+     * @param <T> repository
+     * @throws GenerateException Exception thrown, if the generation failed.
      */
     @SafeVarargs
     private final <T> void confirmRepositoryNotNull(T... repositories) throws GenerateException {
@@ -257,14 +257,14 @@ public class DataGenerator {
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
         events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten, generateDate(12, 22,00), pictureKaufleuten));
+                "Sei wie Bobba. Sei Fett.", kaufleuten, generateDate(12, 22,0), pictureKaufleuten));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza, generateDate(14, 21,00), picturePlaza));
+                "DIE Party für Studis", plaza, generateDate(14, 21,0), picturePlaza));
         events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten, generateDate(-2,20,00), pictureShower));
+                "Party für Fussballer nach dem Duschen", kaufleuten, generateDate(-2,20,0), pictureShower));
         events.add(new Event(null, "Silvios Bunga Bunga Party",
                 "Silvios exklusive Party für die 'gehobene' Gesellschaft",
-                kaufleuten, generateDate(100,19,00), pictureSilvio));
+                kaufleuten, generateDate(100,19,0), pictureSilvio));
         return events;
     }
 
@@ -283,7 +283,7 @@ public class DataGenerator {
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Das übliche Ticket an der Abendkasse",
                 bobbaFettParty, 25.00, generateDate(10),
-                generateDate(13,02,00)));
+                generateDate(13,2,0)));
 
         /* Studi Party */
         ticketCategories.add(new TicketCategory(null,
@@ -294,24 +294,24 @@ public class DataGenerator {
                 "Abendkasse", "Nach 12 Uhr musst du für den " +
                 "Eintritt bezahlen. Aber immernoch Studipreis :)",
                 studiParty, 5.00, generateDate(13),
-                generateDate(14, 2,00)));
+                generateDate(14, 2,0)));
 
         /* Duschi Party */
         ticketCategories.add(new TicketCategory(null,
                 "Stürmer Ticket", "Wenn du ein Stürmer bist. Inklusive Salat.",
                 duschiParty, 5.00, generateDate(-10),
-                generateDate(-1,01,00)));
+                generateDate(-1,1,0)));
         ticketCategories.add(new TicketCategory(null,
                 "Mittelfeld Ticket",
                 "Für Mittelfeldspieler. Inklusive Rüebli.",
                 duschiParty, 10.00, generateDate(-10),
-                generateDate(-1,01,00)));
+                generateDate(-1,1,0)));
         ticketCategories.add(new TicketCategory(null, "Verteidiger Ticket",
                 "Die Verteidiger müssen standhaft sein. Inklusive Cervelat",
-                duschiParty, 15.00, generateDate(-10), generateDate(-1,01,00)));
+                duschiParty, 15.00, generateDate(-10), generateDate(-1,1,0)));
         ticketCategories.add(new TicketCategory(null, "Goalie Ticket",
                 "Flinke Hände. Red Bull Inklusive", duschiParty,
-                20.00, generateDate(-10), generateDate(-1,01,00)));
+                20.00, generateDate(-10), generateDate(-1,1,0)));
 
         /* Silvios Party */
         ticketCategories.add(new TicketCategory(null, "Silvios Freundschaft",

@@ -1,4 +1,4 @@
-package logic.coatChecks;
+package logic.coatchecks;
 
 import models.tickets.CoatCheck;
 

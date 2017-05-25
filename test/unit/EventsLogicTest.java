@@ -2,8 +2,8 @@ package unit;
 
 import config.StartupConfiguration;
 import config.StartupConfigurationMock;
-import dal.coatChecks.CoatChecksRepository;
-import dal.coatChecks.CoatChecksRepositoryMock;
+import dal.coatchecks.CoatChecksRepository;
+import dal.coatchecks.CoatChecksRepositoryMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
 import dal.tickets.TicketRepository;

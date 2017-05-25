@@ -1,7 +1,6 @@
 package integration.database;
 
-import dal.coatChecks.CoatChecksRepositoryJPA;
-import dal.events.EventsRepository;
+import dal.coatchecks.CoatChecksRepositoryJPA;
 import dal.events.EventsRepositoryJPA;
 import dal.users.UsersRepositoryJPA;
 import models.events.CoatHanger;
@@ -11,7 +10,6 @@ import models.users.User;
 import org.junit.Test;
 import play.db.jpa.JPAApi;
 import play.test.WithApplication;
-import sun.security.ssl.Debug;
 
 import java.util.Date;
 
