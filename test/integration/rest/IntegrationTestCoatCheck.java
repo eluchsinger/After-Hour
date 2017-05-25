@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import static junit.framework.TestCase.assertEquals;
 import static play.test.Helpers.*;
 
-public class IntegrationTest extends WithApplication{
+public class IntegrationTestCoatCheck extends WithApplication{
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Test

@@ -1,6 +1,6 @@
-package logic.coatChecks;
+package logic.coatchecks;
 
-import dal.coatChecks.CoatChecksRepository;
+import dal.coatchecks.CoatChecksRepository;
 import dal.events.EventsRepository;
 import dal.users.UsersRepository;
 import models.events.Location;
@@ -10,9 +10,6 @@ import models.users.User;
 import javax.inject.Inject;
 import java.util.Date;
 
-/**
- * Created by marco on 23.04.2017.
- */
 public class CoatChecksLogicImpl implements CoatChecksLogic {
     private final CoatChecksRepository coatChecksRepository;
     private final UsersRepository usersRepository;

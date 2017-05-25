@@ -1,4 +1,4 @@
-package dal.coatChecks;
+package dal.coatchecks;
 
 import models.events.CoatHanger;
 import models.events.Location;
@@ -11,9 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 
-/**
- * Created by marco on 23.04.2017.
- */
 public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     private final JPAApi jpaApi;
 
@@ -29,12 +26,6 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     }
 
     @Override
-    public CoatHanger getCoatHangerByID(Integer id){
-        final EntityManager em = jpaApi.em();
-        return em.find(CoatHanger.class, id);
-    }
-
-    @Override
     public CoatHanger getCoatHangerByNumberAndLocationID(Integer coatHangerNumber, String locationID) {
         final EntityManager em = jpaApi.em();
         TypedQuery<CoatHanger> q = em.createNamedQuery("CoatHanger.get", CoatHanger.class);
@@ -44,16 +35,9 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     }
 
     @Override
-    public CoatHanger addNewCoatHanger(CoatHanger coatHanger) {
+    public void addNewCoatHanger(CoatHanger coatHanger) {
         final EntityManager em = jpaApi.em();
         em.persist(coatHanger);
-        return coatHanger;
-    }
-
-    @Override
-    public CoatCheck getCoatCheckByID(Integer id){
-        final EntityManager em = jpaApi.em();
-        return em.find(CoatCheck.class, id);
     }
 
     @Override
@@ -65,10 +49,9 @@ public class CoatChecksRepositoryJPA implements CoatChecksRepository {
     }
 
     @Override
-    public CoatCheck addNewCoatCheck(CoatCheck coatCheck) {
+    public void addNewCoatCheck(CoatCheck coatCheck) {
         final EntityManager em = jpaApi.em();
         em.persist(coatCheck);
-        return coatCheck;
     }
 
     @Override

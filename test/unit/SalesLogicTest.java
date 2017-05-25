@@ -2,8 +2,8 @@ package unit;
 
 import config.StartupConfiguration;
 import config.StartupConfigurationMock;
-import dal.coatChecks.CoatChecksRepository;
-import dal.coatChecks.CoatChecksRepositoryMock;
+import dal.coatchecks.CoatChecksRepository;
+import dal.coatchecks.CoatChecksRepositoryMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
 import dal.tickets.TicketRepository;
@@ -29,9 +29,6 @@ import static org.junit.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
 import static utils.DateGenerator.generateDate;
 
-/**
- * Created by Fabian on 10.05.17.
- */
 public class SalesLogicTest extends WithApplication {
     private SalesLogic salesLogic;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
