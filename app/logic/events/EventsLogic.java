@@ -1,7 +1,7 @@
 package logic.events;
 
 import models.events.Event;
-import models.exceptions.EventDoesNotExistException;
+import models.exceptions.EventDoesNotExistServerException;
 
 import java.util.Date;
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.List;
 public interface EventsLogic {
     /**
      * Gets an {@link Event} object by it's unique id.
-     * @param EventId The unique id of the event.
+     * @param eventId The unique id of the event.
      * @return Returns an {@link Event} object, if one was found.
      * Else returns null.
      */
-    Event getEventById(Integer EventId) throws EventDoesNotExistException;
+    Event getEventById(Integer eventId) throws EventDoesNotExistServerException;
 
     /**
      * Gets a list of all available events.
@@ -27,7 +27,7 @@ public interface EventsLogic {
      */
     List<Event> getEvents();
 
-    Event getEventWithTicketCategories(Integer eventId, Boolean available) throws EventDoesNotExistException;
+    Event getEventWithTicketCategories(Integer eventId, Boolean available) throws EventDoesNotExistServerException;
 
-    Event getEventWithTicketCategories(Integer eventId, Boolean available, Date date) throws EventDoesNotExistException;
+    Event getEventWithTicketCategories(Integer eventId, Boolean available, Date date) throws EventDoesNotExistServerException;
 }

@@ -1,7 +1,6 @@
 package logic.sales;
 
 import models.exceptions.ServerException;
-import models.exceptions.UserDoesNotExistException;
 import models.tickets.Ticket;
 
 import java.util.Date;

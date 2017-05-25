@@ -26,8 +26,8 @@ import java.util.List;
         @NamedQuery(name = "User.getUserByEmail", query="SELECT u FROM User u WHERE u.email = :email")
 })
 public class User {
-    private final static int TICKETS_INIT_SIZE = 2;
-    private final static int COATCHECKS_INIT_SIZE = 2;
+    private static final int TICKETS_INIT_SIZE = 2;
+    private static final int COATCHECKS_INIT_SIZE = 2;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

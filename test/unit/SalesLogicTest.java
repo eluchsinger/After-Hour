@@ -12,9 +12,9 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.sales.SalesLogic;
 import models.exceptions.ServerException;
-import models.exceptions.TicketAlreadyBoughtException;
-import models.exceptions.TicketCategoryInvalidException;
-import models.exceptions.UserDoesNotExistException;
+import models.exceptions.TicketAlreadyBoughtServerException;
+import models.exceptions.TicketCategoryInvalidServerException;
+import models.exceptions.UserDoesNotExistServerException;
 import models.tickets.Ticket;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,6 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static org.junit.Assert.assertNotNull;
 import static play.inject.Bindings.bind;
@@ -31,7 +30,6 @@ import static utils.DateGenerator.generateDate;
 
 public class SalesLogicTest extends WithApplication {
     private SalesLogic salesLogic;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected Application provideApplication() {
@@ -56,27 +54,27 @@ public class SalesLogicTest extends WithApplication {
         assertNotNull(ticket);
    }
 
-   @Test (expected = TicketAlreadyBoughtException.class)
+   @Test (expected = TicketAlreadyBoughtServerException.class)
     public void testBuyTicketAlreadyBought() throws ServerException {
         salesLogic.buyTicket(1,1);
    }
 
-   @Test (expected = TicketCategoryInvalidException.class)
+   @Test (expected = TicketCategoryInvalidServerException.class)
     public void testBuyTicketNotExistingTicketCategory() throws ServerException {
         salesLogic.buyTicket(1,100);
    }
 
-   @Test (expected = TicketCategoryInvalidException.class)
+   @Test (expected = TicketCategoryInvalidServerException.class)
     public void testBuyTicketNotAvailableTicketCategory() throws ServerException, ParseException {
         salesLogic.buyTicket(1,2, generateDate(2));
    }
 
-   @Test (expected = UserDoesNotExistException.class)
+   @Test (expected = UserDoesNotExistServerException.class)
     public void testBuyTicketWithNotExistingUser() throws ParseException, ServerException {
        salesLogic.buyTicket(1313,1);
    }
 
-   @Test (expected = TicketAlreadyBoughtException.class)
+   @Test (expected = TicketAlreadyBoughtServerException.class)
     public void testBuyTicketDiffrentTicketCategories() throws ParseException, ServerException {
        salesLogic.buyTicket(5,9, generateDate(2));
        salesLogic.buyTicket(5,10, generateDate(2));

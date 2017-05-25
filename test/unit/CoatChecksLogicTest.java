@@ -41,7 +41,7 @@ public class CoatChecksLogicTest extends WithApplication{
         CoatCheck coatCheck = coatChecksLogic.createNewCoatCheck("silvio.berlusconi@italy.it", 2, "Plaza");
 
         assertNotNull(coatCheck);
-        assertEquals(new Integer(2), coatCheck.getCoatHanger().getCoatHangerNumber());
+        assertEquals(2, coatCheck.getCoatHanger().getCoatHangerNumber().intValue());
         assertEquals("silvio.berlusconi@italy.it", coatCheck.getUser().getEmail());
     }
 
