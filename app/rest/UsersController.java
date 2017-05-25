@@ -3,7 +3,7 @@ package rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import logic.users.UsersLogic;
 import models.exceptions.ServerException;
-import models.exceptions.UserDoesNotExistException;
+import models.exceptions.UserDoesNotExistServerException;
 import models.users.User;
 import play.api.Play;
 import play.db.jpa.Transactional;
@@ -37,7 +37,7 @@ public class UsersController extends Controller {
     public Result getAvailableEvents(Integer userId){
         try {
             return ok(Json.toJson(usersLogic.getEventsAvailable(userId)));
-        } catch (UserDoesNotExistException e) {
+        } catch (UserDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
     }
@@ -47,8 +47,7 @@ public class UsersController extends Controller {
         try {
             Map<String, String[]> loginData = request().body().asFormUrlEncoded();
 
-            String email = loginData.get("email")[0];
-            email = replaceCharacterEntities(email);
+            String email = replaceCharacterEntities(loginData.get("email")[0]);
             String password = loginData.get("password")[0];
 
             return ok(Json.toJson(usersLogic.login(email,password)));
@@ -62,11 +61,12 @@ public class UsersController extends Controller {
 
     @Transactional
     public Result getUserByEmail(String email){
+        String emailWithoutEntity;
         try {
-            email = replaceCharacterEntities(email);
-            User user = this.usersLogic.getUserByEmail(email);
+            emailWithoutEntity = replaceCharacterEntities(email);
+            User user = this.usersLogic.getUserByEmail(emailWithoutEntity);
             return ok(Json.toJson(user));
-        } catch (UserDoesNotExistException e) {
+        } catch (UserDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
 
@@ -91,7 +91,7 @@ public class UsersController extends Controller {
         try {
             final User user = this.usersLogic.getUserById(userId);
             return ok(Json.toJson(user));
-        } catch (UserDoesNotExistException e) {
+        } catch (UserDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
     }
@@ -102,15 +102,16 @@ public class UsersController extends Controller {
             final User user = usersLogic.getUserById(userId);
             File file = Play.current().getFile("app/pictures/" + user.getPictureName());
             return ok(file);
-        } catch (UserDoesNotExistException e) {
+        } catch (UserDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
     }
 
     private String replaceCharacterEntities(String email) {
+        String emailWithoutEntity = email;
         if(email.contains("%40")){
-            email = email.replace("%40", "@");
+            emailWithoutEntity = email.replace("%40", "@");
         }
-        return email;
+        return emailWithoutEntity;
     }
 }

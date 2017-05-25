@@ -4,9 +4,9 @@ import dal.tickets.TicketRepository;
 import dal.users.UsersRepository;
 import models.events.TicketCategory;
 import models.exceptions.ServerException;
-import models.exceptions.TicketAlreadyBoughtException;
-import models.exceptions.TicketCategoryInvalidException;
-import models.exceptions.UserDoesNotExistException;
+import models.exceptions.TicketAlreadyBoughtServerException;
+import models.exceptions.TicketCategoryInvalidServerException;
+import models.exceptions.UserDoesNotExistServerException;
 import models.tickets.Ticket;
 import models.users.User;
 
@@ -50,15 +50,15 @@ public class SalesLogicImpl implements SalesLogic{
         User buyingUser = this.usersRepository.getUserById(userId);
 
         if (!validateUser(buyingUser))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
         if (!validateTicketCategory(ticketCategory, date))
-            throw new TicketCategoryInvalidException();
+            throw new TicketCategoryInvalidServerException();
 
         Integer eventId = ticketCategory.getEvent().getId();
 
         if (!validateTicketBought(eventId ,userId))
-            throw new TicketAlreadyBoughtException();
+            throw new TicketAlreadyBoughtServerException();
 
         Ticket soldTicket = ticketCategory.sellTicket(buyingUser);
         this.ticketRepository.persistTicket(soldTicket);

@@ -5,9 +5,7 @@ import models.tickets.Ticket;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by Fabian Schwyter on 17.04.2017.

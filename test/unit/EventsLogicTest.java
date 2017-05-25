@@ -12,7 +12,7 @@ import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
 import logic.events.EventsLogic;
 import models.events.Event;
-import models.exceptions.EventDoesNotExistException;
+import models.exceptions.EventDoesNotExistServerException;
 import models.exceptions.ServerException;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,6 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import static junit.framework.TestCase.assertEquals;
 import static play.inject.Bindings.bind;
@@ -34,7 +33,6 @@ import static utils.DateGenerator.generateDate;
  */
 public class EventsLogicTest extends WithApplication {
     private EventsLogic eventsLogic;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected Application provideApplication() {
@@ -53,13 +51,13 @@ public class EventsLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetExistingEvent() throws EventDoesNotExistException {
+    public void testGetExistingEvent() throws EventDoesNotExistServerException {
         final Event event = eventsLogic.getEventById(2);
         assertEquals(new Integer (2), event.getId());
     }
 
-    @Test (expected = EventDoesNotExistException.class)
-    public void testGetNonExistingEvent() throws EventDoesNotExistException {
+    @Test (expected = EventDoesNotExistServerException.class)
+    public void testGetNonExistingEvent() throws EventDoesNotExistServerException {
         eventsLogic.getEventById(323132);
     }
 
@@ -75,7 +73,7 @@ public class EventsLogicTest extends WithApplication {
         assertEquals(2,event.getTicketCategories().size());
     }
 
-    @Test (expected = EventDoesNotExistException.class)
+    @Test (expected = EventDoesNotExistServerException.class)
     public void testGetEventWithTicketCategoriesWithNotExistingEvent() throws ServerException {
        eventsLogic.getEventWithTicketCategories(99,true);
     }

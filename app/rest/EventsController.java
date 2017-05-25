@@ -2,7 +2,7 @@ package rest;
 
 import logic.events.EventsLogic;
 import models.events.Event;
-import models.exceptions.EventDoesNotExistException;
+import models.exceptions.EventDoesNotExistServerException;
 import models.exceptions.ServerException;
 import play.api.Play;
 import play.db.jpa.Transactional;
@@ -35,7 +35,7 @@ public class EventsController extends Controller {
     public Result getEvent(Integer id) {
         try {
             return ok(Json.toJson(eventsLogic.getEventById(id)));
-        } catch (EventDoesNotExistException e) {
+        } catch (EventDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
     }
@@ -56,7 +56,7 @@ public class EventsController extends Controller {
             final Event event = eventsLogic.getEventById(eventId);
             File file = Play.current().getFile("app/pictures/" + event.getPictureName());
             return ok(file);
-        } catch (EventDoesNotExistException e) {
+        } catch (EventDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
     }

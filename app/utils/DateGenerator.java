@@ -9,7 +9,6 @@ import java.util.Date;
  * Utiliies for date generation.
  */
 public class DateGenerator {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * Generates a date (now) with an offset.
