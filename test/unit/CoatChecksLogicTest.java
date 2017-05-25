@@ -2,17 +2,15 @@ package unit;
 
 import config.StartupConfiguration;
 import config.StartupConfigurationMock;
-import dal.coatChecks.CoatChecksRepository;
-import dal.coatChecks.CoatChecksRepositoryMock;
+import dal.coatchecks.CoatChecksRepository;
+import dal.coatchecks.CoatChecksRepositoryMock;
 import dal.events.EventsRepository;
 import dal.events.EventsRepositoryMock;
 import dal.tickets.TicketRepository;
 import dal.tickets.TicketRepositoryMock;
 import dal.users.UsersRepository;
 import dal.users.UsersRepositoryMock;
-import logic.coatChecks.CoatChecksLogic;
-import models.events.CoatHanger;
-import models.events.Location;
+import logic.coatchecks.CoatChecksLogic;
 import models.tickets.CoatCheck;
 import org.junit.Test;
 import play.Application;
@@ -24,9 +22,6 @@ import java.util.Date;
 import static org.junit.Assert.*;
 import static play.inject.Bindings.bind;
 
-/**
- * Created by marco on 06.05.2017.
- */
 public class CoatChecksLogicTest extends WithApplication{
 
     @Override

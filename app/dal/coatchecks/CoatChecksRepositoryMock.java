@@ -1,4 +1,4 @@
-package dal.coatChecks;
+package dal.coatchecks;
 
 import models.events.CoatHanger;
 import models.events.Location;
@@ -11,9 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created by marco on 23.04.2017.
- */
 @Singleton
 public class CoatChecksRepositoryMock implements CoatChecksRepository {
     private List<CoatCheck> coatChecks;
@@ -39,28 +36,8 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
     }
 
     @Override
-    public CoatHanger getCoatHangerByID(Integer id) {
-        return coatHangers
-                .stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-
-    }
-
-    @Override
-    public CoatHanger addNewCoatHanger(CoatHanger coatHanger) {
+    public void addNewCoatHanger(CoatHanger coatHanger) {
         coatHangers.add(coatHanger);
-        return  coatHanger;
-    }
-
-    @Override
-    public CoatCheck getCoatCheckByID(Integer id) {
-        return coatChecks
-                .stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElse(null);
     }
 
     @Override
@@ -73,9 +50,8 @@ public class CoatChecksRepositoryMock implements CoatChecksRepository {
     }
 
     @Override
-    public CoatCheck addNewCoatCheck(CoatCheck coatCheck) {
+    public void addNewCoatCheck(CoatCheck coatCheck) {
         coatChecks.add(coatCheck);
-        return coatCheck;
     }
 
     @Override
