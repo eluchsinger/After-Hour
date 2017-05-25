@@ -13,11 +13,11 @@ import java.util.List;
 public interface EventsLogic {
     /**
      * Gets an {@link Event} object by it's unique id.
-     * @param EventId The unique id of the event.
+     * @param eventId The unique id of the event.
      * @return Returns an {@link Event} object, if one was found.
      * Else returns null.
      */
-    Event getEventById(Integer EventId) throws EventDoesNotExistServerException;
+    Event getEventById(Integer eventId) throws EventDoesNotExistServerException;
 
     /**
      * Gets a list of all available events.
