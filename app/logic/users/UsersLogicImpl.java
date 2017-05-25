@@ -3,9 +3,9 @@ package logic.users;
 import dal.users.UsersRepository;
 import models.events.Event;
 import models.exceptions.ServerException;
-import models.exceptions.UserDoesNotExistException;
-import models.exceptions.UserHasNoTicketException;
-import models.exceptions.UserWrongPasswordException;
+import models.exceptions.UserDoesNotExistServerException;
+import models.exceptions.UserHasNoTicketServerException;
+import models.exceptions.UserWrongPasswordServerException;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
@@ -32,14 +32,14 @@ public class UsersLogicImpl implements UsersLogic {
     /**
      * Gets a user by it's id.
      * @param userId The unique UserID of the user to get.
-     * @return Returns the found user or an UserDoesNotExistException, if nothing was found.
+     * @return Returns the found user or an UserDoesNotExistServerException, if nothing was found.
      */
     @Override
-    public User getUserById(Integer userId) throws UserDoesNotExistException {
+    public User getUserById(Integer userId) throws UserDoesNotExistServerException {
         User user = this.usersRepository.getUserById(userId);
 
         if (!validateUser(user))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
         return user;
     }
@@ -59,11 +59,11 @@ public class UsersLogicImpl implements UsersLogic {
      * @return Returns the found user or null, if nothing was found.
      */
     @Override
-    public User getUserByEmail(String email) throws UserDoesNotExistException {
+    public User getUserByEmail(String email) throws UserDoesNotExistServerException {
         User user = this.usersRepository.getUserByEmail(email);
 
         if (!validateUser(user))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
         return user;
 
@@ -81,10 +81,10 @@ public class UsersLogicImpl implements UsersLogic {
         user.setCoatChecks(validCoatChecks);
 
         if (!validateUser(user))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
         if (!user.compareWithPassword(password))
-            throw new UserWrongPasswordException();
+            throw new UserWrongPasswordServerException();
 
         return user;
     }
@@ -94,37 +94,35 @@ public class UsersLogicImpl implements UsersLogic {
         User user = this.usersRepository.getUserById(userId);
 
         if (!validateUser(user))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
         Optional<Ticket> ticket = user.getTickets().stream()
                 .filter(x -> x.getTicketCategory().getEvent().getId() == eventId)
                 .findFirst();
 
         if (!ticket.isPresent())
-            throw new UserHasNoTicketException();
+            throw new UserHasNoTicketServerException();
 
         return ticket.get();
     }
 
     @Override
-    public List<Event> getEventsAvailable(final Integer userId) throws UserDoesNotExistException {
+    public List<Event> getEventsAvailable(final Integer userId) throws UserDoesNotExistServerException {
         return getEventsAvailable(userId, new Date());
     }
 
     @Override
-    public List<Event> getEventsAvailable(Integer userId, Date date) throws UserDoesNotExistException {
+    public List<Event> getEventsAvailable(Integer userId, Date date) throws UserDoesNotExistServerException {
         User user = this.usersRepository.getUserById(userId);
 
         if (!validateUser(user))
-            throw new UserDoesNotExistException();
+            throw new UserDoesNotExistServerException();
 
-        List <Event> events = user.getTickets()
+        return user.getTickets()
                 .stream()
                 .map(x -> x.getTicketCategory().getEvent())
                 .filter(event -> new TimeIgnoringDateComparator().compare(event.getEventDate(),date) > 0)
                 .collect(Collectors.toList());
-
-        return events;
     }
 
 

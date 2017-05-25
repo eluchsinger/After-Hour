@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @Singleton
 public class UsersRepositoryMock implements UsersRepository {
-    private final static int INITIAL_USER_CAPACITY = 10;
+    private static final int INITIAL_USER_CAPACITY = 10;
     private List<User> users = new ArrayList<>(INITIAL_USER_CAPACITY);
 
     public UsersRepositoryMock() {

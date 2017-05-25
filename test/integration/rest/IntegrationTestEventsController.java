@@ -65,7 +65,7 @@ public class IntegrationTestEventsController extends WithApplication {
         final Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
                 .uri("/events/1/image");
-        final Result result = route(request);;
+        final Result result = route(request);
         assertEquals(OK, result.status());
     }
 }

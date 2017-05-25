@@ -2,7 +2,6 @@ package rest;
 
 import logic.sales.SalesLogic;
 import models.exceptions.ServerException;
-import models.tickets.Ticket;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;

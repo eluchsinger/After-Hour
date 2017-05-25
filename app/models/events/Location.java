@@ -32,6 +32,7 @@ public class Location {
         this.description = description;
         this.placeId = placeId;
         this.coatHangers = new ArrayList<>();
+        this.id = locationId;
     }
 
     public Integer getId() {

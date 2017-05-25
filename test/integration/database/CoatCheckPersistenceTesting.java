@@ -61,7 +61,7 @@ public class CoatCheckPersistenceTesting extends WithApplication{
 
             CoatHanger coatHanger = repository.getCoatHangerByNumberAndLocationID(5, "ChIJIXJ33hsKkEcRTTvRa3eNxd0");
 
-            assertEquals(new Integer(5), coatHanger.getCoatHangerNumber());
+            assertEquals(5, coatHanger.getCoatHangerNumber().intValue());
             assertEquals("ChIJIXJ33hsKkEcRTTvRa3eNxd0", coatHanger.getLocation().getPlaceId());
         });
     }
@@ -80,7 +80,7 @@ public class CoatCheckPersistenceTesting extends WithApplication{
             CoatCheck coatCheck = repository.createNewCoatCheck(user, location, new Date(), 4);
 
             assertEquals(user.getEmail(), coatCheck.getUser().getEmail());
-            assertEquals(new Integer(4), coatCheck.getCoatHanger().getCoatHangerNumber());
+            assertEquals(4, coatCheck.getCoatHanger().getCoatHangerNumber().intValue());
         });
     }
 

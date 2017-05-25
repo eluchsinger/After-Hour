@@ -13,8 +13,8 @@ import dal.users.UsersRepositoryMock;
 import logic.users.UsersLogic;
 import models.events.Event;
 import models.exceptions.ServerException;
-import models.exceptions.UserDoesNotExistException;
-import models.exceptions.UserHasNoTicketException;
+import models.exceptions.UserDoesNotExistServerException;
+import models.exceptions.UserHasNoTicketServerException;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.users.User;
@@ -25,7 +25,6 @@ import play.inject.guice.GuiceApplicationBuilder;
 import play.test.WithApplication;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -40,7 +39,6 @@ import static utils.DateGenerator.generateDate;
  */
 public class UsersLogicTest extends WithApplication {
     private UsersLogic usersLogic;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected Application provideApplication() {
@@ -59,20 +57,20 @@ public class UsersLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetExistingUserById() throws UserDoesNotExistException {
+    public void testGetExistingUserById() throws UserDoesNotExistServerException {
         final User expectedUser = usersLogic.getUserById(1);
-        assertEquals(new Integer(1),expectedUser.getId());
+        assertEquals(1,expectedUser.getId().intValue());
     }
 
-    @Test (expected = UserDoesNotExistException.class)
-    public void testGetNonExistingUserById() throws UserDoesNotExistException {
-        final User expectedUser = usersLogic.getUserById(123123123);
+    @Test (expected = UserDoesNotExistServerException.class)
+    public void testGetNonExistingUserById() throws UserDoesNotExistServerException {
+        usersLogic.getUserById(123123123);
     }
 
     @Test
-    public void testUserGeneratingId() throws UserDoesNotExistException {
+    public void testUserGeneratingId() throws UserDoesNotExistServerException {
         final User user = usersLogic.getUserById(2);
-        assertEquals(user.getId(), new Integer(2));
+        assertEquals(2,user.getId().intValue());
     }
 
     @Test
@@ -81,12 +79,12 @@ public class UsersLogicTest extends WithApplication {
         assertNotNull(ticket);
     }
 
-    @Test (expected = UserHasNoTicketException.class)
+    @Test (expected = UserHasNoTicketServerException.class)
     public void testGetTicketUserHasNoTicket() throws ServerException {
         usersLogic.getTicket(1,100);
     }
 
-    @Test  (expected = UserDoesNotExistException.class)
+    @Test  (expected = UserDoesNotExistServerException.class)
     public void testGetTicketUserDoesNotExist() throws ServerException {
         usersLogic.getTicket(100,1);
     }
@@ -105,18 +103,18 @@ public class UsersLogicTest extends WithApplication {
     }
 
     @Test
-    public void testGetUserByEmail() throws UserDoesNotExistException {
+    public void testGetUserByEmail() throws UserDoesNotExistServerException {
         User user = usersLogic.getUserByEmail("silvio.berlusconi@italy.it");
         assertEquals("Silvio",user.getFirstName());
     }
 
-    @Test (expected = UserDoesNotExistException.class)
-    public void testGetUserByMailWithNotExistingUser() throws UserDoesNotExistException {
+    @Test (expected = UserDoesNotExistServerException.class)
+    public void testGetUserByMailWithNotExistingUser() throws UserDoesNotExistServerException {
         usersLogic.getUserByEmail("donald.trump@uso.com");
     }
 
     @Test
-    public void testGetAvailableEvents() throws ParseException, UserDoesNotExistException {
+    public void testGetAvailableEvents() throws ParseException, UserDoesNotExistServerException {
         List<Event> events = usersLogic.getEventsAvailable(1, generateDate(0));
         assertEquals(3, events.size());
 
