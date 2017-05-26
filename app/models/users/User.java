@@ -2,6 +2,7 @@ package models.users;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import models.tickets.CoatCheck;
 import models.tickets.Ticket;
 import models.utils.TimeIgnoringDateComparator;
@@ -38,6 +39,7 @@ public class User {
     private Date dateOfBirth;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean isEmployee;
 
@@ -147,6 +149,14 @@ public class User {
 
     public String getPictureName(){
         return this.pictureName;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public void setPictureName(java.lang.String pictureName) {
