@@ -69,8 +69,6 @@ public class UsersController extends Controller {
         } catch (UserDoesNotExistServerException e) {
             return badRequest(Json.toJson(e));
         }
-
-
     }
 
     @Transactional
@@ -79,11 +77,14 @@ public class UsersController extends Controller {
             JsonNode json = request().body().asJson();
             User user = Json.fromJson(json, User.class);
             this.usersLogic.registerUser(user);
-            return ok();
-        } catch (Exception e) {
+            user = this.usersLogic.getUserByEmail(user.getEmail());
+            return ok(Json.toJson(user));
+        } catch (UserDoesNotExistServerException e){
+            return badRequest(Json.toJson(e));
+        }
+        catch (Exception e) {
             return badRequest("Registration Process couldn't start");
         }
-
     }
 
     @Transactional
