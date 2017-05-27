@@ -242,6 +242,7 @@ public class DataGenerator {
 
 
 
+
         return users;
     }
 
@@ -265,6 +266,10 @@ public class DataGenerator {
         events.add(new Event(null, "Silvios Bunga Bunga Party",
                 "Silvios exklusive Party für die 'gehobene' Gesellschaft",
                 kaufleuten, generateDate(100,19,0), pictureSilvio));
+
+
+
+
         return events;
     }
 
