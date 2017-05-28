@@ -1,5 +1,4 @@
 import com.google.inject.AbstractModule;
-
 import config.StartupConfiguration;
 import config.StartupConfigurationImpl;
 import dal.coatchecks.CoatChecksRepository;
@@ -19,8 +18,6 @@ import logic.sales.SalesLogicImpl;
 import logic.users.UsersLogic;
 import logic.users.UsersLogicImpl;
 import services.ApplicationTimer;
-import services.AtomicCounter;
-import services.Counter;
 
 import java.time.Clock;
 
@@ -43,8 +40,6 @@ public class Module extends AbstractModule {
         // Ask Guice to create an instance of ApplicationTimer when the
         // application starts.
         bind(ApplicationTimer.class).asEagerSingleton();
-        // Set AtomicCounter as the implementation for Counter.
-        bind(Counter.class).to(AtomicCounter.class);
 
         bind(UsersLogic.class).to(UsersLogicImpl.class);
         bind(EventsLogic.class).to(EventsLogicImpl.class);
