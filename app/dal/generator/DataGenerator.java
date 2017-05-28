@@ -241,19 +241,19 @@ public class DataGenerator {
                 "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true, gavric));
 
         //Demo Users for presentation
-        final String marcel = "marcel.jpg";
-        final String marco = "marco.jpg";
-        final String esteban = "esteban.jpg";
-        final String fabian = "fabian.jpg";
+        final String marcelPicture = "marcel.jpg";
+        final String marcoPicture = "marco.jpg";
+        final String estebanPicture = "esteban.jpg";
+        final String fabianPicture = "fabian.jpg";
 
         users.add(new User(null, "marcel.stocker@hsr.ch",
-                "Stocker", "Marcel", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", false, marcel));
+                "Stocker", "Marcel", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", false, marcelPicture));
         users.add(new User(null, "marco.steiner@hsr.ch",
-                "Steiner", "Marco", this.dateFormat.parse("1995-04-28"), Gender.MALE, "123456", false, marco));
+                "Steiner", "Marco", this.dateFormat.parse("1995-04-28"), Gender.MALE, "123456", false, marcoPicture));
         users.add(new User(null, "esteban.luchsinger@hsr.ch",
-                "Luchsinger", "Esteban", this.dateFormat.parse("1994-10-07"), Gender.MALE, "123456", true, esteban));
+                "Luchsinger", "Esteban", this.dateFormat.parse("1994-10-07"), Gender.MALE, "123456", true, estebanPicture));
         users.add(new User(null, "fabian.schwyter@hsr.ch",
-                "Schwyter", "Fabian", this.dateFormat.parse("1994-11-05"), Gender.MALE, "123456", true, fabian));
+                "Schwyter", "Fabian", this.dateFormat.parse("1994-11-05"), Gender.MALE, "123456", true, fabianPicture));
 
         return users;
     }
