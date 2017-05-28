@@ -240,7 +240,20 @@ public class DataGenerator {
         users.add(new User(null, "bachelor@kauf.ch",
                 "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true, gavric));
 
+        //Demo Users for presentation
+        final String marcelPicture = "marcel.jpg";
+        final String marcoPicture = "marco.jpg";
+        final String estebanPicture = "esteban.jpg";
+        final String fabianPicture = "fabian.jpg";
 
+        users.add(new User(null, "marcel.stocker@hsr.ch",
+                "Stocker", "Marcel", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", false, marcelPicture));
+        users.add(new User(null, "marco.steiner@hsr.ch",
+                "Steiner", "Marco", this.dateFormat.parse("1995-04-28"), Gender.MALE, "123456", false, marcoPicture));
+        users.add(new User(null, "esteban.luchsinger@hsr.ch",
+                "Luchsinger", "Esteban", this.dateFormat.parse("1994-10-07"), Gender.MALE, "123456", true, estebanPicture));
+        users.add(new User(null, "fabian.schwyter@hsr.ch",
+                "Schwyter", "Fabian", this.dateFormat.parse("1994-11-05"), Gender.MALE, "123456", true, fabianPicture));
 
         return users;
     }
@@ -248,77 +261,79 @@ public class DataGenerator {
 
     private List<Event> getDemoEvents(final EventsRepository eventsRepository) throws ParseException {
 
-        final String pictureKaufleuten = "kaufleuten.png";
-        final String picturePlaza = "nachtseminar.png";
-        final String pictureSilvio = "bunga-bunga.jpg";
-        final String pictureShower = "shower.png";
+        final String pictureNachtseminar = "nachtseminar.jpg";
+        final String pictureHighFive = "high_five.jpg";
+        final String pictureSanapa = "sanapa.jpg";
+        final String pictureShake = "shake.jpg";
 
         final Location kaufleuten = eventsRepository.getLocationById(1);
         final Location plaza = eventsRepository.getLocationById(2);
         final List<Event> events = new ArrayList<>(INITIAL_EVENTS_CAPACITY);
-        events.add(new Event(null, "Bobba Fett Party",
-                "Sei wie Bobba. Sei Fett.", kaufleuten, generateDate(12, 22,0), pictureKaufleuten));
         events.add(new Event(null, "Nachtseminar",
-                "DIE Party für Studis", plaza, generateDate(14, 21,0), picturePlaza));
-        events.add(new Event(null, "Duschi Abgstellt Party",
-                "Party für Fussballer nach dem Duschen", kaufleuten, generateDate(-2,20,0), pictureShower));
-        events.add(new Event(null, "Silvios Bunga Bunga Party",
-                "Silvios exklusive Party für die 'gehobene' Gesellschaft",
-                kaufleuten, generateDate(100,19,0), pictureSilvio));
+                "Die Party für Studenten", kaufleuten, generateDate(12, 22,0), pictureNachtseminar));
+        events.add(new Event(null, "HIGH FIVE",
+                "FROM HOUSE TO HIP HOP", plaza, generateDate(14, 21,0), pictureHighFive));
+        events.add(new Event(null, "SANAPA",
+                "Die Nachmittagsparty", kaufleuten, generateDate(3,20,0), pictureSanapa));
+        events.add(new Event(null, "SHAKE! SHAKE! SHAKE!",
+                "HIP HOP R'N'B DANCEHALL ELECTRONIC BEATS",
+                kaufleuten, generateDate(100,19,0), pictureShake));
+
+
         return events;
     }
 
     private List<TicketCategory> getDemoTicketCategories(final EventsRepository eventsRepository) throws ParseException {
-        final Event bobbaFettParty = eventsRepository.getEventById(1);
-        final Event studiParty = eventsRepository.getEventById(2);
-        final Event duschiParty = eventsRepository.getEventById(3);
-        final Event silviosParty = eventsRepository.getEventById(4);
+        final Event nachtseminarParty = eventsRepository.getEventById(1);
+        final Event highFiveParty = eventsRepository.getEventById(2);
+        final Event sanapaParty = eventsRepository.getEventById(3);
+        final Event shakeParty = eventsRepository.getEventById(4);
         final List<TicketCategory> ticketCategories = new ArrayList<>(INITIAL_TICKET_CATEGORY_CAPACITY);
 
-        /* Bobba Fett Party */
+        /* Nachtseminar Party*/
         ticketCategories.add(new TicketCategory(null,
                 "Vorverkauf", "Das Vorverkaufsticket der Extraklasse",
-                bobbaFettParty, 15.00, generateDate(0),
+                nachtseminarParty, 15.00, generateDate(0),
                 generateDate(10)));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Das übliche Ticket an der Abendkasse",
-                bobbaFettParty, 25.00, generateDate(10),
+                nachtseminarParty, 25.00, generateDate(10),
                 generateDate(13,2,0)));
 
-        /* Studi Party */
+        /* High Five Party*/
         ticketCategories.add(new TicketCategory(null,
                 "Early Bird", "Vorverkaufsticket",
-                studiParty, 0.0, generateDate(0),
+                highFiveParty, 0.0, generateDate(0),
                 generateDate(13)));
         ticketCategories.add(new TicketCategory(null,
                 "Abendkasse", "Nach 12 Uhr musst du für den " +
                 "Eintritt bezahlen. Aber immernoch Studipreis :)",
-                studiParty, 5.00, generateDate(13),
+                highFiveParty, 5.00, generateDate(13),
                 generateDate(14, 2,0)));
 
-        /* Duschi Party */
+        /* SANAPA Party*/
         ticketCategories.add(new TicketCategory(null,
-                "Stürmer Ticket", "Wenn du ein Stürmer bist. Inklusive Salat.",
-                duschiParty, 5.00, generateDate(-10),
-                generateDate(-1,1,0)));
+                "Vorverkauf", "Vorverkauf Ticket",
+                sanapaParty, 5.00, generateDate(0),
+                generateDate(2)));
         ticketCategories.add(new TicketCategory(null,
-                "Mittelfeld Ticket",
-                "Für Mittelfeldspieler. Inklusive Rüebli.",
-                duschiParty, 10.00, generateDate(-10),
-                generateDate(-1,1,0)));
-        ticketCategories.add(new TicketCategory(null, "Verteidiger Ticket",
-                "Die Verteidiger müssen standhaft sein. Inklusive Cervelat",
-                duschiParty, 15.00, generateDate(-10), generateDate(-1,1,0)));
-        ticketCategories.add(new TicketCategory(null, "Goalie Ticket",
-                "Flinke Hände. Red Bull Inklusive", duschiParty,
-                20.00, generateDate(-10), generateDate(-1,1,0)));
+                "VIP Ticket, Vorverkauf",
+                "Vorverkauf Ticket für VIP(inklusive 2 Shots).",
+                sanapaParty, 10.00, generateDate(0),
+                generateDate(2)));
+        ticketCategories.add(new TicketCategory(null, "Abendkasse",
+                "Abendkasse Ticket",
+                sanapaParty, 15.00, generateDate(2), generateDate(4,2,0)));
+        ticketCategories.add(new TicketCategory(null, "VIP Ticket, Abendkasse",
+                "Vorverkauf Ticket für VIP(inklusive 1 Shot).", sanapaParty,
+                20.00, generateDate(2), generateDate(4,2,0)));
 
-        /* Silvios Party */
-        ticketCategories.add(new TicketCategory(null, "Silvios Freundschaft",
-                "Wenn du mit Silvio befreundet bist.", silviosParty,
+        /* Shake Shake Shake Party */
+        ticketCategories.add(new TicketCategory(null, "VIP Ticket",
+                "VIP Ticket.", shakeParty,
                 3455.00, generateDate(0), generateDate(99)));
-        ticketCategories.add(new TicketCategory(null, "Nur Bekannter Ticket",
-                "Nur ein Bekannter des Presidente.", silviosParty, 6545.00,
+        ticketCategories.add(new TicketCategory(null, "VIP Lounge Ticket",
+                "VIP Ticket mit Lounge.", shakeParty, 6545.00,
                 generateDate(0), generateDate(99)));
         return ticketCategories;
     }
@@ -333,41 +348,41 @@ public class DataGenerator {
         final User guenther = usersRepository.getUserById(4);
 
         /* Categories */
-        final TicketCategory bobbaFett1 = ticketRepository.getTicketCategoryById(1);
-        final TicketCategory bobbaFett2 = ticketRepository.getTicketCategoryById(2);
+        final TicketCategory nachtseminarCategory1 = ticketRepository.getTicketCategoryById(1);
+        final TicketCategory nachtseminarCategory2 = ticketRepository.getTicketCategoryById(2);
 
-        final TicketCategory studi1 = ticketRepository.getTicketCategoryById(3);
-        final TicketCategory studi2 = ticketRepository.getTicketCategoryById(4);
+        final TicketCategory highFiveCategory1 = ticketRepository.getTicketCategoryById(3);
+        final TicketCategory highFiveCategory2 = ticketRepository.getTicketCategoryById(4);
 
-        final TicketCategory duschi1 = ticketRepository.getTicketCategoryById(5);
-        final TicketCategory duschi2 = ticketRepository.getTicketCategoryById(6);
-        final TicketCategory duschi3 = ticketRepository.getTicketCategoryById(7);
-        final TicketCategory duschi4 = ticketRepository.getTicketCategoryById(8);
+        final TicketCategory sanapaCategory1 = ticketRepository.getTicketCategoryById(5);
+        final TicketCategory sanapaCategory2 = ticketRepository.getTicketCategoryById(6);
+        final TicketCategory sanapaCategory3 = ticketRepository.getTicketCategoryById(7);
+        final TicketCategory sanapaCategory4 = ticketRepository.getTicketCategoryById(8);
 
-        final TicketCategory silvio1 = ticketRepository.getTicketCategoryById(9);
-        final TicketCategory silvio2 = ticketRepository.getTicketCategoryById(10);
+        final TicketCategory shakeCategory1 = ticketRepository.getTicketCategoryById(9);
+        final TicketCategory shakeCategory2 = ticketRepository.getTicketCategoryById(10);
 
         /* Bobba Fett Party */
-        tickets.add(bobbaFett1.sellTicket(silvio));
+        tickets.add(nachtseminarCategory1.sellTicket(silvio));
 
-        tickets.add(bobbaFett2.sellTicket(franz));
+        tickets.add(nachtseminarCategory2.sellTicket(franz));
 
         /* Studi Party */
-        tickets.add(studi1.sellTicket(irina));
-        tickets.add(studi1.sellTicket(guenther));
-        tickets.add(studi1.sellTicket(silvio));
+        tickets.add(highFiveCategory1.sellTicket(irina));
+        tickets.add(highFiveCategory1.sellTicket(guenther));
+        tickets.add(highFiveCategory1.sellTicket(silvio));
 
-        tickets.add(studi2.sellTicket(franz));
+        tickets.add(highFiveCategory2.sellTicket(franz));
 
         /* Duschi Party */
-        tickets.add(duschi1.sellTicket(guenther));
-        tickets.add(duschi2.sellTicket(silvio));
-        tickets.add(duschi3.sellTicket(franz));
-        tickets.add(duschi4.sellTicket(irina));
+        tickets.add(sanapaCategory1.sellTicket(guenther));
+        tickets.add(sanapaCategory2.sellTicket(silvio));
+        tickets.add(sanapaCategory3.sellTicket(franz));
+        tickets.add(sanapaCategory4.sellTicket(irina));
 
-        tickets.add(silvio1.sellTicket(silvio));
-        tickets.add(silvio1.sellTicket(franz));
-        tickets.add(silvio2.sellTicket(irina));
+        tickets.add(shakeCategory1.sellTicket(silvio));
+        tickets.add(shakeCategory1.sellTicket(franz));
+        tickets.add(shakeCategory2.sellTicket(irina));
 
         return tickets;
     }

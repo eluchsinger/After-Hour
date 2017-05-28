@@ -8,7 +8,7 @@ GET /                                       rest.HomeController.index
 # REST Events
 GET /events                                 rest.EventsController.getAllEvents
 GET /events/:id                             rest.EventsController.getEvent(id: Integer)
-GET  /events/:eventId/image                 rest.EventsController.getEventImage(eventId: Integer)
+GET /events/:eventId/image                  rest.EventsController.getEventImage(eventId: Integer)
 GET /events/:eventId/ticketCategories       rest.EventsController.getTicketCategories(eventId: Integer, onlyAvailable: Boolean)
 
 # REST Users
@@ -30,11 +30,6 @@ GET /ticket/:categoryId/user/:userId        rest.SalesController.buyTicket(userI
 
 # Request for Update
 GET /update                                 admin.AdminController.executeUpdate
-
-# An example controller showing how to use dependency injection
-GET /count                                  rest.CountController.count
-# An example controller showing how to write asynchronous code
-GET /message                                rest.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file                           controllers.Assets.versioned(path="/public", file: Asset)
