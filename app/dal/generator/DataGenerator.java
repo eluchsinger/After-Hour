@@ -240,8 +240,20 @@ public class DataGenerator {
         users.add(new User(null, "bachelor@kauf.ch",
                 "Gavric", "Vujo", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", true, gavric));
 
+        //Demo Users for presentation
+        final String marcel = "marcel.jpg";
+        final String marco = "marco.jpg";
+        final String esteban = "esteban.jpg";
+        final String fabian = "fabian.jpg";
 
-
+        users.add(new User(null, "marcel.stocker@hsr.ch",
+                "Stocker", "Marcel", this.dateFormat.parse("1990-06-19"), Gender.MALE, "123456", false, marcel));
+        users.add(new User(null, "marco.steiner@hsr.ch",
+                "Steiner", "Marco", this.dateFormat.parse("1995-04-28"), Gender.MALE, "123456", false, marco));
+        users.add(new User(null, "esteban.luchsinger@hsr.ch",
+                "Luchsinger", "Esteban", this.dateFormat.parse("1994-10-07"), Gender.MALE, "123456", true, esteban));
+        users.add(new User(null, "fabian.schwyter@hsr.ch",
+                "Schwyter", "Fabian", this.dateFormat.parse("1994-11-05"), Gender.MALE, "123456", true, fabian));
 
         return users;
     }
@@ -266,8 +278,6 @@ public class DataGenerator {
         events.add(new Event(null, "Silvios Bunga Bunga Party",
                 "Silvios exklusive Party für die 'gehobene' Gesellschaft",
                 kaufleuten, generateDate(100,19,0), pictureSilvio));
-
-
 
 
         return events;
