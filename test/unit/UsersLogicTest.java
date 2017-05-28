@@ -116,7 +116,7 @@ public class UsersLogicTest extends WithApplication {
     @Test
     public void testGetAvailableEvents() throws ParseException, UserDoesNotExistServerException {
         List<Event> events = usersLogic.getEventsAvailable(1, generateDate(0));
-        assertEquals(3, events.size());
+        assertEquals(4, events.size());
 
         events = usersLogic.getEventsAvailable(1, generateDate(200));
         assertEquals(0, events.size());
